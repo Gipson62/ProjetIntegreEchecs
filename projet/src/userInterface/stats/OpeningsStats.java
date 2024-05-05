@@ -1,4 +1,4 @@
-package userInterface.searches;
+package userInterface.stats;
 
 import userInterface.DefaultPanel;
 import userInterface.MainWindow;
@@ -8,11 +8,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FriendTournamentsSearch extends DefaultPanel {
+public class OpeningsStats extends DefaultPanel {
     MainWindow mainWindow;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public FriendTournamentsSearch(MainWindow initMainWindow) {
+    public OpeningsStats(MainWindow initMainWindow) {
         this.mainWindow = initMainWindow;
         this.setLayout(new BorderLayout());
 
@@ -21,13 +21,13 @@ public class FriendTournamentsSearch extends DefaultPanel {
         GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
         this.formPanel.setLayout(gridLayout);
 
-        this.formPanel.add(new JLabel("amis"));
-        // TODO : getAllUsers()
-        String[] usersList = {"Gipson62#8015", "Salut#208", "....#sgh"};
-        JComboBox users = new JComboBox(usersList);
-        this.formPanel.add(users);
+        this.formPanel.add(new JLabel("username & tag"));
+        JTextField username = new JTextField();
+        this.formPanel.add(username);
 
         this.add(this.formPanel, BorderLayout.CENTER);
+
+        // TODO : Add the result just under the question with a list (Opening name -> usage (%))
 
         this.buttonsPanel = new JPanel();
         GridLayout gridLayout1 = new GridLayout(1, 2, 5, 5);

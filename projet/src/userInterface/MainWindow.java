@@ -2,9 +2,12 @@ package userInterface;
 
 import userInterface.profile.InscriptionPanel;
 import userInterface.profile.LoginPanel;
+import userInterface.profile.MyProfile;
 import userInterface.searches.EloSearch;
 import userInterface.searches.FriendTournamentsSearch;
 import userInterface.searches.TournamentsSearch;
+import userInterface.stats.OpeningsStats;
+import userInterface.stats.Winrate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +38,9 @@ public class MainWindow extends JFrame {
         this.container.add("EloSearch", new EloSearch(this));
         this.container.add("TournamentsSearch", new TournamentsSearch(this));
         this.container.add("FriendTournamentsSearch", new FriendTournamentsSearch(this));
+        this.container.add("MyProfile", new MyProfile(this));
+        this.container.add("OpeningsStats", new OpeningsStats(this));
+        this.container.add("Winrate", new Winrate(this));
         this.cardLayout.show(this.container, "HomePanel");
 
 
@@ -83,7 +89,7 @@ public class MainWindow extends JFrame {
         this.myProfil.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO : add a transition to the MyProfil Panel IF he's logged in
+                changePanel("MyProfile");
             }
         });
 
@@ -121,7 +127,7 @@ public class MainWindow extends JFrame {
         this.stat1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO : add a transition to the First Stat Panel
+                changePanel("Winrate");
             }
         });
         this.stat2 = new JMenuItem("Utilisation des ouvertures");
@@ -129,7 +135,7 @@ public class MainWindow extends JFrame {
         this.stat2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO : add a transition to the First Search Panel
+                changePanel("OpeningsStats");
             }
         });
 
