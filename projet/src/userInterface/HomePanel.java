@@ -16,7 +16,6 @@ public class HomePanel extends DefaultPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("BROOOOO?");
                 mainWindow.changePanel("LoginPanel");
             }
         });
