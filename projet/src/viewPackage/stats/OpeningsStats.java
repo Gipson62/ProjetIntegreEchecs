@@ -1,7 +1,7 @@
-package userInterface.stats;
+package viewPackage.stats;
 
-import userInterface.DefaultPanel;
-import userInterface.MainWindow;
+import viewPackage.DefaultPanel;
+import viewPackage.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;

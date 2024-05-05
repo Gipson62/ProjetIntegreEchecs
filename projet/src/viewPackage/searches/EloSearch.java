@@ -1,33 +1,39 @@
-package userInterface.stats;
+package viewPackage.searches;
 
-import userInterface.DefaultPanel;
-import userInterface.MainWindow;
+import viewPackage.DefaultPanel;
+import viewPackage.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Winrate extends DefaultPanel {
+public class EloSearch extends DefaultPanel {
     MainWindow mainWindow;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public Winrate(MainWindow initMainWindow) {
+    public EloSearch(MainWindow initMainWindow) {
         this.mainWindow = initMainWindow;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
         this.formPanel.setSize(150, 150);
-        GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
+        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
         this.formPanel.setLayout(gridLayout);
 
-        this.formPanel.add(new JLabel("username & tag"));
-        JTextField username = new JTextField();
-        this.formPanel.add(username);
+        this.formPanel.add(new JLabel("elo"));
+        JSlider eloSlider = new JSlider(0, 3000);
+        this.formPanel.add(eloSlider);
+
+        this.formPanel.add(new JLabel("date"));
+        JSpinner date1Spinner = new JSpinner();
+        this.formPanel.add(date1Spinner);
+
+        this.formPanel.add(new JLabel("date"));
+        JSpinner date2Spinner = new JSpinner();
+        this.formPanel.add(date2Spinner);
 
         this.add(this.formPanel, BorderLayout.CENTER);
-
-        // TODO : Add the result just under the question with a list (White/Black -> % of win)
 
         this.buttonsPanel = new JPanel();
         GridLayout gridLayout1 = new GridLayout(1, 2, 5, 5);

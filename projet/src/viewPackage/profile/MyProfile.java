@@ -1,7 +1,7 @@
-package userInterface.profile;
+package viewPackage.profile;
 
-import userInterface.DefaultPanel;
-import userInterface.MainWindow;
+import viewPackage.DefaultPanel;
+import viewPackage.MainWindow;
 
 public class MyProfile extends DefaultPanel {
     private MainWindow mainWindow;

@@ -1,31 +1,40 @@
-package userInterface.searches;
+package viewPackage.searches;
 
-import userInterface.DefaultPanel;
-import userInterface.MainWindow;
+import viewPackage.DefaultPanel;
+import viewPackage.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FriendTournamentsSearch extends DefaultPanel {
+public class TournamentsSearch extends DefaultPanel {
     MainWindow mainWindow;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public FriendTournamentsSearch(MainWindow initMainWindow) {
+    public TournamentsSearch(MainWindow initMainWindow) {
         this.mainWindow = initMainWindow;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
         this.formPanel.setSize(150, 150);
-        GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
+        GridLayout gridLayout = new GridLayout(3, 2, 5, 5);
         this.formPanel.setLayout(gridLayout);
 
-        this.formPanel.add(new JLabel("amis"));
-        // TODO : getAllUsers()
+        this.formPanel.add(new JLabel("utilisateur"));
         String[] usersList = {"Gipson62#8015", "Salut#208", "....#sgh"};
         JComboBox users = new JComboBox(usersList);
         this.formPanel.add(users);
+
+        this.formPanel.add(new JLabel("date"));
+        JSpinner dateSpinner = new JSpinner();
+        this.formPanel.add(dateSpinner);
+
+        this.formPanel.add(new JLabel("état"));
+        String[] values = {"finale", "demi-finale", "quart", "huitième"};
+        JComboBox states = new JComboBox(values);
+        states.setSelectedItem("huitième");
+        this.formPanel.add(states);
 
         this.add(this.formPanel, BorderLayout.CENTER);
 

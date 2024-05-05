@@ -1,13 +1,13 @@
-package userInterface;
+package viewPackage;
 
-import userInterface.profile.InscriptionPanel;
-import userInterface.profile.LoginPanel;
-import userInterface.profile.MyProfile;
-import userInterface.searches.EloSearch;
-import userInterface.searches.FriendTournamentsSearch;
-import userInterface.searches.TournamentsSearch;
-import userInterface.stats.OpeningsStats;
-import userInterface.stats.Winrate;
+import viewPackage.profile.InscriptionPanel;
+import viewPackage.profile.LoginPanel;
+import viewPackage.profile.MyProfile;
+import viewPackage.searches.EloSearch;
+import viewPackage.searches.FriendTournamentsSearch;
+import viewPackage.searches.TournamentsSearch;
+import viewPackage.stats.OpeningsStats;
+import viewPackage.stats.Winrate;
 
 import javax.swing.*;
 import java.awt.*;
