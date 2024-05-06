@@ -1,5 +1,7 @@
 package viewPackage;
 
+import exceptionPackage.UnknownPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +18,11 @@ public class HomePanel extends DefaultPanel {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainWindow.changePanel("LoginPanel");
+                try {
+                    mainWindow.changePanel("LoginPanel");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
