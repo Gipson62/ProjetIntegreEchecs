@@ -12,6 +12,7 @@ import viewPackage.stats.Winrate;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 
 public class MainWindow extends JFrame {
     private CardLayout cardLayout;
@@ -19,6 +20,7 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu appMenu, profilMenu, searchMenu, statMenu;
     private JMenuItem exit, home, login, signUp, myProfil, search1, search2, search3, stat1, stat2;
+    private HashMap<String, DefaultPanel> panels;
     public MainWindow() {
         super("Application d'échecs");
         this.setBounds(250, 250, 750, 750);
@@ -32,15 +34,17 @@ public class MainWindow extends JFrame {
         this.container = this.getContentPane();
         this.container.setLayout(this.cardLayout);
 
-        this.container.add("HomePanel", new HomePanel(this));
-        this.container.add("LoginPanel", new LoginPanel(this));
-        this.container.add("InscriptionPanel", new InscriptionPanel(this));
-        this.container.add("EloSearch", new EloSearch(this));
-        this.container.add("TournamentsSearch", new TournamentsSearch(this));
-        this.container.add("FriendTournamentsSearch", new FriendTournamentsSearch(this));
-        this.container.add("MyProfile", new MyProfile(this));
-        this.container.add("OpeningsStats", new OpeningsStats(this));
-        this.container.add("Winrate", new Winrate(this));
+        this.panels = new HashMap<>();
+
+        this.addPanel("HomePanel", new HomePanel(this));
+        this.addPanel("LoginPanel", new LoginPanel(this));
+        this.addPanel("InscriptionPanel", new InscriptionPanel(this));
+        this.addPanel("EloSearch", new EloSearch(this));
+        this.addPanel("TournamentsSearch", new TournamentsSearch(this));
+        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this));
+        this.addPanel("MyProfile", new MyProfile(this));
+        this.addPanel("OpeningsStats", new OpeningsStats(this));
+        this.addPanel("Winrate", new Winrate(this));
         this.cardLayout.show(this.container, "HomePanel");
 
 
@@ -141,7 +145,23 @@ public class MainWindow extends JFrame {
 
         this.setVisible(true);
     }
+
+    /**
+     * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
+     * @param panelName specify the panel you want to go to using a name.
+     */
     public void changePanel(String panelName) {
+        this.panels.get(panelName).resetPanel();
         this.cardLayout.show(this.container, panelName);
+    }
+
+    /**
+     * Add a panel to the `CardLayout` and to the panels `Hashmap`.
+     * @param panelName
+     * @param panel
+     */
+    public void addPanel(String panelName, DefaultPanel panel) {
+        this.panels.put(panelName, panel);
+        this.container.add(panelName, panel);
     }
 }
