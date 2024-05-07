@@ -17,13 +17,13 @@ public class Account {
     private Bio bio;
     private Gender gender;
     private Tag tag;
-    private Boolean isBeginner;
+    private boolean isBeginner;
     private Rank rank;
     private Elo elo;
 
     //Constructor
     public Account(Integer idAccount, String username, String email, LocalDate birthdate,
-                   String password, String bio, int tag, boolean isBeginner, String rank,
+                   String password, String bio, int tag, boolean isBeginner, Integer rank,
                    int elo,String gender) throws IllegalAccountArgumentException {
 
         List<String> errors = new ArrayList<>();
@@ -128,7 +128,7 @@ public class Account {
         this.isBeginner = isBeginner;
     }
 
-    public void setRank(String rank) throws IllegalAccountArgumentException {
+    public void setRank(Integer rank) throws IllegalAccountArgumentException {
         this.rank = new Rank(rank);
     }
 
@@ -204,7 +204,7 @@ public class Account {
         return rank;
     }
 
-    public String getRank() {
+    public int getRank() {
         return rank.getRank();
     }
 
