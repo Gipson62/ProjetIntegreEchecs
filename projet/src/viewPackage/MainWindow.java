@@ -1,5 +1,6 @@
 package viewPackage;
 
+import exceptionPackage.UnknownPanel;
 import viewPackage.profile.InscriptionPanel;
 import viewPackage.profile.LoginPanel;
 import viewPackage.profile.MyProfile;
@@ -12,6 +13,7 @@ import viewPackage.stats.Winrate;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 
 public class MainWindow extends JFrame {
     private CardLayout cardLayout;
@@ -19,6 +21,7 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu appMenu, profilMenu, searchMenu, statMenu;
     private JMenuItem exit, home, login, signUp, myProfil, search1, search2, search3, stat1, stat2;
+    private HashMap<String, DefaultPanel> panels;
     public MainWindow() {
         super("Application d'échecs");
         this.setBounds(250, 250, 750, 750);
@@ -32,15 +35,17 @@ public class MainWindow extends JFrame {
         this.container = this.getContentPane();
         this.container.setLayout(this.cardLayout);
 
-        this.container.add("HomePanel", new HomePanel(this));
-        this.container.add("LoginPanel", new LoginPanel(this));
-        this.container.add("InscriptionPanel", new InscriptionPanel(this));
-        this.container.add("EloSearch", new EloSearch(this));
-        this.container.add("TournamentsSearch", new TournamentsSearch(this));
-        this.container.add("FriendTournamentsSearch", new FriendTournamentsSearch(this));
-        this.container.add("MyProfile", new MyProfile(this));
-        this.container.add("OpeningsStats", new OpeningsStats(this));
-        this.container.add("Winrate", new Winrate(this));
+        this.panels = new HashMap<>();
+
+        this.addPanel("HomePanel", new HomePanel(this));
+        this.addPanel("LoginPanel", new LoginPanel(this));
+        this.addPanel("InscriptionPanel", new InscriptionPanel(this));
+        this.addPanel("EloSearch", new EloSearch(this));
+        this.addPanel("TournamentsSearch", new TournamentsSearch(this));
+        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this));
+        this.addPanel("MyProfile", new MyProfile(this));
+        this.addPanel("OpeningsStats", new OpeningsStats(this));
+        this.addPanel("Winrate", new Winrate(this));
         this.cardLayout.show(this.container, "HomePanel");
 
 
@@ -62,7 +67,11 @@ public class MainWindow extends JFrame {
         this.home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("HomePanel");
+                try {
+                    changePanel("HomePanel");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -73,7 +82,11 @@ public class MainWindow extends JFrame {
         this.login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("LoginPanel");
+                try {
+                    changePanel("LoginPanel");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.signUp = new JMenuItem("Créer un compte");
@@ -81,7 +94,11 @@ public class MainWindow extends JFrame {
         this.signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("InscriptionPanel");
+                try {
+                    changePanel("InscriptionPanel");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.myProfil = new JMenuItem("Mon profil");
@@ -89,7 +106,11 @@ public class MainWindow extends JFrame {
         this.myProfil.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("MyProfile");
+                try {
+                    changePanel("MyProfile");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -100,7 +121,11 @@ public class MainWindow extends JFrame {
         this.search1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("TournamentsSearch");
+                try {
+                    changePanel("TournamentsSearch");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.search2 = new JMenuItem("Parties entre 2 dates");
@@ -108,7 +133,11 @@ public class MainWindow extends JFrame {
         this.search2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("EloSearch");
+                try {
+                    changePanel("EloSearch");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.search3 = new JMenuItem("Tournois d'un ami");
@@ -116,7 +145,11 @@ public class MainWindow extends JFrame {
         this.search3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("FriendTournamentsSearch");
+                try {
+                    changePanel("FriendTournamentsSearch");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
@@ -127,7 +160,11 @@ public class MainWindow extends JFrame {
         this.stat1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("Winrate");
+                try {
+                    changePanel("Winrate");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.stat2 = new JMenuItem("Utilisation des ouvertures");
@@ -135,13 +172,33 @@ public class MainWindow extends JFrame {
         this.stat2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel("OpeningsStats");
+                try {
+                    changePanel("OpeningsStats");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
         this.setVisible(true);
     }
-    public void changePanel(String panelName) {
+
+    /**
+     * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
+     * @param panelName specify the panel you want to go to using a name.
+     */
+    public void changePanel(String panelName) throws UnknownPanel {
+        this.panels.get(panelName).resetPanel();
         this.cardLayout.show(this.container, panelName);
+    }
+
+    /**
+     * Add a panel to the `CardLayout` and to the panels `Hashmap`.
+     * @param panelName
+     * @param panel
+     */
+    public void addPanel(String panelName, DefaultPanel panel) {
+        this.panels.put(panelName, panel);
+        this.container.add(panelName, panel);
     }
 }

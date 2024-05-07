@@ -1,5 +1,6 @@
 package viewPackage.profile;
 
+import exceptionPackage.UnknownPanel;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
 
@@ -36,7 +37,11 @@ public class LoginPanel extends DefaultPanel {
         inscriptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainWindow.changePanel("InscriptionPanel");
+                try {
+                    mainWindow.changePanel("InscriptionPanel");
+                } catch (UnknownPanel ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         this.add(buttonsPanel, BorderLayout.SOUTH);
