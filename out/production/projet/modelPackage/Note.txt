@@ -1,0 +1,9 @@
+pour faire autant de classe
+Car comme ca achaque foisqu'on utilise une variable dans une classe pas besoin de refaire le setter
+comme ca
+tout peut etre null grace au instance et dans modifie on
+on peut mettre des filtres pour empecher de mettre null dans par exepmple account
+
+Si on permet de tout mettre a NULL mais dans account on remet un filtre qui empeche de mettre null
+
+mettre taille max aussi
