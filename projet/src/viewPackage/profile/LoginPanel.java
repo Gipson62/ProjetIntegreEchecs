@@ -3,6 +3,7 @@ package viewPackage.profile;
 import exceptionPackage.UnknownPanel;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
+import viewPackage.PanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginPanel extends DefaultPanel {
-    MainWindow mainWindow;
+    PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public LoginPanel(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    public LoginPanel(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
@@ -38,7 +39,7 @@ public class LoginPanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mainWindow.changePanel("InscriptionPanel");
+                    panelManager.changePanel("InscriptionPanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }

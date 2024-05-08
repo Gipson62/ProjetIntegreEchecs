@@ -2,6 +2,7 @@ package viewPackage.searches;
 
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
+import viewPackage.PanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class FriendTournamentsSearch extends DefaultPanel {
-    MainWindow mainWindow;
+    PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public FriendTournamentsSearch(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    public FriendTournamentsSearch(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();

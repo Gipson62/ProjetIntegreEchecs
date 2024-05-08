@@ -8,7 +8,7 @@ import viewPackage.searches.EloSearch;
 import viewPackage.searches.FriendTournamentsSearch;
 import viewPackage.searches.TournamentsSearch;
 import viewPackage.stats.OpeningsStats;
-import viewPackage.stats.Winrate;
+import viewPackage.stats.WinratePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,33 +21,13 @@ public class MainWindow extends JFrame {
     private JMenuBar menuBar;
     private JMenu appMenu, profilMenu, searchMenu, statMenu;
     private JMenuItem exit, home, login, signUp, myProfil, search1, search2, search3, stat1, stat2;
-    private HashMap<String, DefaultPanel> panels;
-    public MainWindow() {
-        super("Application d'échecs");
-        this.setBounds(250, 250, 750, 750);
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        this.cardLayout = new CardLayout();
-        this.container = this.getContentPane();
-        this.container.setLayout(this.cardLayout);
-
-        this.panels = new HashMap<>();
-
-        this.addPanel("HomePanel", new HomePanel(this));
-        this.addPanel("LoginPanel", new LoginPanel(this));
-        this.addPanel("InscriptionPanel", new InscriptionPanel(this));
-        this.addPanel("EloSearch", new EloSearch(this));
-        this.addPanel("TournamentsSearch", new TournamentsSearch(this));
-        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this));
-        this.addPanel("MyProfile", new MyProfile(this));
-        this.addPanel("OpeningsStats", new OpeningsStats(this));
-        this.addPanel("Winrate", new Winrate(this));
-        this.cardLayout.show(this.container, "HomePanel");
-
+    private PanelManager panelManager;
+    public MainWindow(String title) {
+        super(title);
+        this.panelManager = new PanelManager(this);
+        this.add(panelManager, BorderLayout.CENTER);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(250, 250, 750, 500);
 
         this.menuBar = new JMenuBar();
         this.setJMenuBar(this.menuBar);
@@ -68,7 +48,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("HomePanel");
+                    panelManager.changePanel("HomePanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -83,7 +63,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("LoginPanel");
+                    panelManager.changePanel("LoginPanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -95,7 +75,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("InscriptionPanel");
+                    panelManager.changePanel("InscriptionPanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -107,7 +87,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("MyProfile");
+                    panelManager.changePanel("MyProfile");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -122,7 +102,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("TournamentsSearch");
+                    panelManager.changePanel("TournamentsSearch");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -134,7 +114,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("EloSearch");
+                    panelManager.changePanel("EloSearch");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -146,7 +126,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("FriendTournamentsSearch");
+                    panelManager.changePanel("FriendTournamentsSearch");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -161,7 +141,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("Winrate");
+                    panelManager.changePanel("WinratePanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -173,32 +153,15 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    changePanel("OpeningsStats");
+                    panelManager.changePanel("OpeningsStats");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
 
+        this.pack();
+
         this.setVisible(true);
-    }
-
-    /**
-     * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
-     * @param panelName specify the panel you want to go to using a name.
-     */
-    public void changePanel(String panelName) throws UnknownPanel {
-        this.panels.get(panelName).resetPanel();
-        this.cardLayout.show(this.container, panelName);
-    }
-
-    /**
-     * Add a panel to the `CardLayout` and to the panels `Hashmap`.
-     * @param panelName
-     * @param panel
-     */
-    public void addPanel(String panelName, DefaultPanel panel) {
-        this.panels.put(panelName, panel);
-        this.container.add(panelName, panel);
     }
 }

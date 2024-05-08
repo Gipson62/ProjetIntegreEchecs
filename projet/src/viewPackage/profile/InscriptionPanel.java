@@ -3,6 +3,7 @@ package viewPackage.profile;
 import exceptionPackage.UnknownPanel;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
+import viewPackage.PanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,19 +13,47 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class InscriptionPanel extends DefaultPanel {
-    MainWindow mainWindow;
+    PanelManager panelManager;
     JPanel formPanel, buttonsPanel;
     JTextField email, pseudo;
     JPasswordField password;
     JSlider elo;
     JSpinner date;
     JCheckBox beginner;
-    public InscriptionPanel(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    public InscriptionPanel(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
-        this.formPanel.setSize(150, 150);
+        this.formPanel.setPreferredSize(new Dimension(75, 150));
+        GridBagLayout gridBag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        this.formPanel.setLayout(gridBag);
+
+        JLabel emailLabel = new JLabel("Email :", SwingConstants.RIGHT);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        gridBag.setConstraints(emailLabel, c);
+        this.formPanel.add(emailLabel);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        this.email = new JTextField();
+        gridBag.setConstraints(this.email, c);
+        this.formPanel.add(this.email);
+
+        JLabel passwordLabel = new JLabel("Mot de Passe :", SwingConstants.RIGHT);
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridBag.setConstraints(passwordLabel, c);
+        this.formPanel.add(passwordLabel);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        this.password = new JPasswordField();
+        gridBag.setConstraints(this.password, c);
+        this.formPanel.add(this.password);
+
+        JLabel inscriptionLabel = new JLabel("Pseudo :", SwingConstants.RIGHT);
+        this.formPanel.setBackground(Color.GREEN);
+        this.add(this.formPanel, BorderLayout.CENTER);
+        this.buttonsPanel = new JPanel();
+        /*
         GridLayout gridLayout = new GridLayout(6, 2, 5, 5);
         this.formPanel.setLayout(gridLayout);
 
@@ -52,6 +81,8 @@ public class InscriptionPanel extends DefaultPanel {
         this.beginner = new JCheckBox();
         this.formPanel.add(this.beginner);
 
+         */
+
 
         this.add(this.formPanel, BorderLayout.CENTER);
 
@@ -65,7 +96,7 @@ public class InscriptionPanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mainWindow.changePanel("LoginPanel");
+                    panelManager.changePanel("LoginPanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }
@@ -76,11 +107,11 @@ public class InscriptionPanel extends DefaultPanel {
     }
     @Override
     public void resetPanel() {
-        this.email.setText("");
+        /*this.email.setText("");
         this.pseudo.setText("");
         this.password.setText("");
         this.elo.setValue(500);
-        this.beginner.setSelected(false);
+        this.beginner.setSelected(false);*/
         //this.date.setValue(new Date(1970, Calendar.JANUARY, 1));
         return;
     }

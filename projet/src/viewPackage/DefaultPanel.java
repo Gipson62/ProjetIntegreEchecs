@@ -1,6 +1,7 @@
 package viewPackage;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class DefaultPanel extends JPanel {
     /**

@@ -2,6 +2,7 @@ package viewPackage.stats;
 
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
+import viewPackage.PanelManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OpeningsStats extends DefaultPanel {
-    MainWindow mainWindow;
+    PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public OpeningsStats(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    public OpeningsStats(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
