@@ -15,13 +15,13 @@ public class MainBusiness {
                     true, 5, 700, "Moi");
             AccountManager accountManager = new AccountManager();
 
-            accountManager.insertAccount(account);
-            System.out.println(accountManager.selectAccount(9));
-            System.out.println(accountManager.selectAccount(account.getIdAccount()).getUsername());
-            System.out.println(accountManager.selectAccount("etu52812bis@henallux.be").getUsername());
+            accountManager.addAccount(account);
+            System.out.println(accountManager.getAccount(9));
+            System.out.println(accountManager.getAccount(account.getIdAccount()).getUsername());
+            System.out.println(accountManager.getAccount("etu52812bis@henallux.be").getUsername());
             account.setUsername("BhelasUpdated");
             accountManager.updateAccount(account);
-            System.out.println(accountManager.selectAccount("etu52812bis@henallux.be").getUsername());
+            System.out.println(accountManager.getAccount("etu52812bis@henallux.be").getUsername());
             accountManager.deleteAccountLignes(account.getIdAccount(),true,false);
 
 

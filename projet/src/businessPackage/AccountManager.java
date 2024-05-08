@@ -13,12 +13,12 @@ public class AccountManager {
         dao = new AccountDBAccess();
     }
 
-    public void insertAccount(Account account) throws AddAccountException {
-        dao.insertAccount(account);
+    public void addAccount(Account account) throws AddAccountException {
+        dao.addAccount(account);
     }
 
-    public <T> Account selectAccount(T parameterResearch) throws ReadAccountException{
-        return dao.selectAccount(parameterResearch);
+    public <T> Account getAccount(T parameterResearch) throws ReadAccountException{
+        return dao.getAccount(parameterResearch);
     }
 
     public void updateAccount(Account account) throws UpdateAccountException{

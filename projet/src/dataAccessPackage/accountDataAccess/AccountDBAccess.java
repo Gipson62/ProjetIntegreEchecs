@@ -23,7 +23,7 @@ public class AccountDBAccess implements AccountDataAccess{
 
 
     @Override
-    public void insertAccount(Account account) throws AddAccountException{
+    public void addAccount(Account account) throws AddAccountException{
         //créé un nouvel account dans la BD si valeur ok et non deja existante pour email et username+tag et id
         //Puis enregistre l'id de l'account dans l'objet account passé en paramètre par adresse
 //TODO : ajouter une exception pour les erreurs sql et un save point + rollback (si erreur generateur id est accrémenté)
@@ -47,7 +47,7 @@ public class AccountDBAccess implements AccountDataAccess{
 
             preparedStatement.executeUpdate();//sqlException
             try {
-                account.setIdAccount( selectAccount(account.getEmail()).getIdAccount());
+                account.setIdAccount( getAccount(account.getEmail()).getIdAccount());
             } catch (IllegalAccountArgumentException | ReadAccountException e) {
                 e.printStackTrace();
             }
@@ -58,7 +58,7 @@ public class AccountDBAccess implements AccountDataAccess{
     }
 
     @Override
-    public <T> Account selectAccount(T parameterResearch) throws ReadAccountException {
+    public <T> Account getAccount(T parameterResearch) throws ReadAccountException {
 
         try
         {
