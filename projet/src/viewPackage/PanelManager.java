@@ -22,6 +22,7 @@ public class PanelManager extends JPanel {
     private MainWindow mainWindow;
     private HashMap<String, DefaultPanel> panels;
     private CardLayout cardLayout;
+    private JPanel container;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
@@ -36,20 +37,24 @@ public class PanelManager extends JPanel {
         this.add(this.right);
 
         this.cardLayout = new CardLayout();
-        this.center.setLayout(cardLayout);
+        this.center.setLayout(new BorderLayout());
 
         this.panels = new HashMap<>();
 
-        this.addPanel("HomePanel", new HomePanel(this));
-        this.addPanel("LoginPanel", new LoginPanel(this));
-        this.addPanel("InscriptionPanel", new InscriptionPanel(this));
-        this.addPanel("EloSearch", new EloSearch(this));
-        this.addPanel("TournamentsSearch", new TournamentsSearch(this));
-        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this));
-        this.addPanel("MyProfile", new MyProfile(this));
-        this.addPanel("OpeningsStats", new OpeningsStats(this));
-        this.addPanel("WinratePanel", new WinratePanel(this));
-        this.cardLayout.show(this.center, "HomePanel");
+        container = new JPanel();
+        this.container.setLayout(cardLayout);
+
+        this.addPanel("HomePanel", new HomePanel(this), container);
+        this.addPanel("LoginPanel", new LoginPanel(this), container);
+        this.addPanel("InscriptionPanel", new InscriptionPanel(this), container);
+        this.addPanel("EloSearch", new EloSearch(this), container);
+        this.addPanel("TournamentsSearch", new TournamentsSearch(this), container);
+        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this), container);
+        this.addPanel("MyProfile", new MyProfile(this), container);
+        this.addPanel("OpeningsStats", new OpeningsStats(this), container);
+        this.addPanel("WinratePanel", new WinratePanel(this), container);
+        this.center.add(container, BorderLayout.CENTER);
+        //this.cardLayout.show(container, "HomePanel");
         System.out.println(this);
     }
 
@@ -104,9 +109,9 @@ public class PanelManager extends JPanel {
      * @param panelName
      * @param panel
      */
-    public void addPanel(String panelName, DefaultPanel panel) {
+    public void addPanel(String panelName, DefaultPanel panel, JPanel parent) {
         this.panels.put(panelName, panel);
-        this.center.add(panel, panelName);
+        parent.add(panel, panelName);
     }
     /**
      * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
@@ -114,7 +119,7 @@ public class PanelManager extends JPanel {
      */
     public void changePanel(String panelName) throws UnknownPanel {
         this.panels.get(panelName).resetPanel();
-        this.cardLayout.show(this.center, panelName);
+        this.cardLayout.show(container, panelName);
         //this.center.repaint();
     }
 
