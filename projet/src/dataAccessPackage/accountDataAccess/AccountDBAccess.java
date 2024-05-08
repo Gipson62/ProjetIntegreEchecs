@@ -106,9 +106,11 @@ public class AccountDBAccess implements AccountDataAccess{
 
     @Override
     //boolean pour savoir si on supprime la bio et ou le genre
-    public void deleteAccount(int idAccount) { //, boolean deleteBio, boolean deleteGender
+    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) { //, boolean deleteBio, boolean deleteGender
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET bio = NULL, gender = NULL WHERE id = ?");
+            //PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET bio = NULL, gender = NULL WHERE id = ?");
+            //delet account
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
             preparedStatement.setInt(1, idAccount);
             preparedStatement.executeUpdate();
             System.out.println("Account deleted from the database.");

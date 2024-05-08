@@ -6,5 +6,5 @@ public interface AccountDataAccess {
     void insertAccount(Account account) throws Exception;
     <T> Account selectAccount(T parameterResearch) throws Exception;
     void updateAccount(Account account) throws Exception;
-    void deleteAccount(int idAccount) throws Exception;
+    void deleteAccountLignes(int idAccount, boolean ligne1, boolean ligne2) throws Exception;
 }

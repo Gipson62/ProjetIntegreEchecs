@@ -19,7 +19,8 @@ public class MainBusiness {
             account.setUsername("BhelasUpdated");
             accountManager.updateAccount(account);
             System.out.println(accountManager.selectAccount("etu52812bis@henallux.be").getUsername());
-            accountManager.deleteAccount(account.getIdAccount());
+            accountManager.deleteAccountLignes(account.getIdAccount(),true,true);
+
 
             //connection.close( );//envoie une sql exception a mettre ou ??? a la fin de la fonction main ???
         }

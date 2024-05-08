@@ -23,8 +23,8 @@ public class AccountManager {
         dao.updateAccount(account);
     }
 
-    public void deleteAccount(int idAccount) throws Exception{
-        dao.deleteAccount(idAccount);
+    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws Exception{
+        dao.deleteAccountLignes(idAccount, deleteBio, deleteGender);
     }
 
 }
