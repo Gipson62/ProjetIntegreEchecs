@@ -7,7 +7,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+
+import exceptionPackage.account.*;
 import exceptionPackage.IllegalAccountArgumentException;
+
+
 
 
 public class AccountDBAccess implements AccountDataAccess{
@@ -16,19 +20,20 @@ public class AccountDBAccess implements AccountDataAccess{
     public AccountDBAccess(){
         this.connection = SingletonConnection.getInstance();
     }
-    
+
 
     @Override
-    public void insertAccount(Account account) throws SQLException{
+    public void insertAccount(Account account) throws AddAccountException{
         //créé un nouvel account dans la BD si valeur ok et non deja existante pour email et username+tag et id
         //Puis enregistre l'id de l'account dans l'objet account passé en paramètre par adresse
 //TODO : ajouter une exception pour les erreurs sql et un save point + rollback (si erreur generateur id est accrémenté)
-            System.out.println("Start insertion in the DB\n");
+            System.out.println("Start insertion in the DB");
+        try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO account ( username, email, birthdate, password, bio, tag, is_beginner, `rank` , gender, elo) " +"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO account ( username, email, birthdate, password, bio, tag, is_beginner, `rank` , gender, elo) "
+                            +"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            //preparedStatement.setNull(1, Types.INTEGER);
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
@@ -43,84 +48,96 @@ public class AccountDBAccess implements AccountDataAccess{
             preparedStatement.executeUpdate();//sqlException
             try {
                 account.setIdAccount( selectAccount(account.getEmail()).getIdAccount());
-            } catch (IllegalAccountArgumentException e) {
+            } catch (IllegalAccountArgumentException | ReadAccountException e) {
                 e.printStackTrace();
             }
+        } catch (SQLException e) {
+
+            throw new AddAccountException(e.getMessage());// ici créé new exception perso
+        }
     }
 
     @Override
-    public <T> Account selectAccount(T parameterResearch) throws SQLException {
+    public <T> Account selectAccount(T parameterResearch) throws ReadAccountException {
 
-        if (parameterResearch instanceof Integer) {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE id = ?");
-        preparedStatement.setInt(1, (int) parameterResearch);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        try
+        {
+            if (parameterResearch instanceof Integer) {
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE id = ?");
+                preparedStatement.setInt(1, (int) parameterResearch);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            try {
-                return resultSetToAccount(resultSet);
-            } catch (IllegalAccountArgumentException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }else if (parameterResearch instanceof String && ((String) parameterResearch).contains("@")) {
-            String email = (String) parameterResearch;
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ?");
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    try {
+                        return resultSetToAccount(resultSet);
+                    } catch (IllegalAccountArgumentException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            } else if (parameterResearch instanceof String && ((String) parameterResearch).contains("@")) {
+                String email = (String) parameterResearch;
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ?");
+                preparedStatement.setString(1, email);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                try {
-                    return resultSetToAccount(resultSet);
-                } catch (IllegalAccountArgumentException e) {
-                    e.printStackTrace();
+                if (resultSet.next()) {
+                    try {
+                        return resultSetToAccount(resultSet);
+                    } catch (IllegalAccountArgumentException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            return null;
+        }catch (SQLException e){
+            throw new ReadAccountException(e.getMessage());
         }
-        // Add more conditions here for other types of parameters
-
-        return null;
     }
 
 
     @Override
-    public void updateAccount(Account account) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE account SET username = ?, email = ?, birthdate = ?, password = ?, bio = ?, tag = ?, is_beginner = ?, `rank` = ?, gender = ?, elo = ? WHERE id = ?");
+    public void updateAccount(Account account) throws UpdateAccountException {
+        try
+        {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE account SET username = ?, email = ?, birthdate = ?, password = ?, bio = ?, tag = ?, is_beginner = ?, `rank` = ?, gender = ?, elo = ? WHERE id = ?");
 
-        preparedStatement.setString(1, account.getUsername());
-        preparedStatement.setString(2, account.getEmail());
-        preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
-        preparedStatement.setString(4, account.getPassword());
-        preparedStatement.setString(5, account.getBio());
-        preparedStatement.setInt(6, account.getTag());
-        preparedStatement.setBoolean(7, account.getIsBeginner());
-        preparedStatement.setInt(8, account.getRank());
-        preparedStatement.setString(9, account.getGender());
-        preparedStatement.setInt(10, account.getElo());
-        preparedStatement.setInt(11, account.getIdAccount());
+            preparedStatement.setString(1, account.getUsername());
+            preparedStatement.setString(2, account.getEmail());
+            preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
+            preparedStatement.setString(4, account.getPassword());
+            preparedStatement.setString(5, account.getBio());
+            preparedStatement.setInt(6, account.getTag());
+            preparedStatement.setBoolean(7, account.getIsBeginner());
+            preparedStatement.setInt(8, account.getRank());
+            preparedStatement.setString(9, account.getGender());
+            preparedStatement.setInt(10, account.getElo());
+            preparedStatement.setInt(11, account.getIdAccount());
 
-        preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new UpdateAccountException(e.getMessage());
+        }
     }
 
     @Override
     //boolean pour savoir si on supprime la bio et ou le genre
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) { //, boolean deleteBio, boolean deleteGender
+    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{ //, boolean deleteBio, boolean deleteGender
         try {
-            //PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET bio = NULL, gender = NULL WHERE id = ?");
+            String nullLignes = deleteBio ? "bio = NULL" : "";
+            nullLignes += deleteGender ? (nullLignes.isEmpty() ?"gender = NULL": ",gender = NULL") : "";
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET "+ nullLignes +" WHERE id = ?");
             //delet account
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
+            //PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
             preparedStatement.setInt(1, idAccount);
             preparedStatement.executeUpdate();
-            System.out.println("Account deleted from the database.");
-        } catch (SQLException exception) {
-            System.out.println("An error occurred while deleting the account from the database.");
-            //get the error message
-            System.out.println("Error message: " + exception.getMessage());
+            System.out.println("Lignes deleted from the database.");
+        } catch (SQLException e) {
+            throw new DeleteAccountLignesExcemption(e.getMessage());
         }
-        //suppression dans la BD
-
     }
 
     // recoit un resultSet et renvoie un objet Account

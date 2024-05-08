@@ -1,10 +1,12 @@
 package dataAccessPackage.accountDataAccess;
 
+import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
+import exceptionPackage.account.*;
 public interface AccountDataAccess {
     //CRUD
-    void insertAccount(Account account) throws Exception;
-    <T> Account selectAccount(T parameterResearch) throws Exception;
-    void updateAccount(Account account) throws Exception;
-    void deleteAccountLignes(int idAccount, boolean ligne1, boolean ligne2) throws Exception;
+    void insertAccount(Account account) throws AddAccountException;
+    <T> Account selectAccount(T parameterResearch) throws ReadAccountException;
+    void updateAccount(Account account) throws UpdateAccountException;
+    void deleteAccountLignes(int idAccount, boolean ligne1, boolean ligne2) throws DeleteAccountLignesExcemption;
 }

@@ -1,7 +1,9 @@
 package businessPackage;
 
 import dataAccessPackage.accountDataAccess.*;
+import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
+import exceptionPackage.account.*;
 
 
 public class AccountManager {
@@ -11,19 +13,19 @@ public class AccountManager {
         dao = new AccountDBAccess();
     }
 
-    public void insertAccount(Account account) throws Exception{
+    public void insertAccount(Account account) throws AddAccountException {
         dao.insertAccount(account);
     }
 
-    public <T> Account selectAccount(T parameterResearch) throws Exception{
+    public <T> Account selectAccount(T parameterResearch) throws ReadAccountException{
         return dao.selectAccount(parameterResearch);
     }
 
-    public void updateAccount(Account account) throws Exception{
+    public void updateAccount(Account account) throws UpdateAccountException{
         dao.updateAccount(account);
     }
 
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws Exception{
+    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{
         dao.deleteAccountLignes(idAccount, deleteBio, deleteGender);
     }
 
