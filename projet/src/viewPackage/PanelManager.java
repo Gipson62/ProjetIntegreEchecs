@@ -12,6 +12,8 @@ import viewPackage.stats.WinratePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.HashMap;
@@ -23,10 +25,11 @@ public class PanelManager extends JPanel {
     private HashMap<String, DefaultPanel> panels;
     private CardLayout cardLayout;
     private JPanel container;
+    private PanelListener listener;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
-        PanelListener listener = new PanelListener(this);
+        listener = new PanelListener(this);
         this.addComponentListener(listener);
         this.left = createLeftPanel();
         this.right = createRightPanel();
@@ -60,36 +63,37 @@ public class PanelManager extends JPanel {
 
     public JPanel createLeftPanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(Color.YELLOW);
+        //panel.setBackground(Color.YELLOW);
         panel.setPreferredSize(new Dimension(100, 400));
-
+        /*
         JLabel label = new JLabel("Left");
         label.setFont(panel.getFont().deriveFont(24f));
         panel.add(label);
-
+         */
         return panel;
     }
     public JPanel createRightPanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(Color.RED);
+        //panel.setBackground(Color.RED);
         panel.setPreferredSize(new Dimension(100, 400));
 
+        /*
         JLabel label = new JLabel("Right");
         label.setFont(panel.getFont().deriveFont(24f));
         panel.add(label);
-
-
+         */
         return panel;
     }
     public JPanel createCenterPanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(Color.GREEN);
-        panel.setPreferredSize(new Dimension(400, 400));
+        //panel.setBackground(Color.GREEN);
+        panel.setPreferredSize(new Dimension(400, 500));
 
+        /*
         JLabel label = new JLabel("Fixed");
         label.setFont(panel.getFont().deriveFont(24f));
         panel.add(label);
-
+        */
         return panel;
     }
     public void updateLeftPanel(int width, int height) {
@@ -132,16 +136,18 @@ public class PanelManager extends JPanel {
         public void componentResized(ComponentEvent event) {
             JPanel panel = (JPanel) event.getSource();
             Dimension d = panel.getSize();
-            if (d.width < 750 && d.height < 500) {
-                d.width = 750;
+            if (d.width < 800) {
+                d.width = 800;
+            }
+            if (d.height < 500) {
                 d.height = 500;
             }
-            int width = (d.width - d.height) / 2;
+            int width = (d.width) / 2;
             int height = d.height;
 
-            this.frame.updateLeftPanel(width, height);
-            this.frame.updateCenterPanel(height, height);
-            this.frame.updateRightPanel(width, height);
+            this.frame.updateLeftPanel(width/2, height);
+            this.frame.updateCenterPanel(width, height);
+            this.frame.updateRightPanel(width/2, height);
             this.frame.mainWindow.pack();
         }
     }

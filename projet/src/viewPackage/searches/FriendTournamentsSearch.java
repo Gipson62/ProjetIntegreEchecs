@@ -11,28 +11,39 @@ import java.awt.event.ActionListener;
 
 public class FriendTournamentsSearch extends DefaultPanel {
     PanelManager panelManager;
-    JPanel formPanel;
-    JPanel buttonsPanel;
+    JPanel formPanel, buttonsPanel, titlePanel, resultPanel;
+    JComboBox users;
     public FriendTournamentsSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
-        this.formPanel = new JPanel();
-        this.formPanel.setSize(150, 150);
-        GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
-        this.formPanel.setLayout(gridLayout);
+        this.titlePanel = new JPanel();
+        this.setLayout(new BorderLayout());
+        JLabel title = new JLabel("Recherche 3");
+        title.setFont(this.getFont().deriveFont(28f));
+        this.titlePanel.add(title, BorderLayout.CENTER);
+        this.add(this.titlePanel, BorderLayout.NORTH);
 
-        this.formPanel.add(new JLabel("amis"));
+        this.formPanel = new JPanel();
+        GridBagLayout gridBag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        this.formPanel.setLayout(gridBag);
+
+        JLabel friendsLabel = new JLabel("Amis :");
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        gridBag.setConstraints(friendsLabel, c);
+        this.formPanel.add(friendsLabel);
         // TODO : getAllUsers()
+        c.gridwidth = GridBagConstraints.REMAINDER;
         String[] usersList = {"Gipson62#8015", "Salut#208", "....#sgh"};
-        JComboBox users = new JComboBox(usersList);
-        this.formPanel.add(users);
+        this.users = new JComboBox(usersList);
+        gridBag.setConstraints(this.users, c);
+        this.formPanel.add(this.users);
 
         this.add(this.formPanel, BorderLayout.CENTER);
 
         this.buttonsPanel = new JPanel();
-        GridLayout gridLayout1 = new GridLayout(1, 2, 5, 5);
-        this.buttonsPanel.setLayout(gridLayout1);
         this.buttonsPanel.add(new JButton("Valider"));
         JButton inscriptionButton = new JButton("Recommencer");
         this.buttonsPanel.add(inscriptionButton, BorderLayout.SOUTH);
@@ -47,6 +58,6 @@ public class FriendTournamentsSearch extends DefaultPanel {
     }
     @Override
     public void resetPanel() {
-        return;
+        this.users.setSelectedIndex(0);
     }
 }

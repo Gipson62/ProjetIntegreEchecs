@@ -27,7 +27,7 @@ public class MainWindow extends JFrame {
         this.panelManager = new PanelManager(this);
         this.add(panelManager, BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(250, 250, 750, 500);
+        this.setBounds(250, 250, 800, 500);
 
         this.menuBar = new JMenuBar();
         this.setJMenuBar(this.menuBar);
