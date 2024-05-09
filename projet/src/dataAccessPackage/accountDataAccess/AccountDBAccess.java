@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import exceptionPackage.account.*;
 import exceptionPackage.IllegalAccountArgumentException;
@@ -137,6 +138,26 @@ public class AccountDBAccess implements AccountDataAccess{
             System.out.println("Lignes deleted from the database.");
         } catch (SQLException e) {
             throw new DeleteAccountLignesExcemption(e.getMessage());
+        }
+    }
+
+
+    @Override
+    public ArrayList<Account> getAllAccounts() throws ReadAccountException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<Account> accounts = new ArrayList<>();
+            while (resultSet.next()) {
+                try {
+                    accounts.add(resultSetToAccount(resultSet));
+                } catch (IllegalAccountArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            return accounts;
+        } catch (SQLException e) {
+            throw new ReadAccountException(e.getMessage());
         }
     }
 

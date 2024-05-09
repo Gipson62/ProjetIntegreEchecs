@@ -24,6 +24,9 @@ public class MainBusiness {
             System.out.println(accountManager.getAccount("etu52812bis@henallux.be").getUsername());
             accountManager.deleteAccountLignes(account.getIdAccount(),true,false);
 
+            for (Account account1 : accountManager.getAllAccounts()) {
+                System.out.println(account1);
+            }
 
             //connection.close( );//envoie une sql exception a mettre ou ??? a la fin de la fonction main ???
         }

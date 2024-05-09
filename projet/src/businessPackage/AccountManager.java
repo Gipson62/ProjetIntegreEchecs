@@ -5,6 +5,8 @@ import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
 import exceptionPackage.account.*;
 
+import java.util.ArrayList;
+
 
 public class AccountManager {
     AccountDataAccess dao;
@@ -29,4 +31,7 @@ public class AccountManager {
         dao.deleteAccountLignes(idAccount, deleteBio, deleteGender);
     }
 
+    public ArrayList<Account> getAllAccounts() throws ReadAccountException{
+        return dao.getAllAccounts();
+    }
 }
