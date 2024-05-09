@@ -4,6 +4,7 @@ import exceptionPackage.friendship.*;
 import modelPackage.Friendship;
 import modelPackage.accountModel.IdAccount;
 
+
 import java.util.ArrayList;
 
 public interface FriendshipDataAccess {
