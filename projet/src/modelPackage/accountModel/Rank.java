@@ -3,10 +3,18 @@ package modelPackage.accountModel;
 import exceptionPackage.IllegalAccountArgumentException;
 public class Rank {
     private int rank;
+    private String name;
+    private String description;
 
     public Rank(int rank) throws  IllegalAccountArgumentException{
 
-        this.rank = rank;
+        setRank(rank);
+    }
+
+    public Rank(int rank,String name, String description) throws  IllegalAccountArgumentException{
+        this.name = name;
+        this.description = description;
+        setRank(rank);
     }
 
     public int getRank() {
@@ -21,5 +29,22 @@ public class Rank {
         }else {
             throw new IllegalAccountArgumentException("Wrong rank size");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return "Rank{" +
+                "rank=" + rank +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

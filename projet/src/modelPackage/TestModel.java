@@ -20,7 +20,7 @@ public class TestModel {
                     null, // bio
                     -30, // tag
                     true, // isBeginner
-                    1, // rank
+                    new Rank(1), // rank
                     -1, // elo
                     "batman" // gender
             );

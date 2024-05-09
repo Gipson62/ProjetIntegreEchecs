@@ -16,7 +16,7 @@ public class MainBusiness {
         try {
 
             AccountManager accountManager = new AccountManager();
-            if  (accountManager.login(new Email("etu52812@henallux.be"), new Password("Kirikou1"))){
+            if  (accountManager.login(new Email("vraiMDPtest1@henallux.be"), new Password("password"))){
                 System.out.println("Login success");
             }
             else{

@@ -9,8 +9,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import modelPackage.accountModel.Account;
-
-
+import modelPackage.accountModel.Rank;
 
 
 public class AuRevoirBasile {
@@ -21,7 +20,7 @@ public class AuRevoirBasile {
         //showAllAccount(connection);
         try {
             Account account = new Account(null, "Bhelas", "etu52812@henallux.be", LocalDate.of(2002, 9, 18), "password", "Premiere insertion dans la BD a partir du projet java ("+LocalDate.now()+")", 333,
-                    true, 5, 700, "Moi");
+                    true, new Rank(1,"Fer","juste fer"), 700, "Moi");
             insertAccount(connection, account);
             selectAccount(connection, 9);
             //connection.close( );//envoie une sql exception a mettre ou ??? a la fin de la fonction main ???

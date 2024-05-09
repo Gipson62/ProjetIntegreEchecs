@@ -23,7 +23,7 @@ public class Account {
 
     //Constructor
     public Account(Integer idAccount, String username, String email, LocalDate birthdate,
-                   String password, String bio, Integer tag, boolean isBeginner, Integer rank,
+                   String password, String bio, Integer tag, boolean isBeginner, Rank rank,
                    int elo, String gender) throws IllegalAccountArgumentException {
         List<String> errors = new ArrayList<>();
 
@@ -34,7 +34,8 @@ public class Account {
         validateField("Password", password, errors);
         validateField("Bio", bio, errors);
         validateField("Tag", tag, errors);
-        validateField("Rank", rank, errors);
+        this.isBeginner = isBeginner;
+        this.rank = rank;
         validateField("Elo", elo, errors);
         validateField("Gender", gender, errors);
 
@@ -67,9 +68,6 @@ public class Account {
                     break;
                 case "Tag":
                     setTag((Integer) value);
-                    break;
-                case "Rank":
-                    setRank((Integer) value);
                     break;
                 case "Elo":
                     setElo((Integer) value);
@@ -121,8 +119,8 @@ public class Account {
         this.isBeginner = isBeginner;
     }
 
-    public void setRank(Integer rank) throws IllegalAccountArgumentException {
-        this.rank = new Rank(rank);
+    public void setRank(int rank, String name, String description) throws IllegalAccountArgumentException {
+        this.rank = new Rank(rank , name, description);
     }
 
     public void setElo(int elo) throws IllegalAccountArgumentException {

@@ -28,7 +28,7 @@ CREATE TABLE Account (
     birthdate DATE NOT NULL,
     is_beginner BIT(1) NOT NULL,
     elo INT NOT NULL,
-    password VARCHAR(24) NOT NULL,
+    password VARCHAR(60) NOT NULL,
     bio VARCHAR(256),
     tag INT NOT NULL,
     gender VARCHAR(16),

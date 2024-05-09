@@ -13,6 +13,7 @@ import exceptionPackage.account.*;
 import exceptionPackage.IllegalAccountArgumentException;
 import modelPackage.accountModel.Email;
 import modelPackage.accountModel.Password;
+import modelPackage.accountModel.Rank;
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -200,7 +201,7 @@ public class AccountDBAccess implements AccountDataAccess{
                                         resultSet.getString("bio"),
                                         resultSet.getInt("tag"),
                                         resultSet.getBoolean("is_beginner"),
-                                        resultSet.getInt("rank"),
+                                        new Rank(resultSet.getInt("rank")),
                                         resultSet.getInt("elo"),
                                         resultSet.getString("gender"));
         }catch (SQLException e){
