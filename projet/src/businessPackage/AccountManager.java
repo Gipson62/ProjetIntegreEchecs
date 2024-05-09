@@ -4,6 +4,8 @@ import dataAccessPackage.accountDataAccess.*;
 import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
 import exceptionPackage.account.*;
+import modelPackage.accountModel.Password;
+import modelPackage.accountModel.Email;
 
 import java.util.ArrayList;
 
@@ -33,5 +35,9 @@ public class AccountManager {
 
     public ArrayList<Account> getAllAccounts() throws ReadAccountException{
         return dao.getAllAccounts();
+    }
+
+    public boolean login(Email email, Password password) throws ReadAccountException, LoginAccountException{
+        return dao.login(email, password);
     }
 }

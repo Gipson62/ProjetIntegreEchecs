@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 import exceptionPackage.account.*;
 import exceptionPackage.IllegalAccountArgumentException;
-
-
+import modelPackage.accountModel.Email;
+import modelPackage.accountModel.Password;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class AccountDBAccess implements AccountDataAccess{
@@ -41,7 +42,7 @@ public class AccountDBAccess implements AccountDataAccess{
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
-            preparedStatement.setString(4, account.getPassword());
+            preparedStatement.setString(4, doHashing(account.getPassword()));
             preparedStatement.setString(5, account.getBio());
 
             preparedStatement.setBoolean(6, account.getIsBeginner());
@@ -112,7 +113,7 @@ public class AccountDBAccess implements AccountDataAccess{
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
-            preparedStatement.setString(4, account.getPassword());
+            preparedStatement.setString(4, doHashing(account.getPassword()));
             preparedStatement.setString(5, account.getBio());
             preparedStatement.setInt(6, account.getTag());
             preparedStatement.setBoolean(7, account.getIsBeginner());
@@ -169,8 +170,28 @@ public class AccountDBAccess implements AccountDataAccess{
         }
     }
 
+    @Override
+    public boolean login(Email email, Password password) throws ReadAccountException, LoginAccountException{
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT password FROM account WHERE email = ?");
+            preparedStatement.setString(1, email.getEmail());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String hashedPassword = resultSet.getString("password");
+                if (hashedPassword.length() < 60) {
+                    throw new LoginAccountException("Password is not hashed.") ;
+                }
+                return checkPassword(password.getPassword(), resultSet.getString("password"));
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new ReadAccountException(e.getMessage());
+        }
+    }
+
     // recoit un resultSet et renvoie un objet Account
-    private Account resultSetToAccount(ResultSet resultSet) throws SQLException, IllegalAccountArgumentException{
+    private Account resultSetToAccount(ResultSet resultSet) throws IllegalAccountArgumentException{
+        try{
         return new Account(  resultSet.getInt("id"),
                                         resultSet.getString("username"),
                                         resultSet.getString("email"),
@@ -182,6 +203,19 @@ public class AccountDBAccess implements AccountDataAccess{
                                         resultSet.getInt("rank"),
                                         resultSet.getInt("elo"),
                                         resultSet.getString("gender"));
+        }catch (SQLException e){
+            throw new IllegalAccountArgumentException(e.getMessage());
+        }
+    }
+
+    public static boolean checkPassword(String password, String hashedPassword) {
+        // Vérifie si le mot de passe saisi correspond au haché du mot de passe correct
+        return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    public static String doHashing(String password) {
+        // Génère un haché bcrypt du mot de passe
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 }
