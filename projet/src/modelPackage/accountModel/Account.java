@@ -224,4 +224,21 @@ public class Account {
         return gender == null ? null :gender.getGender();
     }
 
+    //toString
+    @Override
+    public String toString() {
+        return "Account{" +
+                "idAccount=" + getIdAccount() +
+                ", username=" + getUsername() +
+                ", email=" + getEmail() +
+                ", birthdate=" + getBirthdate() +
+                ", password=" + getPassword() +
+                ", bio=" + getBio() +
+                ", tag=" + getTag() +
+                ", isBeginner=" + getIsBeginner() +
+                ", rank=" + getRank() +
+                ", elo=" + getElo() +
+                ", gender=" + getGender() +
+                "}";
+    }
 }

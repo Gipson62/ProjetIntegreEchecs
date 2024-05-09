@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import modelPackage.accountModel.IdAccount;
 
 public class Friendship {
-    private IdAccount idFriendship;
+    private Integer idFriendship;
     private IdAccount idAccount1;
     private IdAccount idAccount2;
     private LocalDate dateFriendship;
@@ -27,6 +27,9 @@ public class Friendship {
     }
 
     public void setIdFriendship(int idFriendship) throws IllegalAccountArgumentException{
-        this.idFriendship = new IdAccount(idFriendship);
+        if(idFriendship < 0){
+            throw new IllegalAccountArgumentException("idFriendship is null");
+        }
+        this.idFriendship = idFriendship;
     }
 }
