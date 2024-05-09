@@ -6,12 +6,12 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.time.LocalDate;
 
-//test des utilisations des classes Business
+//test des utilisations des classes Business et Data pour account
 public class MainBusiness {
     public static void main(String[] args) {
 
         try {
-            Account account = new Account(null, "Bhelas2", "etu52812bis@henallux.be", LocalDate.of(2002, 9, 18), "password", "Premiere insertion dans la BD a partir du projet java ("+LocalDate.now()+")", 333,
+            Account account = new Account(null, "Bhelas2", "etu52812bisbs@henallux.be", LocalDate.of(2002, 9, 18), "password", "Premiere insertion dans la BD a partir du projet java ("+LocalDate.now()+")", null,
                     true, 5, 700, "Moi");
             AccountManager accountManager = new AccountManager();
 
@@ -19,17 +19,18 @@ public class MainBusiness {
             System.out.println(accountManager.getAccount(9));
             System.out.println(accountManager.getAccount(account.getIdAccount()).getUsername());
             System.out.println(accountManager.getAccount("etu52812bis@henallux.be").getUsername());
-            account.setUsername("BhelasUpdated");
+            //account.setUsername("BhelasUpdated");
+            account.setBio(null);
             accountManager.updateAccount(account);
             System.out.println(accountManager.getAccount("etu52812bis@henallux.be").getUsername());
-            accountManager.deleteAccountLignes(account.getIdAccount(),true,false);
+            accountManager.deleteAccountLignes(account.getIdAccount(),false,true);
 
             for (Account account1 : accountManager.getAllAccounts()) {
                 System.out.println(account1);
             }
 
             //connection.close( );//envoie une sql exception a mettre ou ??? a la fin de la fonction main ???
-        }
+        } // par exemple try creation d'un contre => possible erreur sql ou erreur de valeur
         catch (IllegalAccountArgumentException e) {
             System.out.println("1Error message: " + e.getMessage());
         }
