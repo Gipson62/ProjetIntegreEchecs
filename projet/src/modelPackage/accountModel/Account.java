@@ -23,77 +23,70 @@ public class Account {
 
     //Constructor
     public Account(Integer idAccount, String username, String email, LocalDate birthdate,
-                   String password, String bio, int tag, boolean isBeginner, Integer rank,
-                   int elo,String gender) throws IllegalAccountArgumentException {
-
+                   String password, String bio, Integer tag, boolean isBeginner, Integer rank,
+                   int elo, String gender) throws IllegalAccountArgumentException {
         List<String> errors = new ArrayList<>();
 
-        try {
-            setIdAccount(idAccount);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setUsername(username);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setEmail(email);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setBirthdate(birthdate);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setPassword(password);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setBio(bio);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setTag(tag);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setRank(rank);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setElo(elo);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
-
-        try {
-            setGender(gender);
-        } catch (IllegalAccountArgumentException e) {
-            errors.add(e.getMessage());
-        }
+        validateField("ID Account", idAccount, errors);
+        validateField("Username", username, errors);
+        validateField("Email", email, errors);
+        validateField("Birthdate", birthdate, errors);
+        validateField("Password", password, errors);
+        validateField("Bio", bio, errors);
+        validateField("Tag", tag, errors);
+        validateField("Rank", rank, errors);
+        validateField("Elo", elo, errors);
+        validateField("Gender", gender, errors);
 
         if (!errors.isEmpty()) {
             String errorMessage = String.join("\n", errors);
             throw new IllegalAccountArgumentException(errorMessage);
         }
-
     }
+
+    private void validateField(String fieldName, Object value, List<String> errors) {
+        try {
+            switch (fieldName) {
+                case "ID Account":
+                    setIdAccount((Integer) value);
+                    break;
+                case "Username":
+                    setUsername((String) value);
+                    break;
+                case "Email":
+                    setEmail((String) value);
+                    break;
+                case "Birthdate":
+                    setBirthdate((LocalDate) value);
+                    break;
+                case "Password":
+                    setPassword((String) value);
+                    break;
+                case "Bio":
+                    setBio((String) value);
+                    break;
+                case "Tag":
+                    setTag((Integer) value);
+                    break;
+                case "Rank":
+                    setRank((Integer) value);
+                    break;
+                case "Elo":
+                    setElo((Integer) value);
+                    break;
+                case "Gender":
+                    setGender((String) value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid field name: " + fieldName);
+            }
+        } catch (IllegalAccountArgumentException e) {
+            errors.add(fieldName + ": " + e.getMessage());
+        } catch (ClassCastException | IllegalArgumentException e) {
+            errors.add(fieldName + " is invalid or has wrong type");
+        }
+    }
+
 
     //Setter
     public void setIdAccount(Integer idAccount) throws IllegalAccountArgumentException {
@@ -120,8 +113,8 @@ public class Account {
         this.bio = bio == null ? null : new Bio(bio);
     }
 
-    public void setTag(int tag) throws IllegalAccountArgumentException {
-        this.tag = new Tag(tag);
+    public void setTag(Integer tag) throws IllegalAccountArgumentException {
+        this.tag = tag == null ? null :new Tag(tag);
     }
 
     public void setIsBeginner(Boolean isBeginner) {
@@ -192,8 +185,8 @@ public class Account {
         return tag;
     }
 
-    public int getTag() {
-        return tag.getTag();
+    public Integer getTag() {
+        return tag == null ? null :tag.getTag();
     }
 
     public Boolean getIsBeginner() {
