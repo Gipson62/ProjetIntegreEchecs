@@ -32,23 +32,28 @@ public class AccountDBAccess implements AccountDataAccess{
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO account ( username, email, birthdate, password, bio, tag, is_beginner, `rank` , gender, elo) "
-                            +"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO Account (username, email, birthdate, password, bio, tag, is_beginner, `rank`, gender, elo)  \n" +
+                            "SELECT ?, ?, ?, ?, ?, \n" +
+                            "       IFNULL(MAX(tag), 0) + 1, ?, ?, ?, ?\n" +
+                            "FROM Account\n" +
+                            "WHERE username = ?;");
 
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
             preparedStatement.setString(4, account.getPassword());
             preparedStatement.setString(5, account.getBio());
-            preparedStatement.setInt(6, account.getTag());
-            preparedStatement.setBoolean(7, account.getIsBeginner());
-            preparedStatement.setInt(8, account.getRank());
-            preparedStatement.setString(9, account.getGender());
-            preparedStatement.setInt(10, account.getElo());
+
+            preparedStatement.setBoolean(6, account.getIsBeginner());
+            preparedStatement.setInt(7, account.getRank());
+            preparedStatement.setString(8, account.getGender());
+            preparedStatement.setInt(9, account.getElo());
+            preparedStatement.setString(10, account.getUsername());
 
             preparedStatement.executeUpdate();//sqlException
             try {
                 account.setIdAccount( getAccount(account.getEmail()).getIdAccount());
+                account.setTag(getAccount(account.getEmail()).getTag());
             } catch (IllegalAccountArgumentException | ReadAccountException e) {
                 e.printStackTrace();
             }
@@ -127,6 +132,9 @@ public class AccountDBAccess implements AccountDataAccess{
     @Override
     //boolean pour savoir si on supprime la bio et ou le genre
     public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{ //, boolean deleteBio, boolean deleteGender
+        if (!deleteBio && !deleteGender) {
+            throw new DeleteAccountLignesExcemption("You must delete at least one column.");
+        }
         try {
             String nullLignes = deleteBio ? "bio = NULL" : "";
             nullLignes += deleteGender ? (nullLignes.isEmpty() ?"gender = NULL": ",gender = NULL") : "";
