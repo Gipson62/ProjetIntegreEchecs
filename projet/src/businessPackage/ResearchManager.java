@@ -21,4 +21,8 @@ public class ResearchManager {
             return dao.getFiltredMatch(filterMatch);
         }
 
+        public ArrayList<ResultTournamentPlayed> getTournamentPlayed(FilterTournamentPlayed filterTournamentPlayed) throws ResearchDataAccessException{
+            return dao.getTournamentPlayed(filterTournamentPlayed);
+        }
+
 }
