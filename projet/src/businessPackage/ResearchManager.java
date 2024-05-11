@@ -5,6 +5,7 @@ import dataAccessPackage.research.ResearchDataAccess;
 import exceptionPackage.research.*;
 import modelPackage.research.*;
 import exceptionPackage.research.*;
+import modelPackage.accountModel.IdAccount;
 
 
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class ResearchManager {
 
         public ArrayList<ResultTournamentPlayed> getTournamentPlayed(FilterTournamentPlayed filterTournamentPlayed) throws ResearchDataAccessException{
             return dao.getTournamentPlayed(filterTournamentPlayed);
+        }
+
+        public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException{
+            return dao.getMatchData(idAccount);
         }
 
 }

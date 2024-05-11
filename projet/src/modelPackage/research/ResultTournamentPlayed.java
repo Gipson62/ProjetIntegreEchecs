@@ -67,9 +67,9 @@ public class ResultTournamentPlayed {
         return "ResultTournamentPlayed{" +
                 "nameTournament='" + nameTournament + '\'' +
                 ", dateMatch=" + dateMatch +
-                ", tournamentElo=" + tournamentElo +
+                ", tournamentElo=" + tournamentElo.getElo() +
                 ", timeMatch=" + timeMatch +
-                ", userTournamentWinner=" + userTournamentWinner +
+                ", userTournamentWinner=" + userTournamentWinner.getUsername() +
                 '}';
     }
 }
