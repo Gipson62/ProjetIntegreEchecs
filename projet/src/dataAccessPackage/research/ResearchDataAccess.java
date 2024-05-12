@@ -14,5 +14,7 @@ public interface ResearchDataAccess {
     ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException;
 
     ArrayList<ResultTournamentPlayed> getTournamentPlayed(FilterTournamentPlayed filterTournamentPlayed) throws ResearchDataAccessException;
+    ArrayList<MatchData> getMatchData(IdAccount idAccount, int nbMatchDataMax) throws ResearchDataAccessException;
+
     ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException;
 }

@@ -121,7 +121,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
     }
 
     @Override
-    public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException {
+    public ArrayList<MatchData> getMatchData(IdAccount idAccount, int nbMatchDataMax) throws ResearchDataAccessException {
         ArrayList<MatchData> matchData = new ArrayList<>();
 
         try {
@@ -181,9 +181,10 @@ public class ResearchDBAccess implements ResearchDataAccess{
                     "ORDER BY \n" +
                     "    m.start_date DESC\n" +
                     "LIMIT \n" +
-                    "    5;");
+                    "    ?;");
 
             preparedStatement.setInt(1, idAccount.getIdAccount());
+            preparedStatement.setInt(2, nbMatchDataMax);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -213,5 +214,8 @@ public class ResearchDBAccess implements ResearchDataAccess{
         return matchData;
     }
 
+    public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException {
+        return getMatchData(idAccount, 5);
+    }
 
 }

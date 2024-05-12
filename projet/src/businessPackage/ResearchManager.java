@@ -26,6 +26,11 @@ public class ResearchManager {
             return dao.getTournamentPlayed(filterTournamentPlayed);
         }
 
+        public ArrayList<MatchData> getMatchData(IdAccount idAccount, int nbMatchDataMax) throws ResearchDataAccessException{
+            return dao.getMatchData(idAccount, nbMatchDataMax);
+        }
+
+        //no limit of matchData = milite set at 5
         public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException{
             return dao.getMatchData(idAccount);
         }
