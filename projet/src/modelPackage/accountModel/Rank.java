@@ -2,24 +2,49 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 public class Rank {
-    private String rank;
+    private int rank;
+    private String name;
+    private String description;
 
-    public Rank(String rank) throws  IllegalAccountArgumentException{
+    public Rank(int rank) throws  IllegalAccountArgumentException{
 
-        this.rank = rank;
+        setRank(rank);
     }
 
-    public String getRank() {
+    public Rank(int rank,String name, String description) throws  IllegalAccountArgumentException{
+        this.name = name;
+        this.description = description;
+        setRank(rank);
+    }
+
+    public int getRank() {
         return rank;
     }
 
-    public void setRank(String rank) throws IllegalAccountArgumentException{
+    public void setRank(Integer  rank) throws IllegalAccountArgumentException{
 
         //taille max 11
-        if(rank.length() < 11 && rank.length() > 0){
+        if(rank >= 0 && rank <= 11){
             this.rank = rank;
         }else {
             throw new IllegalAccountArgumentException("Wrong rank size");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return "Rank{" +
+                "rank=" + rank +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
