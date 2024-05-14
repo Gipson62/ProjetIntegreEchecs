@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS TournamentState;
 DROP TABLE IF EXISTS FriendShip;
 DROP TABLE IF EXISTS Account;
 DROP TABLE IF EXISTS `Rank`;
+DROP VIEW IF EXISTS match_outcomes;
 
 CREATE TABLE `Rank` (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,6 +38,7 @@ CREATE TABLE Account (
     CONSTRAINT CHK_elo CHECK (elo >= 0 AND elo <= 3000),
     CONSTRAINT UC_tag_username UNIQUE (tag, username),
     CONSTRAINT UC_email UNIQUE (email)
+    
 );
 
 CREATE TABLE FriendShip (
@@ -128,3 +130,32 @@ CREATE TABLE Defense (
     FOREIGN KEY (move2) REFERENCES Move(id),
     CONSTRAINT UC_unique_defense_moves UNIQUE (move1, move2)
 );
+
+
+CREATE VIEW match_outcomes AS
+SELECT *
+FROM (
+    SELECT DISTINCT player_black AS you,
+        CASE
+            WHEN `Match`.winner = 'b' THEN 'Won'
+            ELSE 'Lost'
+        END AS Outcome,
+        CONCAT(p2.username, '#', p2.tag) AS Opponent,
+        p2.elo AS elo2,
+        `Match`.start_date
+    FROM Account p1 
+        INNER JOIN Account p2 ON (p1.id <> p2.id) 
+        INNER JOIN `Match` ON (p1.id = `Match`.player_black AND p2.id = `Match`.player_white) 
+    UNION
+    SELECT DISTINCT player_white AS you,
+        CASE
+            WHEN `Match`.winner = 'w' THEN 'Won'
+            ELSE 'Lost'
+        END AS Outcome,
+        CONCAT(p1.username, '#', p1.tag),
+        p1.elo AS eloww,
+        `Match`.start_date
+    FROM Account p1 
+        INNER JOIN Account p2 ON (p1.id <> p2.id) 
+        INNER JOIN `Match` ON (p1.id = `Match`.player_black AND p2.id = `Match`.player_white) 
+) AS historicView;
