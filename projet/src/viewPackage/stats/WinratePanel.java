@@ -2,18 +2,19 @@ package viewPackage.stats;
 
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
+import viewPackage.PanelManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Winrate extends DefaultPanel {
-    MainWindow mainWindow;
+public class WinratePanel extends DefaultPanel {
+    PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
-    public Winrate(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    public WinratePanel(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();

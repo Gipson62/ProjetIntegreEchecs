@@ -1,8 +1,10 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-public class Birthdate {
+public class Birthdate implements Serializable {
 
 
     private LocalDate birthdate;

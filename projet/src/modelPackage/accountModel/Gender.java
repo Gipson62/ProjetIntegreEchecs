@@ -2,7 +2,9 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 
-public class Gender {
+import java.io.Serializable;
+
+public class Gender implements Serializable {
     //string de taille 6 max fait que de lettre
     private String gender ;
 
@@ -15,7 +17,7 @@ public class Gender {
     }
 
     public void setGender(String gender) throws IllegalAccountArgumentException{
-        if(gender.length() <= 6 && gender.length() > 0){
+        if(gender.length() <= 16 && gender.length() > 0){
             this.gender = gender;
         }else {
             throw new IllegalAccountArgumentException("Wrong gender size");

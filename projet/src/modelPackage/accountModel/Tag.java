@@ -2,7 +2,9 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
     private int tag;
 
     public Tag(int tag) throws IllegalAccountArgumentException{

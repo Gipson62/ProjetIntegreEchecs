@@ -1,7 +1,10 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
-public class Email {
+
+import java.io.Serializable;
+
+public class Email implements Serializable {
     private String email;
 
     public Email(String email) throws IllegalAccountArgumentException {

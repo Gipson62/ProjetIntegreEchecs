@@ -1,9 +1,8 @@
 package dataAccessPackage;
 
 import java.sql.*;
-import java.util.* ;
 
-public class SingletonConnexion {
+public class SingletonConnection {
     private static Connection connexionUnique;
 
     public static Connection getInstance( )  {

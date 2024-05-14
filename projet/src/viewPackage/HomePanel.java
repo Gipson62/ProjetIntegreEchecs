@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePanel extends DefaultPanel {
-    MainWindow mainWindow;
-    public HomePanel(MainWindow initMainWindow) {
-        this.mainWindow = initMainWindow;
+    PanelManager panelManager;
+    JPanel formPanel;
+    JPanel buttonsPanel;
+    public HomePanel(PanelManager initPanelManager) {
+        this.panelManager = initPanelManager;
 
         // TODO : Add a button to transition to "login" or "signUp" if it's not already done
         JButton button = new JButton("Salut");
@@ -19,7 +21,7 @@ public class HomePanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    mainWindow.changePanel("LoginPanel");
+                    panelManager.changePanel("LoginPanel");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }

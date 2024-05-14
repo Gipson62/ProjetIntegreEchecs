@@ -3,7 +3,9 @@ package modelPackage.accountModel;
 //account exemption
 import exceptionPackage.IllegalAccountArgumentException;
 
-public class IdAccount {
+import java.io.Serializable;
+
+public class IdAccount implements Serializable {
     private int idAccount;
 
     public IdAccount(int idAccount) throws IllegalAccountArgumentException{

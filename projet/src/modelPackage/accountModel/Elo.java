@@ -1,7 +1,10 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
-public class Elo {
+
+import java.io.Serializable;
+
+public class Elo implements Serializable {
     //elo entre 0 et 3000
     private int elo;
 
