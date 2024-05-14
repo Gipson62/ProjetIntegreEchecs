@@ -150,8 +150,7 @@ INSERT INTO Defense (move1, move2, name, description) VALUES
 
 
 
-INSERT INTO MatchMove ( move_number, match_id, elapsed_time, move_id)
-VALUES
+INSERT INTO MatchMove ( move_number, match_id, elapsed_time, move_id) VALUES
 ( 1, 14, '00:10:00', 'e4'), -- Coup 1 des Blancs
 (  2,14, '00:15:00', 'd5'), -- Coup 1 des Noirs en réponse au coup 1 des Blancs
 (  3,14, '00:20:00', 'exD5'), -- Coup 2 des Blancs en réponse au coup 1 des Noirs
