@@ -44,7 +44,12 @@ public class testFriendship {
 
         System.out.println("Test getFriendList");
         try {
-            friendshipManager.getFriendList(new IdAccount( friendship.getIdAccount1()));
+            ArrayList<Friendship>  friends = friendshipManager.getFriendList(new IdAccount( 1));
+
+
+            for (Friendship friend : friends) {
+                System.out.println(friend.getIdAccount1() + " " + friend.getIdAccount2());
+            }
             System.out.println("Test getFriendList passed");
         } catch (Exception e) {
             System.out.println("Test getFriendList failed" + e.getMessage());

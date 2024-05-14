@@ -48,17 +48,20 @@ public class FriendshipDBAccess implements FriendshipDataAccess{
 
         ArrayList<Friendship> friendList = new ArrayList<>();
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Friendship WHERE Friend_1 = ? OR Friend_2 = ?");
-            preparedStatement.setInt(1, account.getIdAccount());
-            preparedStatement.setInt(2, account.getIdAccount());
+            int idAccount = account.getIdAccount();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT  *\n" +
+                    "FROM (SELECT Friend_2 FROM Friendship WHERE Friend_1 = ? UNION SELECT Friend_1 FROM Friendship WHERE Friend_2 = ?) as friend");
+            preparedStatement.setInt(1, idAccount);
+            preparedStatement.setInt(2, idAccount);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 try {
-                    friendList.add(new Friendship(resultSet.getInt("Friend_1"), resultSet.getInt("Friend_2")));
+                    friendList.add(new Friendship(idAccount, resultSet.getInt("Friend_2")));
                 } catch (IllegalAccountArgumentException e) {
                     e.printStackTrace();
                 }
             }
+
         }catch(SQLException e){
             throw new GetFriendListException(e.getMessage());
         }
