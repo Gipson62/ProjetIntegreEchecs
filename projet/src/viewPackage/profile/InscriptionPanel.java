@@ -1,6 +1,10 @@
 package viewPackage.profile;
 
+import businessPackage.AccountManager;
 import exceptionPackage.UnknownPanel;
+import exceptionPackage.account.AddAccountException;
+import modelPackage.accountModel.Account;
+import modelPackage.accountModel.Rank;
 import viewPackage.DefaultPanel;
 import viewPackage.PanelManager;
 
@@ -9,8 +13,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class InscriptionPanel extends DefaultPanel {
+    AccountManager accountManager;
     PanelManager panelManager;
     JPanel formPanel, buttonsPanel, titlePanel;
     JTextField email, pseudo;
@@ -94,7 +102,23 @@ public class InscriptionPanel extends DefaultPanel {
         this.add(this.formPanel, BorderLayout.CENTER);
         this.buttonsPanel = new JPanel();
 
-        this.buttonsPanel.add(new JButton("Valider"));
+        this.accountManager = new AccountManager();
+
+        JButton validationButton = new JButton("Valider");
+        this.buttonsPanel.add(validationButton);
+
+        validationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    accountManager.addAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                } catch (AddAccountException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+
         JButton inscriptionButton = new JButton("Se Connecter");
         this.buttonsPanel.add(inscriptionButton, BorderLayout.SOUTH);
         inscriptionButton.addActionListener(new ActionListener() {

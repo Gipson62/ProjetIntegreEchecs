@@ -1,6 +1,14 @@
 package viewPackage.profile;
 
+import businessPackage.AccountManager;
 import exceptionPackage.UnknownPanel;
+import exceptionPackage.account.AddAccountException;
+import exceptionPackage.account.LoginAccountException;
+import exceptionPackage.account.ReadAccountException;
+import modelPackage.accountModel.Account;
+import modelPackage.accountModel.Email;
+import modelPackage.accountModel.Password;
+import modelPackage.accountModel.Rank;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
 import viewPackage.PanelManager;
@@ -9,8 +17,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.ZoneId;
+import java.util.Arrays;
 
 public class LoginPanel extends DefaultPanel {
+    AccountManager accountManager;
     PanelManager panelManager;
     JPanel formPanel;
     JTextField email;
@@ -51,7 +62,21 @@ public class LoginPanel extends DefaultPanel {
         this.add(this.formPanel, BorderLayout.CENTER);
 
         this.buttonsPanel = new JPanel();
-        this.buttonsPanel.add(new JButton("Valider"));
+        this.accountManager = new AccountManager();
+
+        JButton validationButton = new JButton("Valider");
+        this.buttonsPanel.add(validationButton);
+
+        validationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    accountManager.login(new Email(email.getText()), new Password(Arrays.toString(password.getPassword())));
+                } catch (ReadAccountException | LoginAccountException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         JButton inscriptionButton = new JButton("Inscription");
         this.buttonsPanel.add(inscriptionButton);
         inscriptionButton.addActionListener(new ActionListener() {
