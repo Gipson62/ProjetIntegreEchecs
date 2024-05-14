@@ -1,6 +1,6 @@
 package viewPackage.profile;
 
-import businessPackage.AccountManager;
+import controllerPackage.AccountController;
 import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
@@ -13,12 +13,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 
 public class InscriptionPanel extends DefaultPanel {
-    AccountManager accountManager;
+    AccountController accountController;
     PanelManager panelManager;
     JPanel formPanel, buttonsPanel, titlePanel;
     JTextField email, pseudo;
@@ -102,7 +100,7 @@ public class InscriptionPanel extends DefaultPanel {
         this.add(this.formPanel, BorderLayout.CENTER);
         this.buttonsPanel = new JPanel();
 
-        this.accountManager = new AccountManager();
+        this.accountController = new AccountController();
 
         JButton validationButton = new JButton("Valider");
         this.buttonsPanel.add(validationButton);
@@ -111,7 +109,7 @@ public class InscriptionPanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    accountManager.addAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                    accountController.addAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
                 } catch (AddAccountException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }

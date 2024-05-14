@@ -71,7 +71,14 @@ public class LoginPanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    accountManager.login(new Email(email.getText()), new Password(Arrays.toString(password.getPassword())));
+                    System.out.println("Login...");
+                    boolean isLogged = accountManager.login(new Email(email.getText()), new Password(Arrays.toString(password.getPassword())));
+                    if (isLogged) {
+                        JOptionPane.showMessageDialog(null, "Successfully logged in", "Logged in", JOptionPane.OK_OPTION);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There's an error in either your password or your email", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 } catch (ReadAccountException | LoginAccountException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
