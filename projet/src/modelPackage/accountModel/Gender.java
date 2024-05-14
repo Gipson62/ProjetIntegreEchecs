@@ -2,7 +2,9 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 
-public class Gender {
+import java.io.Serializable;
+
+public class Gender implements Serializable {
     //string de taille 6 max fait que de lettre
     private String gender ;
 

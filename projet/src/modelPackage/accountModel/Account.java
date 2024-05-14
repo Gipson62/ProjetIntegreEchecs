@@ -2,11 +2,13 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 import modelPackage.accountModel.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class Account implements Serializable {
 
     //Attributes
     private IdAccount idAccount;

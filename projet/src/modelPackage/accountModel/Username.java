@@ -2,7 +2,9 @@ package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
 
-public class Username {
+import java.io.Serializable;
+
+public class Username implements Serializable {
     private String username;
 
     public Username(String username) throws IllegalAccountArgumentException{

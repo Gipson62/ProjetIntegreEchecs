@@ -1,7 +1,10 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
-public class Bio {
+
+import java.io.Serializable;
+
+public class Bio implements Serializable {
     private String bio;
 
     public Bio(String bio) throws IllegalAccountArgumentException{

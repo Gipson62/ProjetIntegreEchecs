@@ -1,7 +1,10 @@
 package viewPackage.profile;
 
+import businessPackage.AccountManager;
+import exceptionPackage.account.UpdateAccountException;
+import modelPackage.accountModel.Account;
+import modelPackage.accountModel.Rank;
 import viewPackage.DefaultPanel;
-import viewPackage.MainWindow;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
@@ -9,9 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Arrays;
 
+// TODO : add a way to get written data about the user from the disk with Serializable
 public class MyProfile extends DefaultPanel {
+    AccountManager accountManager;
     PanelManager panelManager;
     JPanel infoPanel, friendsPanel, buttonsPanel;
     JTextField email, pseudo, tag, id;
@@ -20,6 +26,7 @@ public class MyProfile extends DefaultPanel {
     JSpinner birthdate;
     JCheckBox beginner;
     JTable friends;
+    UpdateButton updateButton;
     public MyProfile(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -115,12 +122,41 @@ public class MyProfile extends DefaultPanel {
         this.buttonsPanel = new JPanel();
         JButton removeButton = new JButton("Supprimer");
         this.buttonsPanel.add(removeButton);
-        JButton updateButton = new JButton("Modifier");
+        this.updateButton = new UpdateButton(this, "Modifier");
         this.buttonsPanel.add(updateButton);
 
         this.add(this.infoPanel, BorderLayout.NORTH);
         this.add(this.friendsPanel, BorderLayout.CENTER);
         this.add(this.buttonsPanel, BorderLayout.SOUTH);
+    }
+    private class UpdateButton extends JButton {
+        MyProfile myProfile;
+        public UpdateButton(MyProfile myProfile, String text) {
+            super(text);
+            this.myProfile = myProfile;
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean isEnabled = myProfile.pseudo.isEnabled();
+                    myProfile.birthdate.setEnabled(!isEnabled);
+                    myProfile.elo.setEnabled(!isEnabled);
+                    myProfile.pseudo.setEnabled(!isEnabled);
+                    myProfile.password.setEnabled(!isEnabled);
+                    myProfile.email.setEnabled(!isEnabled);
+                    myProfile.beginner.setEnabled(!isEnabled);
+                    if(isEnabled) {
+                        try {
+                            myProfile.accountManager.updateAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                        } catch (UpdateAccountException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
+                        myProfile.updateButton.setText("Modifier");
+                    } else {
+                        myProfile.updateButton.setText("Valider");
+                    }
+                }
+            });
+        }
     }
     @Override
     public void resetPanel() {

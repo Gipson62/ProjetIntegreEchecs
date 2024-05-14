@@ -1,7 +1,10 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
-public class Rank {
+
+import java.io.Serializable;
+
+public class Rank implements Serializable {
     private int rank;
     private String name;
     private String description;
