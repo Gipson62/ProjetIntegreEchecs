@@ -37,7 +37,7 @@ public class AccountManager {
         return dao.getAllAccounts();
     }
 
-    public boolean login(Email email, Password password) throws ReadAccountException, LoginAccountException{
+    public Account login(Email email, Password password) throws ReadAccountException, LoginAccountException{
         return dao.login(email, password);
     }
 }

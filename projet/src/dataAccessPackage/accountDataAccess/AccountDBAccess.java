@@ -172,7 +172,7 @@ public class AccountDBAccess implements AccountDataAccess{
     }
 
     @Override
-    public boolean login(Email email, Password password) throws ReadAccountException, LoginAccountException{
+    public Account login(Email email, Password password) throws ReadAccountException, LoginAccountException{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT password FROM account WHERE email = ?");
             preparedStatement.setString(1, email.getEmail());
@@ -182,9 +182,12 @@ public class AccountDBAccess implements AccountDataAccess{
                 if (hashedPassword.length() < 60) {
                     throw new LoginAccountException("Password is not hashed.") ;
                 }
-                return checkPassword(password.getPassword(), resultSet.getString("password"));
+                if (checkPassword(password.getPassword(), hashedPassword)) {
+                    return getAccount(email.getEmail());
+                }
+                throw new LoginAccountException("Invalide password.");
             }
-            return false;
+            throw new LoginAccountException("Email not found.");
         } catch (SQLException e) {
             throw new ReadAccountException(e.getMessage());
         }

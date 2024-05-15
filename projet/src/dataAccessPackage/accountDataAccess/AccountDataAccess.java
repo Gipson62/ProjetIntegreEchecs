@@ -15,6 +15,6 @@ public interface AccountDataAccess {
     void updateAccount(Account account) throws UpdateAccountException;
     void deleteAccountLignes(int idAccount, boolean ligne1, boolean ligne2) throws DeleteAccountLignesExcemption;
     ArrayList<Account> getAllAccounts() throws ReadAccountException;
-    boolean login(Email email, Password password) throws ReadAccountException, LoginAccountException;
+    Account login(Email email, Password password) throws ReadAccountException, LoginAccountException;
 
 }
