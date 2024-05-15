@@ -183,7 +183,9 @@ public class AccountDBAccess implements AccountDataAccess{
                     throw new LoginAccountException("Password is not hashed.") ;
                 }
                 if (checkPassword(password.getPassword(), hashedPassword)) {
-                    return getAccount(email.getEmail());
+                    Account account = getAccount(email.getEmail());
+                    account.setPassword(password.getPassword());
+                    return account;
                 }
                 throw new LoginAccountException("Invalide password.");
             }

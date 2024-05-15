@@ -1,6 +1,7 @@
 package viewPackage.profile;
 
 import controllerPackage.AccountController;
+import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
@@ -19,11 +20,12 @@ public class InscriptionPanel extends DefaultPanel {
     AccountController accountController;
     PanelManager panelManager;
     JPanel formPanel, buttonsPanel, titlePanel;
-    JTextField email, pseudo;
+    JTextField email, pseudo, gender;
     JPasswordField password;
     JSlider elo;
     JSpinner dateSpinner;
     JCheckBox beginner;
+    JTextArea bio;
     public InscriptionPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -97,6 +99,24 @@ public class InscriptionPanel extends DefaultPanel {
         gridBag.setConstraints(this.beginner, c);
         this.formPanel.add(this.beginner);
 
+        JLabel genderLabel = new JLabel("Genre");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridBag.setConstraints(genderLabel, c);
+        this.formPanel.add(genderLabel);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        this.gender = new JTextField();
+        gridBag.setConstraints(this.gender, c);
+        this.formPanel.add(this.gender);
+
+        JLabel bioLabel = new JLabel("Bio");
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        gridBag.setConstraints(bioLabel, c);
+        this.formPanel.add(bioLabel);
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        this.bio = new JTextArea();
+        gridBag.setConstraints(this.bio, c);
+        this.formPanel.add(this.bio);
+
         this.add(this.formPanel, BorderLayout.CENTER);
         this.buttonsPanel = new JPanel();
 
@@ -109,9 +129,9 @@ public class InscriptionPanel extends DefaultPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    accountController.addAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                    accountController.addAccount(new Account(null, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), bio.getText(), null, beginner.isSelected(), new Rank(5), elo.getValue(), gender.getText()));
                     panelManager.changePanel("LoginPanel");
-                } catch (AddAccountException | UnknownPanel ex) {
+                } catch (AddAccountException | UnknownPanel | IllegalAccountArgumentException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -138,6 +158,8 @@ public class InscriptionPanel extends DefaultPanel {
         this.email.setText("");
         this.pseudo.setText("");
         this.password.setText("");
+        this.gender.setText("");
+        this.bio.setText("");
         this.elo.setValue(500);
         this.beginner.setSelected(false);
         return;

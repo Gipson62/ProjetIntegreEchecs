@@ -125,9 +125,8 @@ public class PanelManager extends JPanel {
      * @param panelName specify the panel you want to go to using a name.
      */
     public void changePanel(String panelName) throws UnknownPanel {
-        this.panels.get(panelName).resetPanel();
         this.cardLayout.show(container, panelName);
-        //this.center.repaint();
+        this.panels.get(panelName).resetPanel();
     }
 
     private class PanelListener extends ComponentAdapter {

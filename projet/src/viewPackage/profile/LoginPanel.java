@@ -3,7 +3,6 @@ package viewPackage.profile;
 import businessPackage.AccountManager;
 import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.UnknownPanel;
-import exceptionPackage.account.AddAccountException;
 import exceptionPackage.account.LoginAccountException;
 import exceptionPackage.account.ReadAccountException;
 import modelPackage.accountModel.Account;
@@ -18,8 +17,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.ZoneId;
-import java.util.Arrays;
 
 public class LoginPanel extends DefaultPanel {
     AccountManager accountManager;
@@ -29,6 +26,7 @@ public class LoginPanel extends DefaultPanel {
     JPasswordField password;
     JPanel buttonsPanel;
     ValidationButton validationButton;
+    InscriptionButton inscriptionButton;
     public LoginPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -38,7 +36,7 @@ public class LoginPanel extends DefaultPanel {
         GridBagConstraints c = new GridBagConstraints();
         this.formPanel.setLayout(gridBag);
 
-        JLabel title = new JLabel("Créer un compte");
+        JLabel title = new JLabel("Se Connecter");
         title.setFont(this.getFont().deriveFont(28f));
         this.add(title, BorderLayout.NORTH);
 
@@ -69,8 +67,7 @@ public class LoginPanel extends DefaultPanel {
         this.validationButton = new ValidationButton();
         this.buttonsPanel.add(validationButton);
 
-
-        JButton inscriptionButton = new JButton("Inscription");
+        inscriptionButton = new InscriptionButton();
         this.buttonsPanel.add(inscriptionButton);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
@@ -107,7 +104,7 @@ public class LoginPanel extends DefaultPanel {
                     try {
                         System.out.println("Login...");
                         Account loggedAccount = accountManager.login(new Email(email.getText()), new Password(password.getText()));
-                        JOptionPane.showMessageDialog(null, "Successfully logged in", "Logged in", JOptionPane.OK_OPTION);
+                        JOptionPane.showMessageDialog(null, "Successfully logged in", "Logged in", JOptionPane.INFORMATION_MESSAGE);
                         ((MyProfile) panelManager.getPanels().get("MyProfile")).setAccount(loggedAccount);
                     } catch (ReadAccountException | LoginAccountException | IllegalAccountArgumentException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

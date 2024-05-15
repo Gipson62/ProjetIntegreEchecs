@@ -1,6 +1,8 @@
 package viewPackage.profile;
 
 import businessPackage.AccountManager;
+import controllerPackage.AccountController;
+import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.UpdateAccountException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
@@ -17,17 +19,18 @@ import java.util.Arrays;
 
 // TODO : add a way to get written data about the user from the disk with Serializable
 public class MyProfile extends DefaultPanel {
-    AccountManager accountManager;
+    AccountController accountController;
     PanelManager panelManager;
     JPanel infoPanel, friendsPanel, buttonsPanel;
-    JTextField email, pseudo;
-    int id, tag;
+    JTextField email, pseudo, gender;
+    JTextArea bio;
     JPasswordField password;
     JSlider elo;
     JSpinner birthdate;
     JCheckBox beginner;
     JTable friends;
     UpdateButton updateButton;
+    Account account;
     public MyProfile(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -95,6 +98,24 @@ public class MyProfile extends DefaultPanel {
         infoGridBag.setConstraints(this.birthdate, infoC);
         this.infoPanel.add(this.birthdate);
 
+        JLabel genderLabel = new JLabel("Genre :");
+        infoC.gridwidth = GridBagConstraints.RELATIVE;
+        infoGridBag.setConstraints(genderLabel, infoC);
+        this.infoPanel.add(genderLabel);
+        this.gender = new JTextField();
+        infoC.gridwidth = GridBagConstraints.REMAINDER;
+        infoGridBag.setConstraints(this.gender, infoC);
+        this.infoPanel.add(this.gender);
+
+        JLabel bioLabel = new JLabel("Bio :");
+        infoC.gridwidth = GridBagConstraints.RELATIVE;
+        infoGridBag.setConstraints(bioLabel, infoC);
+        this.infoPanel.add(bioLabel);
+        this.bio = new JTextArea();
+        infoC.gridwidth = GridBagConstraints.REMAINDER;
+        infoGridBag.setConstraints(this.bio, infoC);
+        this.infoPanel.add(this.bio);
+
         this.friendsPanel = new JPanel();
         Object[][] data = new Object[4][4];
         String[] columnNames = { "Pseudo#Tag", "Email", "Elo", "Ajouter?" };
@@ -122,15 +143,16 @@ public class MyProfile extends DefaultPanel {
 
         this.buttonsPanel = new JPanel();
         JButton removeButton = new JButton("Supprimer");
+
         this.buttonsPanel.add(removeButton);
-        this.updateButton = new UpdateButton(this, "Modifier");
+        this.updateButton = new UpdateButton("Modifier");
         this.buttonsPanel.add(updateButton);
 
         this.add(this.infoPanel, BorderLayout.NORTH);
         this.add(this.friendsPanel, BorderLayout.CENTER);
         this.add(this.buttonsPanel, BorderLayout.SOUTH);
 
-        this.accountManager = new AccountManager();
+        this.accountController = new AccountController();
     }
     public void setAccount(Account account) {
         this.email.setText(account.getEmail());
@@ -138,33 +160,43 @@ public class MyProfile extends DefaultPanel {
         this.password.setText(account.getPassword());
         this.elo.setValue(account.getElo());
         this.beginner.setSelected(account.getIsBeginner());
-        this.id = account.getIdAccount();
+        this.gender.setText(account.getGender());
+        this.bio.setText(account.getBio());
+        this.account = account;
         JOptionPane.showMessageDialog(null, "Malheureusement la liste d'amis est pas encore faite", "/!\\", JOptionPane.INFORMATION_MESSAGE);
     }
     private class UpdateButton extends JButton {
-        MyProfile myProfile;
-        public UpdateButton(MyProfile myProfile, String text) {
+        public UpdateButton(String text) {
             super(text);
-            this.myProfile = myProfile;
+            birthdate.setEnabled(false);
+            elo.setEnabled(false);
+            pseudo.setEnabled(false);
+            password.setEnabled(false);
+            email.setEnabled(false);
+            beginner.setEnabled(false);
+            gender.setEnabled(false);
+            bio.setEnabled(false);
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    boolean isEnabled = myProfile.pseudo.isEnabled();
-                    myProfile.birthdate.setEnabled(!isEnabled);
-                    myProfile.elo.setEnabled(!isEnabled);
-                    myProfile.pseudo.setEnabled(!isEnabled);
-                    myProfile.password.setEnabled(!isEnabled);
-                    myProfile.email.setEnabled(!isEnabled);
-                    myProfile.beginner.setEnabled(!isEnabled);
+                    boolean isEnabled = pseudo.isEnabled();
+                    birthdate.setEnabled(!isEnabled);
+                    elo.setEnabled(!isEnabled);
+                    pseudo.setEnabled(!isEnabled);
+                    password.setEnabled(!isEnabled);
+                    email.setEnabled(!isEnabled);
+                    beginner.setEnabled(!isEnabled);
+                    gender.setEnabled(!isEnabled);
+                    bio.setEnabled(!isEnabled);
                     if(isEnabled) {
                         try {
-                            myProfile.accountManager.updateAccount(new Account(id, pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                            accountController.updateAccount(new Account(account.getIdAccount(), pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), bio.getText(), 8015, beginner.isSelected(), new Rank(5), elo.getValue(), gender.getText()));
                         } catch (UpdateAccountException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
-                        myProfile.updateButton.setText("Modifier");
+                        updateButton.setText("Modifier");
                     } else {
-                        myProfile.updateButton.setText("Valider");
+                        updateButton.setText("Valider");
                     }
                 }
             });
@@ -172,6 +204,15 @@ public class MyProfile extends DefaultPanel {
     }
     @Override
     public void resetPanel() {
+        //Here it's considered as the function to enter this panel
+        if (account == null) {
+            JOptionPane.showMessageDialog(null, "Bro you aren't logged in yet", "Erreur", JOptionPane.ERROR_MESSAGE);
+            try {
+                panelManager.changePanel("LoginPanel");
+            } catch (UnknownPanel ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
         return;
     }
 }

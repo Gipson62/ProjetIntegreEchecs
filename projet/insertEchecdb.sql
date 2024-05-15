@@ -76,7 +76,7 @@ INSERT INTO Move (id) VALUES
 
 -- Insérer les mouvements possibles pour les fous noirs avec une notation simplifiée
 INSERT INTO Move (id) VALUES
-('Bc8'), ('Bb7'), ('Bg8'), ('Bh7');
+('Bc8'), ('Bb7'), ('Bg8'), ('Bh7'), ('Bb5');
 
 -- Insérer les mouvements possibles pour les fous blancs avec une notation simplifiée
 INSERT INTO Move (id) VALUES
@@ -151,10 +151,10 @@ INSERT INTO Defense (move1, move2, name, description) VALUES
 
 
 INSERT INTO MatchMove ( move_number, match_id, elapsed_time, move_id) VALUES
-( 1, 14, '00:10:00', 'e4'), -- Coup 1 des Blancs
-(  2,14, '00:15:00', 'd5'), -- Coup 1 des Noirs en réponse au coup 1 des Blancs
-(  3,14, '00:20:00', 'exD5'), -- Coup 2 des Blancs en réponse au coup 1 des Noirs
-( 4,14, '00:25:00', 'Dxd5'); -- Coup 2 des Noirs en réponse au coup 2 des Blancs
+( 1, 13, '00:10:00', 'e4'), -- Coup 1 des Blancs
+( 2, 13, '00:15:00', 'd5'), -- Coup 1 des Noirs en réponse au coup 1 des Blancs
+( 3, 13, '00:20:00', 'exD5'), -- Coup 2 des Blancs en réponse au coup 1 des Noirs
+( 4, 13, '00:25:00', 'Dxd5'); -- Coup 2 des Noirs en réponse au coup 2 des Blancs
 
 
 
