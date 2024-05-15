@@ -110,7 +110,8 @@ public class InscriptionPanel extends DefaultPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     accountController.addAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
-                } catch (AddAccountException ex) {
+                    panelManager.changePanel("LoginPanel");
+                } catch (AddAccountException | UnknownPanel ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }

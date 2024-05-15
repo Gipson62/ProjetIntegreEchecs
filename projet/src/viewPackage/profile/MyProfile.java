@@ -20,7 +20,8 @@ public class MyProfile extends DefaultPanel {
     AccountManager accountManager;
     PanelManager panelManager;
     JPanel infoPanel, friendsPanel, buttonsPanel;
-    JTextField email, pseudo, tag, id;
+    JTextField email, pseudo;
+    int id, tag;
     JPasswordField password;
     JSlider elo;
     JSpinner birthdate;
@@ -128,6 +129,17 @@ public class MyProfile extends DefaultPanel {
         this.add(this.infoPanel, BorderLayout.NORTH);
         this.add(this.friendsPanel, BorderLayout.CENTER);
         this.add(this.buttonsPanel, BorderLayout.SOUTH);
+
+        this.accountManager = new AccountManager();
+    }
+    public void setAccount(Account account) {
+        this.email.setText(account.getEmail());
+        this.pseudo.setText(account.getUsername());
+        this.password.setText(account.getPassword());
+        this.elo.setValue(account.getElo());
+        this.beginner.setSelected(account.getIsBeginner());
+        this.id = account.getIdAccount();
+        JOptionPane.showMessageDialog(null, "Malheureusement la liste d'amis est pas encore faite", "/!\\", JOptionPane.INFORMATION_MESSAGE);
     }
     private class UpdateButton extends JButton {
         MyProfile myProfile;
@@ -146,7 +158,7 @@ public class MyProfile extends DefaultPanel {
                     myProfile.beginner.setEnabled(!isEnabled);
                     if(isEnabled) {
                         try {
-                            myProfile.accountManager.updateAccount(new Account(0, pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
+                            myProfile.accountManager.updateAccount(new Account(id, pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), "Salut c'est la bio", 8015, beginner.isSelected(), new Rank(5), elo.getValue(), "male"));
                         } catch (UpdateAccountException ex) {
                             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                         }

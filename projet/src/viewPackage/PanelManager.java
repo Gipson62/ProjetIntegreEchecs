@@ -61,6 +61,9 @@ public class PanelManager extends JPanel {
         System.out.println(this);
     }
 
+    public HashMap<String, DefaultPanel> getPanels() {
+        return panels;
+    }
     public JPanel createLeftPanel() {
         JPanel panel = new JPanel(new FlowLayout());
         //panel.setBackground(Color.YELLOW);

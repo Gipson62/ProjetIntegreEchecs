@@ -1,6 +1,7 @@
 package viewPackage.profile;
 
 import businessPackage.AccountManager;
+import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.AddAccountException;
 import exceptionPackage.account.LoginAccountException;
@@ -27,6 +28,7 @@ public class LoginPanel extends DefaultPanel {
     JTextField email;
     JPasswordField password;
     JPanel buttonsPanel;
+    ValidationButton validationButton;
     public LoginPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -64,38 +66,13 @@ public class LoginPanel extends DefaultPanel {
         this.buttonsPanel = new JPanel();
         this.accountManager = new AccountManager();
 
-        JButton validationButton = new JButton("Valider");
+        this.validationButton = new ValidationButton();
         this.buttonsPanel.add(validationButton);
 
-        validationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    System.out.println("Login...");
-                    boolean isLogged = accountManager.login(new Email(email.getText()), new Password(Arrays.toString(password.getPassword())));
-                    if (isLogged) {
-                        JOptionPane.showMessageDialog(null, "Successfully logged in", "Logged in", JOptionPane.OK_OPTION);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "There's an error in either your password or your email", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }
 
-                } catch (ReadAccountException | LoginAccountException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
         JButton inscriptionButton = new JButton("Inscription");
         this.buttonsPanel.add(inscriptionButton);
-        inscriptionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("InscriptionPanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
+
         this.add(buttonsPanel, BorderLayout.SOUTH);
 
     }
@@ -104,5 +81,39 @@ public class LoginPanel extends DefaultPanel {
     public void resetPanel() {
         this.email.setText("");
         this.password.setText("");
+    }
+    private class InscriptionButton extends JButton {
+        public InscriptionButton() {
+            super("Inscription");
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        panelManager.changePanel("InscriptionPanel");
+                    } catch (UnknownPanel ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
+    }
+
+    private class ValidationButton extends JButton {
+        public ValidationButton() {
+            super("Valider");
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        System.out.println("Login...");
+                        Account loggedAccount = accountManager.login(new Email(email.getText()), new Password(password.getText()));
+                        JOptionPane.showMessageDialog(null, "Successfully logged in", "Logged in", JOptionPane.OK_OPTION);
+                        ((MyProfile) panelManager.getPanels().get("MyProfile")).setAccount(loggedAccount);
+                    } catch (ReadAccountException | LoginAccountException | IllegalAccountArgumentException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
     }
 }

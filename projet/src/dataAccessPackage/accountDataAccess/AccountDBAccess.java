@@ -214,6 +214,7 @@ public class AccountDBAccess implements AccountDataAccess{
 
     public static boolean checkPassword(String password, String hashedPassword) {
         // Vérifie si le mot de passe saisi correspond au haché du mot de passe correct
+        System.out.println(password);
         return BCrypt.checkpw(password, hashedPassword);
     }
 
