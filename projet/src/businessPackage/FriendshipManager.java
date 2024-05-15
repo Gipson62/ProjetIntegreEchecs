@@ -23,6 +23,8 @@ public class FriendshipManager {
         dao.deleteFriendship(friendship);
     }
 
+
+    //demande
     public ArrayList<Friendship> getFriendList(IdAccount account) throws GetFriendListException{
         return dao.getFriendList(account);
     }
