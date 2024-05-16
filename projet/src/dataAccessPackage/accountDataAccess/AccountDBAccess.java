@@ -167,7 +167,7 @@ public class AccountDBAccess implements AccountDataAccess{
             }
             return accounts;
         } catch (SQLException e) {
-            throw new ReadAccountException(e.getMessage());
+            throw new ReadAccountException("Une erreur s'est produite");
         }
     }
 
