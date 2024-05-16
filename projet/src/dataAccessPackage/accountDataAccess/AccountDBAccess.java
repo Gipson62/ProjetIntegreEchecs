@@ -132,22 +132,19 @@ public class AccountDBAccess implements AccountDataAccess{
     }
 
     @Override
-    //boolean pour savoir si on supprime la bio et ou le genre
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{ //, boolean deleteBio, boolean deleteGender
-        if (!deleteBio && !deleteGender) {
-            throw new DeleteAccountLignesExcemption("You must delete at least one column.");
-        }
-        try {
-            String nullLignes = deleteBio ? "bio = NULL" : "";
-            nullLignes += deleteGender ? (nullLignes.isEmpty() ?"gender = NULL": ",gender = NULL") : "";
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET "+ nullLignes +" WHERE id = ?");
-            //delet account
-            //PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
-            preparedStatement.setInt(1, idAccount);
-            preparedStatement.executeUpdate();
-            System.out.println("Lignes deleted from the database.");
-        } catch (SQLException e) {
-            throw new DeleteAccountLignesExcemption(e.getMessage());
+    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesExcemption{ //, boolean deleteBio, boolean deleteGender
+        for (Integer id : idAccounts) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
+
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+
+                System.out.println("Account avec l'id " + id + " à été supprimé");
+            } catch (SQLException e) {
+                throw new DeleteAccountLignesExcemption("Account avec l'id " + id + " n'a pas été supprimé");
+                //les comptes qui n'exste pas sont quand meme affiché comme supprimé pas s'erreur si n'existe pas
+            }
         }
     }
 

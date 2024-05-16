@@ -35,8 +35,8 @@ public class AccountManager {
         dao.updateAccount(account);
     }
 
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{
-        dao.deleteAccountLignes(idAccount, deleteBio, deleteGender);
+    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesExcemption{
+        dao.deleteAccountLignes(idAccounts);
     }
 
     public ArrayList<Account> getAllAccounts() throws ReadAccountException{
