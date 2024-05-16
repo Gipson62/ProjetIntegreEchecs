@@ -17,7 +17,13 @@ public class AccountManager {
         dao = new AccountDBAccess();
     }
 
-    public void addAccount(Account account) throws AddAccountException {
+    public void addAccount(Account account) throws AddAccountException{
+        try {
+            if (getAccount(account.getEmail()) != null)
+                throw new AddAccountException("Email deja existant");
+        } catch (ReadAccountException e) {
+            throw new AddAccountException("Une erreur s'est produite");
+        }
         dao.addAccount(account);
     }
 
