@@ -127,7 +127,13 @@ public class AccountDBAccess implements AccountDataAccess{
         }
         catch (SQLException e)
         {
-            throw new UpdateAccountException(e.getMessage());
+            String message = "Erreur lors de la modification de l'account";
+            if (e.getMessage().contains("UC_tag_username")) {
+                message = "Username déjà utilisé ou tag déjà utilisé.";
+            } else if (e.getMessage().contains("UC_email")) {
+                message = "Email déjà utilisé.";
+            }
+            throw new UpdateAccountException(message);
         }
     }
 
