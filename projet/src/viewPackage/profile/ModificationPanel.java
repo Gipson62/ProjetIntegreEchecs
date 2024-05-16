@@ -24,7 +24,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class InscriptionPanel extends DefaultPanel {
+public class ModificationPanel extends DefaultPanel {
     AccountController accountController;
     RankController rankController;
     PanelManager panelManager;
@@ -37,7 +37,7 @@ public class InscriptionPanel extends DefaultPanel {
     JTextArea bio;
     JComboBox<String> ranks;
     ValidateButton validationButton;
-    public InscriptionPanel(PanelManager initPanelManager) {
+    public ModificationPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();
@@ -45,7 +45,7 @@ public class InscriptionPanel extends DefaultPanel {
 
         this.titlePanel = new JPanel();
         this.setLayout(new BorderLayout());
-        JLabel title = new JLabel("Créer un compte");
+        JLabel title = new JLabel("Modifier un compte");
         title.setFont(this.getFont().deriveFont(28f));
         this.titlePanel.add(title, BorderLayout.CENTER);
         this.add(this.titlePanel, BorderLayout.NORTH);
@@ -166,6 +166,10 @@ public class InscriptionPanel extends DefaultPanel {
         this.bio.setText("");
         this.elo.setValue(500);
         this.beginner.setSelected(false);
+        return;
+    }
+    public void setAccount(Account account) {
+        //TODO
         return;
     }
     private class ValidateButton extends JButton {

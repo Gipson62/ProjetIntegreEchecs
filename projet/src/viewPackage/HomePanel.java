@@ -13,20 +13,6 @@ public class HomePanel extends DefaultPanel {
     JPanel buttonsPanel;
     public HomePanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
-
-        // TODO : Add a button to transition to "login" or "signUp" if it's not already done
-        JButton button = new JButton("Salut");
-        this.add(button);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("LoginPanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
     }
 
     @Override

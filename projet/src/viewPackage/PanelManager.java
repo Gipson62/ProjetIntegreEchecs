@@ -2,30 +2,31 @@ package viewPackage;
 
 import exceptionPackage.UnknownPanel;
 import viewPackage.profile.InscriptionPanel;
-import viewPackage.profile.LoginPanel;
-import viewPackage.profile.MyProfile;
+import viewPackage.profile.Profiles;
 import viewPackage.searches.EloSearch;
 import viewPackage.searches.FriendTournamentsSearch;
 import viewPackage.searches.TournamentsSearch;
 import viewPackage.stats.OpeningsStats;
 import viewPackage.stats.WinratePanel;
+import viewPackage.thread.ChessThread;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class PanelManager extends JPanel {
-    private JPanel left, right;
+    private JPanel left;
+    public RightPanel right;
     private JPanel center;
     private MainWindow mainWindow;
     private HashMap<String, DefaultPanel> panels;
     private CardLayout cardLayout;
     private JPanel container;
     private PanelListener listener;
+    private ChessThread chessThread;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
@@ -34,6 +35,8 @@ public class PanelManager extends JPanel {
         this.left = createLeftPanel();
         this.right = createRightPanel();
         this.center = createCenterPanel();
+        this.chessThread = new ChessThread(this);
+        this.chessThread.start();
 
         this.add(this.left);
         this.add(this.center);
@@ -48,16 +51,14 @@ public class PanelManager extends JPanel {
         this.container.setLayout(cardLayout);
 
         this.addPanel("HomePanel", new HomePanel(this), container);
-        this.addPanel("LoginPanel", new LoginPanel(this), container);
         this.addPanel("InscriptionPanel", new InscriptionPanel(this), container);
         this.addPanel("EloSearch", new EloSearch(this), container);
         this.addPanel("TournamentsSearch", new TournamentsSearch(this), container);
         this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this), container);
-        this.addPanel("MyProfile", new MyProfile(this), container);
+        this.addPanel("Profiles", new Profiles(this), container);
         this.addPanel("OpeningsStats", new OpeningsStats(this), container);
         this.addPanel("WinratePanel", new WinratePanel(this), container);
         this.center.add(container, BorderLayout.CENTER);
-        //this.cardLayout.show(container, "HomePanel");
         System.out.println(this);
     }
 
@@ -66,37 +67,20 @@ public class PanelManager extends JPanel {
     }
     public JPanel createLeftPanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        //panel.setBackground(Color.YELLOW);
-        panel.setPreferredSize(new Dimension(100, 400));
-        /*
-        JLabel label = new JLabel("Left");
-        label.setFont(panel.getFont().deriveFont(24f));
-        panel.add(label);
-         */
-        return panel;
-    }
-    public JPanel createRightPanel() {
-        JPanel panel = new JPanel(new FlowLayout());
-        //panel.setBackground(Color.RED);
         panel.setPreferredSize(new Dimension(100, 400));
 
-        /*
-        JLabel label = new JLabel("Right");
-        label.setFont(panel.getFont().deriveFont(24f));
-        panel.add(label);
-         */
+        return panel;
+    }
+    public RightPanel createRightPanel() {
+        RightPanel panel = new RightPanel(new FlowLayout());
+        panel.setPreferredSize(new Dimension(100, 400));
+
         return panel;
     }
     public JPanel createCenterPanel() {
         JPanel panel = new JPanel(new FlowLayout());
-        //panel.setBackground(Color.GREEN);
         panel.setPreferredSize(new Dimension(400, 500));
 
-        /*
-        JLabel label = new JLabel("Fixed");
-        label.setFont(panel.getFont().deriveFont(24f));
-        panel.add(label);
-        */
         return panel;
     }
     public void updateLeftPanel(int width, int height) {
@@ -144,13 +128,30 @@ public class PanelManager extends JPanel {
             if (d.height < 500) {
                 d.height = 500;
             }
-            int width = (d.width) / 2;
+            int width = (d.width) / 8;
             int height = d.height;
 
-            this.frame.updateLeftPanel(width/2, height);
-            this.frame.updateCenterPanel(width, height);
-            this.frame.updateRightPanel(width/2, height);
+            this.frame.updateLeftPanel(width, height);
+            this.frame.updateCenterPanel(width*6, height);
+            this.frame.updateRightPanel(width, height);
             this.frame.mainWindow.pack();
+        }
+    }
+    public class RightPanel extends JPanel {
+        public BufferedImage currImage;
+        public RightPanel(FlowLayout flowLayout) {
+            super(flowLayout);
+        }
+        @Override
+        public void paint(Graphics g) {
+            super.paint(g);
+            int width = this.getWidth();
+            Image i = this.currImage.getScaledInstance(width, width, Image.SCALE_DEFAULT);
+            g.drawImage(i, 0, this.getHeight()/2 - width/2, this);
+        }
+
+        public void setCurrImage(BufferedImage currImage) {
+            this.currImage = currImage;
         }
     }
 }

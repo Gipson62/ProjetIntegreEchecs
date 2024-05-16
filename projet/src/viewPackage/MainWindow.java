@@ -1,19 +1,10 @@
 package viewPackage;
 
 import exceptionPackage.UnknownPanel;
-import viewPackage.profile.InscriptionPanel;
-import viewPackage.profile.LoginPanel;
-import viewPackage.profile.MyProfile;
-import viewPackage.searches.EloSearch;
-import viewPackage.searches.FriendTournamentsSearch;
-import viewPackage.searches.TournamentsSearch;
-import viewPackage.stats.OpeningsStats;
-import viewPackage.stats.WinratePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashMap;
 
 public class MainWindow extends JFrame {
     private CardLayout cardLayout;
@@ -57,18 +48,6 @@ public class MainWindow extends JFrame {
 
         this.profilMenu = new JMenu("Profil");
         this.menuBar.add(this.profilMenu);
-        this.login = new JMenuItem("Se connecter");
-        this.profilMenu.add(this.login);
-        this.login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("LoginPanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
         this.signUp = new JMenuItem("Créer un compte");
         this.profilMenu.add(this.signUp);
         this.signUp.addActionListener(new ActionListener() {
@@ -87,7 +66,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    panelManager.changePanel("MyProfile");
+                    panelManager.changePanel("Profiles");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }

@@ -1,6 +1,7 @@
 package viewPackage.searches;
 
 import viewPackage.DefaultPanel;
+import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
@@ -15,9 +16,6 @@ public class EloSearch extends DefaultPanel {
     PanelManager panelManager;
     JPanel formPanel;
     JSlider eloSlider;
-    static final int ELO_INIT = 500;
-    static final int ELO_MIN = 0;
-    static final int ELO_MAX = 3000;
     JSpinner date1, date2;
     JPanel buttonsPanel;
     public EloSearch(PanelManager initPanelManager) {
@@ -29,27 +27,13 @@ public class EloSearch extends DefaultPanel {
         GridBagConstraints c = new GridBagConstraints();
         this.formPanel.setLayout(gridBag);
 
-        JLabel eloLabel = new JLabel("Elo : (500)");
+        JLabel eloLabel = new JLabel("Elo :");
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         gridBag.setConstraints(eloLabel, c);
         this.formPanel.add(eloLabel);
         c.gridwidth = GridBagConstraints.REMAINDER;
-        this.eloSlider = new JSlider(ELO_MIN, ELO_MAX);
-        this.eloSlider.setMajorTickSpacing(500);
-        this.eloSlider.setMinorTickSpacing(250);
-        this.eloSlider.setPaintTicks(true);
-        this.eloSlider.setPaintLabels(true);
-        this.eloSlider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider) e.getSource();
-                if(!source.getValueIsAdjusting()) {
-                    int elo = (int)source.getValue();
-                    eloLabel.setText("Elo : ("+elo+")");
-                }
-            }
-        });
+        this.eloSlider = new EloSlider(eloLabel);
         gridBag.setConstraints(this.eloSlider, c);
         this.formPanel.add(this.eloSlider);
 
@@ -92,7 +76,6 @@ public class EloSearch extends DefaultPanel {
     }
     @Override
     public void resetPanel() {
-        this.eloSlider.setValue(ELO_INIT);
         return;
     }
 }
