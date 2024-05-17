@@ -32,7 +32,6 @@ public class ChessThread extends Thread {
                 }
             }
         }
-        System.out.println(this.images);
     }
     @Override
     public void run() {

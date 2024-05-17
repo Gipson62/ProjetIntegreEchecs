@@ -1,5 +1,6 @@
 package viewPackage.searches;
 
+import controllerPackage.ResearchController;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
 import viewPackage.PanelManager;
@@ -11,8 +12,10 @@ import java.awt.event.ActionListener;
 
 public class TournamentsSearch extends DefaultPanel {
     PanelManager panelManager;
-    JPanel formPanel;
-    JPanel buttonsPanel;
+    JPanel formPanel, resultPanel, buttonsPanel;
+    JTable results;
+    ResearchController researchController;
+    ValidateButton validateButton;
     public TournamentsSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.setLayout(new BorderLayout());
@@ -57,5 +60,16 @@ public class TournamentsSearch extends DefaultPanel {
     @Override
     public void resetPanel() {
         return;
+    }
+    private class ValidateButton extends JButton {
+        public ValidateButton(String text) {
+            super(text);
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+        }
     }
 }

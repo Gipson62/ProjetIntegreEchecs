@@ -192,12 +192,12 @@ public class InscriptionPanel extends DefaultPanel {
                                     email.getText(),
                                     date,
                                     password.getText(),
-                                    bio.getText().isEmpty() ? bio.getText() : null,
+                                    bio.getText().isEmpty() ? null : bio.getText(),
                                     null,
                                     beginner.isSelected(),
                                     rank,
                                     elo.getValue(),
-                                    gender.getText().isEmpty() ? gender.getText() : null
+                                    gender.getText().isEmpty() ? null : gender.getText()
                             ));
                         } else {
                             JOptionPane.showMessageDialog(null, "You have to select an existing rank", "Erreur", JOptionPane.ERROR_MESSAGE);

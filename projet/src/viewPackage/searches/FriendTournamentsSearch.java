@@ -1,5 +1,6 @@
 package viewPackage.searches;
 
+import controllerPackage.ResearchController;
 import viewPackage.DefaultPanel;
 import viewPackage.MainWindow;
 import viewPackage.PanelManager;
@@ -12,9 +13,12 @@ import java.awt.event.ActionListener;
 public class FriendTournamentsSearch extends DefaultPanel {
     PanelManager panelManager;
     JPanel formPanel, buttonsPanel, titlePanel, resultPanel;
+    JTable results;
+    ResearchController researchController;
     JComboBox users;
     public FriendTournamentsSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
+        this.researchController = new ResearchController();
         this.setLayout(new BorderLayout());
 
         this.titlePanel = new JPanel();
@@ -59,5 +63,16 @@ public class FriendTournamentsSearch extends DefaultPanel {
     @Override
     public void resetPanel() {
         this.users.setSelectedIndex(0);
+    }
+    private class ValidateButton extends JButton{
+        public ValidateButton(String text) {
+            super(text);
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+        }
     }
 }
