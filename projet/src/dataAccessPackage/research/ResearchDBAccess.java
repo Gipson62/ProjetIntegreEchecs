@@ -25,7 +25,6 @@ public class ResearchDBAccess implements ResearchDataAccess{
     }
     @Override
     public ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException {
-        int id = filterMatch.getUserId();
         LocalDate dateMin = filterMatch.getDateMin();
         LocalDate dateMax = filterMatch.getDateMax();
         int eloMin = filterMatch.getEloMin();
@@ -34,14 +33,22 @@ public class ResearchDBAccess implements ResearchDataAccess{
 
         try {
             System.out.println("Start research filtred");
-            PreparedStatement preparedStatement = connection.prepareStatement("select *\n" +
-                    "from match_outcomes\n" +
-                    "where you =?\n" +
-                    "and elo2 > ?\n" +
-                    "and start_date between ? and ?\n" +
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT DISTINCT p2.elo AS eloWhite,CONCAT(p2.username, '#', p2.tag)as White ,\n" +
+                    "        CASE\n" +
+                    "            WHEN `Match`.winner = 'b' THEN '=>'\n" +
+                    "            ELSE '<='\n" +
+                    "        END AS Winner,CONCAT(p1.username, '#', p1.tag) AS Black,\n" +
+                    "        p1.elo AS eloBlack,\n" +
+                    "        `Match`.start_date\n" +
+                    "    FROM Account p1 \n" +
+                    "        INNER JOIN Account p2 ON (p1.id <> p2.id) \n" +
+                    "        INNER JOIN `Match` ON (p1.id = `Match`.player_black AND p2.id = `Match`.player_white)\n" +
+                    "where p1.elo > ?\n" +
+                    "and\tp2.elo > ?\n" +
+                    "and start_date between ?and ?\n" +
                     "order by start_date ;");
 
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, eloMin);
             preparedStatement.setInt(2, eloMin);
             preparedStatement.setDate(3, Date.valueOf(dateMin));
             preparedStatement.setDate(4, Date.valueOf(dateMax));
@@ -49,19 +56,25 @@ public class ResearchDBAccess implements ResearchDataAccess{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                boolean outcome = resultSet.getString("Outcome").equals("Won");
-                String opponentName = resultSet.getString("Opponent");
-                int elo = resultSet.getInt("elo2");
-                LocalDate startDate = resultSet.getDate("start_date").toLocalDate();
+                String matchWin = resultSet.getString("Winner");
+                String usernameWhite = resultSet.getString("White");
+                String[] splitWhite = usernameWhite.split("#");
+                String usernameWhiteName = splitWhite[0];
+                String tagWhite = splitWhite[1];
+                int eloWhite = resultSet.getInt("eloWhite");
 
-                try
-                {
-                    String[] parts = opponentName.split("#");
-                    ResultFiltredMatch resultFiltredMatch = new ResultFiltredMatch(outcome, parts[0],parts[1], elo, startDate);
+                String usernameBlack = resultSet.getString("Black");
+                String[] splitBlack = usernameBlack.split("#");
+                String usernameBlackName = splitBlack[0];
+                String tagBlack = splitBlack[1];
+                int eloBlack = resultSet.getInt("eloBlack");
+
+                LocalDate dateMatch = resultSet.getDate("start_date").toLocalDate();
+
+                try {
+                    ResultFiltredMatch resultFiltredMatch = new ResultFiltredMatch(matchWin, usernameWhiteName, tagWhite, eloWhite, usernameBlackName, eloBlack, tagBlack, dateMatch);
                     resultFiltredMatchs.add(resultFiltredMatch);
-                }
-                catch (IllegalAccountArgumentException e)
-                {
+                } catch (IllegalAccountArgumentException e) {
                     throw new ResearchDataAccessException("Error during the creation of the result: " + e.getMessage());
                 }
             }

@@ -11,17 +11,26 @@ import java.time.LocalDate;
 import static java.lang.Integer.parseInt;
 
 public class ResultFiltredMatch {
-    private boolean matchWin;
-    private Username opponentUsername;
-    private Tag tagOpponent;
-    private Elo eloOpponent;
+    private String matchWin;
+    private Username usernameWhite;
+    private Tag tagWhite;
+    private Elo eloWhite;
+
+    private Elo eloBlack;
+    private Username usernameBlack;
+    private Tag tagBlack;
     private LocalDate dateMatch;
 
-    public ResultFiltredMatch(boolean matchWin, String opponentUsername,String tagOpponent, int eloOpponent, LocalDate dateMatch) throws IllegalAccountArgumentException {
+    public ResultFiltredMatch(String matchWin, String usernameWhite,String tagWhite, int eloWhite,
+                               String usernameBlack,int eloBlack, String tagBlack ,LocalDate dateMatch) throws IllegalAccountArgumentException {
         try {
-            this.opponentUsername = new Username(opponentUsername);
-            this.eloOpponent = new Elo(eloOpponent);
-            this.tagOpponent = new Tag(parseInt(tagOpponent) );
+            this.usernameWhite = new Username( usernameWhite);
+            this.eloWhite = new Elo(eloWhite);
+            this.tagWhite = new Tag(parseInt(tagWhite) );
+            this.usernameBlack = new Username( usernameBlack);
+            this.eloBlack = new Elo(eloBlack);
+            this.tagBlack = new Tag(parseInt(tagBlack));
+
         } catch (IllegalAccountArgumentException e) {
             throw new IllegalAccountArgumentException("resultFiltredMatch constructor failed: " + e.getMessage());
         }
@@ -29,16 +38,32 @@ public class ResultFiltredMatch {
         this.dateMatch = dateMatch;
     }
 
-    public Elo getEloOpponent() {
-        return eloOpponent;
-    }
-
-    public String getOpponentId() {
-        return opponentUsername.getUsername();
-    }
-
-    public boolean isMatchWin() {
+    public String getMatchWin() {
         return matchWin;
+    }
+
+    public int getEloWhite() {
+        return eloWhite.getElo();
+    }
+
+    public String getUsernameWhite() {
+        return usernameWhite.getUsername();
+    }
+
+    public int getTagWhite() {
+        return tagWhite.getTag();
+    }
+
+    public int getEloBlack() {
+        return eloBlack.getElo();
+    }
+
+    public String getUsernameBlack() {
+        return usernameBlack.getUsername();
+    }
+
+    public int getTagBlack() {
+        return tagBlack.getTag();
     }
 
     public LocalDate getDateMatch() {
@@ -46,13 +71,10 @@ public class ResultFiltredMatch {
     }
 
 
+
     @Override
     public String toString() {
-        return "ResultFiltredMatch{" +
-                "matchWin=" + matchWin +
-                ", opponentUsername=" + opponentUsername.getUsername() +
-                ", eloOpponent=" + eloOpponent.getElo() +
-                ", dateMatch=" + dateMatch +
-                '}';
+        //return elo username+tag  winner  username+tag  elo  date
+        return  getEloBlack() + " " + getUsernameWhite() + "#" + getTagWhite() + " " + matchWin + " " + getUsernameBlack() + "#" + getTagBlack() + " " + getEloBlack() + " " + dateMatch;
     }
 }

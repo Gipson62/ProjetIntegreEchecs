@@ -7,14 +7,12 @@ import exceptionPackage.IllegalAccountArgumentException;
 import java.time.LocalDate;
 
 public class FilterMatch {
-    private IdAccount userId;
     private Elo eloMin;
     private LocalDate dateMin;
     private LocalDate dateMax;
 
-    public FilterMatch(int userId, int eloMin, LocalDate dateMin, LocalDate dateMax) throws IllegalAccountArgumentException{
+    public FilterMatch( int eloMin, LocalDate dateMin, LocalDate dateMax) throws IllegalAccountArgumentException{
         try{
-            this.userId = new IdAccount(userId);
             this.eloMin = new Elo(eloMin);
         } catch (IllegalAccountArgumentException e) {
             throw new IllegalAccountArgumentException("filterMatch constructor failed: " + e.getMessage());
@@ -22,13 +20,10 @@ public class FilterMatch {
         setDate(dateMin, dateMax);
     }
 
-    public FilterMatch(int userId, int eloMin, String dateMin, String dateMax) throws IllegalAccountArgumentException {
-        this(userId, eloMin, LocalDate.parse(dateMin), LocalDate.parse(dateMax));
+    public FilterMatch( int eloMin, String dateMin, String dateMax) throws IllegalAccountArgumentException {
+        this( eloMin, LocalDate.parse(dateMin), LocalDate.parse(dateMax));
     }
 
-    public int getUserId() {
-        return userId.getIdAccount();
-    }
 
     public int getEloMin() {
         return eloMin.getElo();
@@ -42,9 +37,6 @@ public class FilterMatch {
         return dateMax;
     }
 
-    public void setUserId(int userId) throws IllegalAccountArgumentException {
-        this.userId.setIdAccount(userId);
-    }
 
     public void setEloMin(int eloMin) throws IllegalAccountArgumentException {
         this.eloMin.setElo(eloMin);
