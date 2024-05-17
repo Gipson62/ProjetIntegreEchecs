@@ -114,7 +114,7 @@ public class AccountDBAccess implements AccountDataAccess{
             preparedStatement.setString(1, account.getUsername());
             preparedStatement.setString(2, account.getEmail());
             preparedStatement.setDate(3, Date.valueOf(account.getBirthdate()));
-            preparedStatement.setString(4, doHashing(account.getPassword()));
+            preparedStatement.setString(4, account.getPassword().contains("$2a$10$") ? account.getPassword(): doHashing(account.getPassword()));
             preparedStatement.setString(5, account.getBio());
             preparedStatement.setInt(6, account.getTag());
             preparedStatement.setBoolean(7, account.getIsBeginner());
