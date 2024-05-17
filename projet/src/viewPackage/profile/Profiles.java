@@ -83,7 +83,7 @@ public class Profiles extends DefaultPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    accountController.
+
                 }
             });
         }
