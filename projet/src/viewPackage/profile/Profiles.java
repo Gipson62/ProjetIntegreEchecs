@@ -3,36 +3,29 @@ package viewPackage.profile;
 import controllerPackage.AccountController;
 import controllerPackage.RankController;
 import exceptionPackage.UnknownPanel;
+import exceptionPackage.account.DeleteAccountLignesExcemption;
 import exceptionPackage.account.ReadAccountException;
-import exceptionPackage.account.UpdateAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
 import viewPackage.DefaultPanel;
-import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 // TODO : add a way to get written data about the user from the disk with Serializable
 public class Profiles extends DefaultPanel {
-    AccountController accountController;
-    RankController rankController;
-    PanelManager panelManager;
-    JTable friends;
-    UpdateButton updateButton;
-    ArrayList<Account> allAccounts;
+    private AccountController accountController;
+    private RankController rankController;
+    private PanelManager panelManager;
+    private JTable profiles;
+    private UpdateButton updateButton;
+    private RemoveButton removeButton;
+    private ArrayList<Account> allAccounts;
     public Profiles(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
@@ -63,13 +56,18 @@ public class Profiles extends DefaultPanel {
                 data[i][9] = currAccount.getGender();
             }
             String[] columnNames = {"Email", "Username", "Rank", "Birthdate", "IsBeginner", "Elo", "Password", "Bio", "Tag", "Gender"};
-            this.friends = new JTable(data, columnNames);
-            this.add(new JScrollPane(this.friends));
+            this.profiles = new JTable(data, columnNames);
+            this.add(new JScrollPane(this.profiles));
         } catch (ReadAccountException | ReadRankException e) {
             throw new RuntimeException(e);
         }
+        JPanel buttonPanel = new JPanel();
+        //buttonPanel.setLayout(new BorderLayout());
         this.updateButton = new UpdateButton("Modifier");
-        this.add(updateButton, BorderLayout.SOUTH);
+        buttonPanel.add(updateButton, BorderLayout.EAST);
+        this.removeButton = new RemoveButton("Supprimer");
+        buttonPanel.add(removeButton, BorderLayout.WEST);
+        this.add(buttonPanel, BorderLayout.SOUTH);
     }
     @Override
     public void resetPanel() {
@@ -83,7 +81,18 @@ public class Profiles extends DefaultPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    accountController.
+                    int[] idAccounts = profiles.getSelectedRows();
+                    ArrayList<Integer> accountsToRemove = new ArrayList<>();
+                    for (int account : idAccounts) {
+                        accountsToRemove.add(allAccounts.get(account).getIdAccount());
+                    }
+                    try {
+                        System.out.println("IDs: " + accountsToRemove);
+                        accountController.deleteAccountLignes(accountsToRemove);
+                        resetPanel();
+                    } catch (DeleteAccountLignesExcemption ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }
@@ -94,7 +103,7 @@ public class Profiles extends DefaultPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    panelManager.getPanels().get("ModificationPanel").setAccount(allAccounts.get(friends.getSelectedRow()));
+                    panelManager.getPanels().get("ModificationPanel").setAccount(allAccounts.get(profiles.getSelectedRow()));
                     try {
                         panelManager.changePanel("ModificationPanel");
                     } catch (UnknownPanel ex) {

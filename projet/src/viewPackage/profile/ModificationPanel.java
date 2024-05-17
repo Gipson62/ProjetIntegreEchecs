@@ -192,7 +192,19 @@ public class ModificationPanel extends DefaultPanel {
                             }
                         }
                         if (rank != null) {
-                            accountController.updateAccount(new Account(account.getIdAccount(), pseudo.getText(), email.getText(), date, password.getText(), bio.getText(), account.getTag(), beginner.isSelected(), rank, elo.getValue(), gender.getText()));
+                            accountController.updateAccount(new Account(
+                                    account.getIdAccount(),
+                                    pseudo.getText(),
+                                    email.getText(),
+                                    date,
+                                    password.getText(),
+                                    bio.getText().isEmpty() ? bio.getText() : null,
+                                    account.getTag(),
+                                    beginner.isSelected(),
+                                    rank,
+                                    elo.getValue(),
+                                    gender.getText().isEmpty() ? gender.getText() : null
+                            ));
                         } else {
                             JOptionPane.showMessageDialog(null, "You have to select an existing rank", "Erreur", JOptionPane.ERROR_MESSAGE);
                         }

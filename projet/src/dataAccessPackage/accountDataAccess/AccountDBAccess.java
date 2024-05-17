@@ -148,6 +148,7 @@ public class AccountDBAccess implements AccountDataAccess{
 
                 System.out.println("Account avec l'id " + id + " à été supprimé");
             } catch (SQLException e) {
+                System.out.println(e.getMessage());
                 throw new DeleteAccountLignesExcemption("Account avec l'id " + id + " n'a pas été supprimé");
                 //les comptes qui n'exste pas sont quand meme affiché comme supprimé pas s'erreur si n'existe pas
             }

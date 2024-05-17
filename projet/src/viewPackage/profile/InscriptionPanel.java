@@ -186,7 +186,19 @@ public class InscriptionPanel extends DefaultPanel {
                             }
                         }
                         if (rank != null) {
-                            accountController.addAccount(new Account(null, pseudo.getText(), email.getText(), date, password.getText(), bio.getText(), null, beginner.isSelected(), rank, elo.getValue(), gender.getText()));
+                            accountController.addAccount(new Account(
+                                    null,
+                                    pseudo.getText(),
+                                    email.getText(),
+                                    date,
+                                    password.getText(),
+                                    bio.getText().isEmpty() ? bio.getText() : null,
+                                    null,
+                                    beginner.isSelected(),
+                                    rank,
+                                    elo.getValue(),
+                                    gender.getText().isEmpty() ? gender.getText() : null
+                            ));
                         } else {
                             JOptionPane.showMessageDialog(null, "You have to select an existing rank", "Erreur", JOptionPane.ERROR_MESSAGE);
                         }

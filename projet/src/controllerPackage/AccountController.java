@@ -29,8 +29,8 @@ public class AccountController {
         accountManager.updateAccount(account);
     }
 
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{
-        accountManager.deleteAccountLignes(idAccount, deleteBio, deleteGender);
+    public void deleteAccountLignes(ArrayList<Integer> idAccount) throws DeleteAccountLignesExcemption{
+        accountManager.deleteAccountLignes(idAccount);
     }
 
     public ArrayList<Account> getAllAccounts() throws ReadAccountException{
