@@ -30,15 +30,9 @@ public class Profiles extends DefaultPanel {
     AccountController accountController;
     RankController rankController;
     PanelManager panelManager;
-    JTextField email, pseudo, gender;
-    JTextArea bio;
-    JPasswordField password;
-    EloSlider elo;
-    JSpinner birthdate;
-    JCheckBox beginner;
     JTable friends;
     UpdateButton updateButton;
-    Account account;
+    ArrayList<Account> allAccounts;
     public Profiles(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
@@ -48,7 +42,7 @@ public class Profiles extends DefaultPanel {
     public void init() {
         this.setLayout(new BorderLayout());
         try {
-            ArrayList<Account> allAccounts = this.accountController.getAllAccounts();
+            this.allAccounts = this.accountController.getAllAccounts();
             String[][] data = new String[allAccounts.size()][10];
             for(int i = 0; i < allAccounts.size(); i++) {
                 Account currAccount = allAccounts.get(i);
@@ -74,61 +68,40 @@ public class Profiles extends DefaultPanel {
         } catch (ReadAccountException | ReadRankException e) {
             throw new RuntimeException(e);
         }
-        /*this.updateButton = new UpdateButton("Modifier");
-        this.add(updateButton, BorderLayout.SOUTH);*/
-    }
-    public void setAccount(Account account) {
-        this.email.setText(account.getEmail());
-        this.pseudo.setText(account.getUsername());
-        this.password.setText(account.getPassword());
-        this.elo.setValue(account.getElo());
-        this.beginner.setSelected(account.getIsBeginner());
-        this.gender.setText(account.getGender());
-        this.bio.setText(account.getBio());
-        this.account = account;
-        JOptionPane.showMessageDialog(null, "Malheureusement la liste d'amis est pas encore faite", "/!\\", JOptionPane.INFORMATION_MESSAGE);
-    }
-    private class UpdateButton extends JButton {
-        public UpdateButton(String text) {
-            super(text);
-            birthdate.setEnabled(false);
-            elo.setEnabled(false);
-            pseudo.setEnabled(false);
-            password.setEnabled(false);
-            email.setEnabled(false);
-            beginner.setEnabled(false);
-            gender.setEnabled(false);
-            bio.setEnabled(false);
-            this.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    boolean isEnabled = pseudo.isEnabled();
-                    birthdate.setEnabled(!isEnabled);
-                    elo.setEnabled(!isEnabled);
-                    pseudo.setEnabled(!isEnabled);
-                    password.setEnabled(!isEnabled);
-                    email.setEnabled(!isEnabled);
-                    beginner.setEnabled(!isEnabled);
-                    gender.setEnabled(!isEnabled);
-                    bio.setEnabled(!isEnabled);
-                    if(isEnabled) {
-                        try {
-                            accountController.updateAccount(new Account(account.getIdAccount(), pseudo.getText(), email.getText(), ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), password.getText(), bio.getText(), 8015, beginner.isSelected(), new Rank(5), elo.getValue(), gender.getText()));
-                        } catch (UpdateAccountException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                        }
-                        updateButton.setText("Modifier");
-                    } else {
-                        updateButton.setText("Valider");
-                    }
-                }
-            });
-        }
+        this.updateButton = new UpdateButton("Modifier");
+        this.add(updateButton, BorderLayout.SOUTH);
     }
     @Override
     public void resetPanel() {
         this.removeAll();
         this.init();
         return;
+    }
+    private class RemoveButton extends JButton {
+        public RemoveButton(String text) {
+            super(text);
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    accountController.
+                }
+            });
+        }
+    }
+    private class UpdateButton extends JButton {
+        public UpdateButton(String text) {
+            super(text);
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    panelManager.getPanels().get("ModificationPanel").setAccount(allAccounts.get(friends.getSelectedRow()));
+                    try {
+                        panelManager.changePanel("ModificationPanel");
+                    } catch (UnknownPanel ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            });
+        }
     }
 }

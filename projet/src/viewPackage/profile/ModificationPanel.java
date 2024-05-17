@@ -5,6 +5,7 @@ import controllerPackage.RankController;
 import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.AddAccountException;
+import exceptionPackage.account.UpdateAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
@@ -13,11 +14,10 @@ import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -32,11 +32,12 @@ public class ModificationPanel extends DefaultPanel {
     JTextField email, pseudo, gender;
     JPasswordField password;
     EloSlider elo;
-    JSpinner dateSpinner;
+    JSpinner birthdate;
     JCheckBox beginner;
     JTextArea bio;
     JComboBox<String> ranks;
     ValidateButton validationButton;
+    Account account;
     public ModificationPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
@@ -98,10 +99,10 @@ public class ModificationPanel extends DefaultPanel {
         this.formPanel.add(dateLabel);
         c.gridwidth = GridBagConstraints.REMAINDER;
         SimpleDateFormat model = new SimpleDateFormat("dd/MM/yyyy");
-        this.dateSpinner = new JSpinner(new SpinnerDateModel());
-        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, model.toPattern()));
-        gridBag.setConstraints(this.dateSpinner, c);
-        this.formPanel.add(this.dateSpinner);
+        this.birthdate = new JSpinner(new SpinnerDateModel());
+        birthdate.setEditor(new JSpinner.DateEditor(birthdate, model.toPattern()));
+        gridBag.setConstraints(this.birthdate, c);
+        this.formPanel.add(this.birthdate);
 
         JLabel beginnerLabel = new JLabel("Débutant :");
         c.gridwidth = GridBagConstraints.RELATIVE;
@@ -159,18 +160,19 @@ public class ModificationPanel extends DefaultPanel {
     }
     @Override
     public void resetPanel() {
-        this.email.setText("");
-        this.pseudo.setText("");
-        this.password.setText("");
-        this.gender.setText("");
-        this.bio.setText("");
-        this.elo.setValue(500);
-        this.beginner.setSelected(false);
         return;
     }
     public void setAccount(Account account) {
-        //TODO
-        return;
+        this.account = account;
+        this.pseudo.setText(this.account.getUsername());
+        this.password.setText(this.account.getPassword());
+        this.email.setText(this.account.getEmail());
+        this.gender.setText(this.account.getGender());
+        this.bio.setText(this.account.getBio());
+        this.elo.setValue(this.account.getElo());
+        this.beginner.setSelected(this.account.getIsBeginner());
+        this.ranks.setSelectedIndex(this.account.getRank() - 1);
+        this.birthdate.setValue(Date.valueOf(this.account.getBirthdate()));
     }
     private class ValidateButton extends JButton {
         public ValidateButton() {
@@ -179,7 +181,7 @@ public class ModificationPanel extends DefaultPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        LocalDate date = ((java.util.Date) dateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate date = ((java.util.Date) birthdate.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         ArrayList<Rank> allRanks = rankController.getAllRanks();
                         Rank rank = null;
                         for (int i = 0; rank == null && i < allRanks.size(); i++) {
@@ -190,12 +192,12 @@ public class ModificationPanel extends DefaultPanel {
                             }
                         }
                         if (rank != null) {
-                            accountController.addAccount(new Account(null, pseudo.getText(), email.getText(), date, password.getText(), bio.getText(), null, beginner.isSelected(), rank, elo.getValue(), gender.getText()));
+                            accountController.updateAccount(new Account(account.getIdAccount(), pseudo.getText(), email.getText(), date, password.getText(), bio.getText(), account.getTag(), beginner.isSelected(), rank, elo.getValue(), gender.getText()));
                         } else {
                             JOptionPane.showMessageDialog(null, "You have to select an existing rank", "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                         panelManager.changePanel("Profiles");
-                    } catch (AddAccountException | UnknownPanel | IllegalAccountArgumentException | ReadRankException ex) {
+                    } catch (UpdateAccountException | UnknownPanel | IllegalAccountArgumentException | ReadRankException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }

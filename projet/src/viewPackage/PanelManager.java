@@ -2,6 +2,7 @@ package viewPackage;
 
 import exceptionPackage.UnknownPanel;
 import viewPackage.profile.InscriptionPanel;
+import viewPackage.profile.ModificationPanel;
 import viewPackage.profile.Profiles;
 import viewPackage.searches.EloSearch;
 import viewPackage.searches.FriendTournamentsSearch;
@@ -58,6 +59,7 @@ public class PanelManager extends JPanel {
         this.addPanel("Profiles", new Profiles(this), container);
         this.addPanel("OpeningsStats", new OpeningsStats(this), container);
         this.addPanel("WinratePanel", new WinratePanel(this), container);
+        this.addPanel("ModificationPanel", new ModificationPanel(this), container);
         this.center.add(container, BorderLayout.CENTER);
         System.out.println(this);
     }

@@ -1,5 +1,7 @@
 package viewPackage;
 
+import modelPackage.accountModel.Account;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,4 +13,5 @@ public abstract class DefaultPanel extends JPanel {
     public void resetPanel() {
         return;
     }
+    public void setAccount(Account account) { return;}
 }
