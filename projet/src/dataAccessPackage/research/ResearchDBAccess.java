@@ -34,10 +34,8 @@ public class ResearchDBAccess implements ResearchDataAccess{
         try {
             System.out.println("Start research filtred");
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT DISTINCT p2.elo AS eloWhite,CONCAT(p2.username, '#', p2.tag)as White ,\n" +
-                    "        CASE\n" +
-                    "            WHEN `Match`.winner = 'b' THEN '=>'\n" +
-                    "            ELSE '<='\n" +
-                    "        END AS Winner,CONCAT(p1.username, '#', p1.tag) AS Black,\n" +
+                    "        `match`.winner,\n" +
+                    "        CONCAT(p1.username, '#', p1.tag) AS Black,\n" +
                     "        p1.elo AS eloBlack,\n" +
                     "        `Match`.start_date\n" +
                     "    FROM Account p1 \n" +
@@ -56,7 +54,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                String matchWin = resultSet.getString("Winner");
+                String matchWin = resultSet.getString("winner");
                 String usernameWhite = resultSet.getString("White");
                 String[] splitWhite = usernameWhite.split("#");
                 String usernameWhiteName = splitWhite[0];

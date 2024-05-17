@@ -75,6 +75,6 @@ public class ResultFiltredMatch {
     @Override
     public String toString() {
         //return elo username+tag  winner  username+tag  elo  date
-        return  getEloBlack() + " " + getUsernameWhite() + "#" + getTagWhite() + " " + matchWin + " " + getUsernameBlack() + "#" + getTagBlack() + " " + getEloBlack() + " " + dateMatch;
+        return  getEloWhite() + " " + getUsernameWhite() + "#" + getTagWhite() + " " + matchWin + " " + getUsernameBlack() + "#" + getTagBlack() + " " + getEloBlack() + " " + dateMatch;
     }
 }
