@@ -17,7 +17,13 @@ public class AccountManager {
         dao = new AccountDBAccess();
     }
 
-    public void addAccount(Account account) throws AddAccountException {
+    public void addAccount(Account account) throws AddAccountException{
+        try {
+            if (getAccount(account.getEmail()) != null)
+                throw new AddAccountException("Email deja existant");
+        } catch (ReadAccountException e) {
+            throw new AddAccountException("Une erreur s'est produite");
+        }
         dao.addAccount(account);
     }
 
@@ -29,8 +35,8 @@ public class AccountManager {
         dao.updateAccount(account);
     }
 
-    public void deleteAccountLignes(int idAccount, boolean deleteBio, boolean deleteGender) throws DeleteAccountLignesExcemption{
-        dao.deleteAccountLignes(idAccount, deleteBio, deleteGender);
+    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesExcemption{
+        dao.deleteAccountLignes(idAccounts);
     }
 
     public ArrayList<Account> getAllAccounts() throws ReadAccountException{
