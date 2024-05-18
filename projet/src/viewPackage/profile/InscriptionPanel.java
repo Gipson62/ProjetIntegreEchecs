@@ -188,10 +188,10 @@ public class InscriptionPanel extends DefaultPanel {
                         if (rank != null) {
                             accountController.addAccount(new Account(
                                     null,
-                                    pseudo.getText(),
-                                    email.getText(),
+                                    pseudo.getText().isEmpty() ? null : pseudo.getText(),
+                                    email.getText().isEmpty() ? null : email.getText(),
                                     date,
-                                    password.getText(),
+                                    password.getText().isEmpty() ? null : password.getText(),
                                     bio.getText().isEmpty() ? null : bio.getText(),
                                     null,
                                     beginner.isSelected(),
