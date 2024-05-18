@@ -21,7 +21,7 @@ public class Email implements Serializable {
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
             this.email = email;
         } else {
-            throw new IllegalAccountArgumentException("Email is not valid");
+            throw new IllegalAccountArgumentException("Email invalide");
         }
     }
 

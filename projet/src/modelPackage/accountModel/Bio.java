@@ -16,11 +16,11 @@ public class Bio implements Serializable {
     }
 
     public void setBio(String bio) throws IllegalAccountArgumentException {
-        if(bio.length() <= 256){
+        if(bio.length() <= 512){
             this.bio = bio;
         }
         else {
-            throw new IllegalAccountArgumentException("Bio must be at most 256 characters long");
+            throw new IllegalAccountArgumentException("Bio trop longue (512 max)");
         }
     }
 

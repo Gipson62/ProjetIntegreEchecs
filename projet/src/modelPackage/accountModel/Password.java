@@ -17,7 +17,7 @@ public class Password implements Serializable {
 
     public void setPassword(String password) throws IllegalAccountArgumentException {
         if(password.length() < 8){
-            throw new IllegalAccountArgumentException("Password must be at least 8 characters long");
+            throw new IllegalAccountArgumentException("Mot de passe doit contenir au moins 8 caractères");
         }
         this.password = password;
     }

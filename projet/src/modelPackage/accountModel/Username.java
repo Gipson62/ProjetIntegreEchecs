@@ -22,7 +22,7 @@ public class Username implements Serializable {
             this.username = username;
         }
         else{
-            throw new IllegalAccountArgumentException("Username must contain only letters and numbers");
+            throw new IllegalAccountArgumentException("Pseudo ne peut contenir que des lettres et des chiffres (taille max 24)");
         }
 
     }

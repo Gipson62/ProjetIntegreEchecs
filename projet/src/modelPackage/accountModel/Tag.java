@@ -17,7 +17,7 @@ public class Tag implements Serializable {
 
     public void setTag(int tag) throws IllegalAccountArgumentException {
         if (tag < 0) {
-            throw new IllegalAccountArgumentException("Tag must be positive");
+            throw new IllegalAccountArgumentException("Tag doit être positif");
         }
         this.tag = tag;
     }

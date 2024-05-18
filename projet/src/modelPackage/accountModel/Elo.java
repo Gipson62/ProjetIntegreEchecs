@@ -23,7 +23,7 @@ public class Elo implements Serializable {
             this.elo = elo;
         }
         else{
-            throw new IllegalAccountArgumentException("Elo must be between 0 and 3000");
+            throw new IllegalAccountArgumentException("Elo doit etre entre 0 et 3000");
         }
     }
 }

@@ -78,12 +78,12 @@ public class Account implements Serializable {
                     setGender((String) value);
                     break;
                 default:
-                    throw new IllegalArgumentException("Invalid field name: " + fieldName);
+                    System.out.println("Invalid field name");
             }
         } catch (IllegalAccountArgumentException e) {
             errors.add(fieldName + ": " + e.getMessage());
         } catch (ClassCastException | IllegalArgumentException e) {
-            errors.add(fieldName + " is invalid or has wrong type");
+            System.out.println(fieldName + " est invalide : " + value + " n'est pas du bon type");
         }
     }
 
@@ -94,18 +94,30 @@ public class Account implements Serializable {
     }
 
     public void setUsername(String username) throws IllegalAccountArgumentException {
+        if (username == null) {
+            throw new IllegalAccountArgumentException("Pseudo ne peut pas être vide");
+        }
         this.username = new Username(username);
     }
 
     public void setEmail(String email) throws IllegalAccountArgumentException {
+        if (email == null) {
+            throw new IllegalAccountArgumentException("Email ne peut pas être vide");
+        }
         this.email = new Email(email);
     }
 
     public void setBirthdate(LocalDate birthdate) throws IllegalAccountArgumentException {
+        if (birthdate == null) {
+            throw new IllegalAccountArgumentException("Date de naissance ne peut pas être vide");
+        }
         this.birthdate = new Birthdate(birthdate);
     }
 
     public void setPassword(String password) throws IllegalAccountArgumentException {
+        if (password == null) {
+            throw new IllegalAccountArgumentException("Mot de passe ne peut pas être vide");
+        }
         this.password = new Password(password);
     }
 
@@ -123,6 +135,10 @@ public class Account implements Serializable {
 
     public void setRank(int rank, String name, String description) throws IllegalAccountArgumentException {
         this.rank = new Rank(rank , name, description);
+    }
+
+    public void setRank(Rank rank) throws IllegalAccountArgumentException {
+        this.rank = rank;
     }
 
     public void setElo(int elo) throws IllegalAccountArgumentException {
