@@ -21,10 +21,8 @@ import java.util.HashMap;
 public class PanelManager extends JPanel {
     private JPanel left;
     public RightPanel right;
-    private JPanel center;
+    public JPanel center;
     private MainWindow mainWindow;
-    private HashMap<String, JPanel> panels;
-    private CardLayout cardLayout;
     private JPanel container;
     private PanelListener listener;
     private ChessThread chessThread;
@@ -43,30 +41,14 @@ public class PanelManager extends JPanel {
         this.add(this.center);
         this.add(this.right);
 
-        this.cardLayout = new CardLayout();
         this.center.setLayout(new BorderLayout());
 
-        this.panels = new HashMap<>();
-
         container = new JPanel();
-        this.container.setLayout(cardLayout);
 
-        this.addPanel("HomePanel", new HomePanel(this), container);
-        this.addPanel("InscriptionPanel", new InscriptionPanel(this), container);
-        this.addPanel("EloSearch", new EloSearch(this), container);
-        this.addPanel("TournamentsSearch", new TournamentsSearch(this), container);
-        this.addPanel("MatchDataSearch", new MatchDataSearch(this), container);
-        this.addPanel("Profiles", new Profiles(this), container);
-        this.addPanel("OpeningsStats", new OpeningsStats(this), container);
-        this.addPanel("WinratePanel", new WinratePanel(this), container);
-        this.addPanel("ModificationPanel", new ModificationPanel(this), container);
         this.center.add(container, BorderLayout.CENTER);
         System.out.println(this);
     }
 
-    public HashMap<String, JPanel> getPanels() {
-        return panels;
-    }
     public JPanel createLeftPanel() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setPreferredSize(new Dimension(100, 400));
@@ -98,21 +80,27 @@ public class PanelManager extends JPanel {
     }
 
     /**
-     * Add a panel to the `CardLayout` and to the panels `Hashmap`.
-     * @param panelName
-     * @param panel
-     */
-    public void addPanel(String panelName, JPanel panel, JPanel parent) {
-        this.panels.put(panelName, panel);
-        parent.add(panel, panelName);
-    }
-    /**
      * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
      * @param panelName specify the panel you want to go to using a name.
      */
     public void changePanel(String panelName) throws UnknownPanel {
-        this.cardLayout.show(container, panelName);
-        ((IPanel)this.panels.get(panelName)).enterPanel();
+        this.center.removeAll();
+        IPanel destinationPanel = switch (panelName) {
+            case "InscriptionPanel" -> new InscriptionPanel(this);
+            case "ModificationPanel" -> new ModificationPanel(this);
+            case "Profiles" -> new Profiles(this);
+            case "EloSearch" -> new EloSearch(this);
+            case "MatchDataSearch" -> new MatchDataSearch(this);
+            case "TournamentsSearch" -> new TournamentsSearch(this);
+            case "OpeningStats" -> new OpeningsStats(this);
+            case "WinratePanel" -> new WinratePanel(this);
+            case "HomePanel" -> new HomePanel(this);
+            default -> new HomePanel(this);
+        };
+        destinationPanel.enterPanel();
+        this.center.add((JPanel) destinationPanel);
+        this.center.validate();
+        this.center.repaint();
     }
 
     private class PanelListener extends ComponentAdapter {

@@ -104,8 +104,12 @@ public class Profiles extends JPanel implements IPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Account accToModify = allAccounts.get(profiles.getSelectedRow());
-                    System.out.println(accToModify);
-                    ((ModificationPanel) panelManager.getPanels().get("ModificationPanel")).setAccount(accToModify);
+                    ModificationPanel modificationPanel = new ModificationPanel(panelManager);
+                    modificationPanel.setAccount(accToModify);
+                    panelManager.center.removeAll();
+                    panelManager.center.add(modificationPanel);
+                    panelManager.center.validate();
+                    panelManager.center.repaint();
                     try {
                         panelManager.changePanel("ModificationPanel");
                     } catch (UnknownPanel ex) {

@@ -31,6 +31,10 @@ public class StatisticsController {
         return playerMatchStatistics.getAttackList();
     }
 
+    public double getGlobalWinrate() {
+        return playerMatchStatistics.getGlobalWinrate();
+    }
+
 
     @Override
     public String toString() {

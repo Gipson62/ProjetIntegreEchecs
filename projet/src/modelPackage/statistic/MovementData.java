@@ -34,11 +34,11 @@ public class MovementData {
 
     }
 
-    public double getWinRateWith() {
+    public Double getWinRateWith() {
         return winRateWith;
     }
 
-    public double getWinRateAgainst() {
+    public Double getWinRateAgainst() {
         return winRateAgainst;
     }
 

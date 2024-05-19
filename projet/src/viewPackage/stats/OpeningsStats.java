@@ -7,6 +7,7 @@ import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.IdAccount;
+import modelPackage.statistic.MovementData;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
 import viewPackage.searches.MatchDataSearch;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OpeningsStats extends JPanel implements IPanel {
     PanelManager panelManager;
@@ -24,7 +26,7 @@ public class OpeningsStats extends JPanel implements IPanel {
     ArrayList<Account> allAccounts;
     StatisticsController statisticsController;
     AccountController accountController;
-    JTable attack, opening, defense;
+    JTable result;
     public OpeningsStats(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
@@ -39,7 +41,6 @@ public class OpeningsStats extends JPanel implements IPanel {
     @Override
     public void init() {
         this.setLayout(new BorderLayout());
-
         this.formPanel = new JPanel();
         GridBagLayout gridBag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -82,17 +83,49 @@ public class OpeningsStats extends JPanel implements IPanel {
                         IdAccount id = allAccounts.get(users.getSelectedIndex()).getIdAccountO();
                         statisticsController = new StatisticsController(id);
                         statisticsController.setStatistic();
-                        String[][] attackData;
-                        String[] columnAttack = {"Nom", "Nombre de victoire", "Nombre de défaite", "Nombre de victoire contre", "Nombre de défaite contre", "Taux de victoire"};
-                        String[][] defenseData;
-                        String[] columnDefense;
-                        String[][] openingData;
-                        String[] columnOpening;
+                        String[] column = {"Type", "Nom", "Nombre de victoire", "Nombre de défaite", "Nombre de victoire contre", "Nombre de défaite contre", "Taux de victoire avec", "Taux de victoire contre"};
+                        ArrayList<MovementData> attackArray = statisticsController.getAttackList();
+                        ArrayList<MovementData> openingArray = statisticsController.getOpeningList();
+                        ArrayList<MovementData> defenseArray = statisticsController.getDefenseList();
+                        String[][] openingData = new String[attackArray.size() + openingArray.size() + defenseArray.size()][8];
+                        int i = 0;
+                        for(; i < attackArray.size(); i++) {
+                            MovementData currAttack = attackArray.get(i);
+                            createOpeningData(openingData, i, currAttack, "Attaque");
+                        }
+                        for(; i < attackArray.size() + defenseArray.size(); i++) {
+                            int tmp_i = i - attackArray.size();
+                            MovementData currDefense = defenseArray.get(tmp_i);
+                            createOpeningData(openingData, i, currDefense, "Défense");
+                        }
+                        for(; i < attackArray.size() + defenseArray.size() + openingArray.size(); i++) {
+                            int tmp_i = i - attackArray.size() - defenseArray.size();
+                            MovementData currOpening = openingArray.get(tmp_i);
+                            createOpeningData(openingData, i, currOpening, "Ouverture");
+                        }
+                        System.out.println(Arrays.deepToString(openingData));
+                        result = new JTable(openingData, column);
+                        result.setEnabled(false);
+                        resultPanel.removeAll();
+                        resultPanel.add(new JScrollPane(result));
+                        resultPanel.validate();
+                        resultPanel.repaint();
                     } catch (ResearchDataAccessException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
+        }
+
+        private void createOpeningData(String[][] openingData, int i, MovementData currDefense, String type) {
+            openingData[i][0] = type;
+            openingData[i][1] = currDefense.getName();
+            openingData[i][2] = String.valueOf(currDefense.getWinWith());
+            openingData[i][3] = String.valueOf(currDefense.getLoseWith());
+            openingData[i][4] = String.valueOf(currDefense.getWinAgainst());
+            openingData[i][5] = String.valueOf(currDefense.getLoseAgainst());
+            openingData[i][6] = currDefense.getWinRateWith() == null ? "no data" : String.valueOf(currDefense.getWinRateWith());
+            openingData[i][7] = currDefense.getWinRateAgainst() == null ? "no data" : String.valueOf(currDefense.getWinRateAgainst());
         }
     }
 }

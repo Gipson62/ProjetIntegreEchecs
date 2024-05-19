@@ -1,20 +1,35 @@
 package viewPackage.stats;
 
+import controllerPackage.AccountController;
+import controllerPackage.ResearchController;
+import controllerPackage.StatisticsController;
+import exceptionPackage.account.ReadAccountException;
+import exceptionPackage.research.ResearchDataAccessException;
+import modelPackage.accountModel.Account;
+import modelPackage.accountModel.IdAccount;
+import modelPackage.statistic.MovementData;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
+import viewPackage.searches.MatchDataSearch;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WinratePanel extends JPanel implements IPanel {
     PanelManager panelManager;
-    JPanel formPanel;
-    JPanel buttonsPanel;
+    JPanel formPanel, buttonsPanel, resultPanel;
+    JComboBox<String> users;
+    ArrayList<Account> allAccounts;
+    StatisticsController statisticsController;
+    AccountController accountController;
+    JTable result;
     public WinratePanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
-
+        this.accountController = new AccountController();
     }
     @Override
     public void enterPanel() {
@@ -26,32 +41,61 @@ public class WinratePanel extends JPanel implements IPanel {
     @Override
     public void init() {
         this.setLayout(new BorderLayout());
-
         this.formPanel = new JPanel();
-        this.formPanel.setSize(150, 150);
-        GridLayout gridLayout = new GridLayout(1, 2, 5, 5);
-        this.formPanel.setLayout(gridLayout);
+        GridBagLayout gridBag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        this.formPanel.setLayout(gridBag);
 
-        this.formPanel.add(new JLabel("username & tag"));
-        JTextField username = new JTextField();
-        this.formPanel.add(username);
+        try {
+            JLabel usernameLabel = new JLabel("Username :");
+            c.fill = GridBagConstraints.BOTH;
+            c.weightx = 1.0;
+            gridBag.setConstraints(usernameLabel, c);
+            this.formPanel.add(usernameLabel);
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            this.allAccounts = accountController.getAllAccounts();
+            String[] usersTab = new String[this.allAccounts.size()];
+            for(int i = 0; i < this.allAccounts.size(); i++){
+                usersTab[i] = this.allAccounts.get(i).getUsername() + "#" + this.allAccounts.get(i).getTag();
+            }
+            this.users = new JComboBox<>(usersTab);
+            gridBag.setConstraints(this.users, c);
+            this.formPanel.add(this.users);
+        } catch (ReadAccountException e) {
+            throw new RuntimeException(e);
+        }
 
-        this.add(this.formPanel, BorderLayout.CENTER);
-
-        // TODO : Add the result just under the question with a list (White/Black -> % of win)
+        this.resultPanel = new JPanel();
+        this.add(this.formPanel, BorderLayout.NORTH);
+        this.add(this.resultPanel);
 
         this.buttonsPanel = new JPanel();
-        GridLayout gridLayout1 = new GridLayout(1, 2, 5, 5);
-        this.buttonsPanel.setLayout(gridLayout1);
-        this.buttonsPanel.add(new JButton("Valider"));
-        JButton inscriptionButton = new JButton("Recommencer");
-        this.buttonsPanel.add(inscriptionButton, BorderLayout.SOUTH);
-        inscriptionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPanel();
-            }
-        });
+        this.buttonsPanel.add(new ValidateButton("Valider"));
         this.add(buttonsPanel, BorderLayout.SOUTH);
+    }
+    private class ValidateButton extends JButton {
+        public ValidateButton(String text) {
+            super(text);
+            this.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        IdAccount id = allAccounts.get(users.getSelectedIndex()).getIdAccountO();
+                        statisticsController = new StatisticsController(id);
+                        statisticsController.setStatistic();
+                        double winrate = statisticsController.getGlobalWinrate();
+                        JLabel winrateLabel = new JLabel();
+                        winrateLabel.setText("Winrate : " + (Double.isNaN(winrate) ? "no data" : winrate));
+                        winrateLabel.setFont(getFont().deriveFont(28f));
+                        resultPanel.removeAll();
+                        resultPanel.add(winrateLabel);
+                        resultPanel.validate();
+                        resultPanel.repaint();
+                    } catch (ResearchDataAccessException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+        }
     }
 }

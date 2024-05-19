@@ -200,6 +200,9 @@ public class PlayerMatchStatistics {
         return attackList;
     }
 
+    public double getGlobalWinrate() {
+        return globalWinrate;
+    }
 
     @Override
     public String toString() {
