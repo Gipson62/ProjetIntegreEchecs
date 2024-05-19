@@ -34,9 +34,6 @@ public class MatchData {
     }
 
     public MatchData(String player, String opponent, int match_id, String []moves, String attack, String defense, String Opening, char result, String winOrLose) throws IllegalAccountArgumentException {
-        if (player == null || opponent == null || match_id < 0 || moves == null || attack == null || defense == null || Opening == null || result == ' ' || winOrLose == null) {
-            throw new IllegalAccountArgumentException("Illegal argument in MatchData");
-        }
         this.player = new Username(player);
         this.opponent = new Username(opponent);
         this.match_id = match_id;

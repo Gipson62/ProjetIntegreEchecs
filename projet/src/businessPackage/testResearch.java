@@ -6,17 +6,18 @@ import modelPackage.research.*;
 import modelPackage.research.ResultFiltredMatch;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class testResearch {
     public static void main(String[] args) throws ResearchDataAccessException, Exception {
         ResearchManager researchManager = new ResearchManager();
 
-        //TODO : mantch win remplacer par String avec 'win' ou 'lose'
+        ArrayList<MatchData> matchDataArrayList = researchManager.getMatchData(new IdAccount(1));
 
-        FilterMatch filterMatch = new FilterMatch(1500,"2024-07-01","2024-07-31");
-        System.out.println(researchManager.getFiltredMatch(filterMatch));
-
+        for (MatchData matchData : matchDataArrayList) {
+            System.out.println(matchData);
+        }
 
     }
 }

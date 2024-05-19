@@ -136,7 +136,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
         ArrayList<MatchData> matchData = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("" +
+            PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT \n" +
                     "    player.username AS Toi, \n" +
                     "    opponent.username AS Adversaire, \n" +
@@ -214,12 +214,12 @@ public class ResearchDBAccess implements ResearchDataAccess{
                     MatchData match = new MatchData(player, opponent, match_id, moves, attack, defense, Opening, result, winOrLose);
                     matchData.add(match);
                 } catch (IllegalAccountArgumentException e) {
-                    throw new ResearchDataAccessException("Error during the creation of the result: " + e.getMessage());
+                    throw new ResearchDataAccessException("Une erreur est survenue (erreur:300)");
                 }
             }
 
         } catch (SQLException e) {
-            throw new ResearchDataAccessException(" Error during the research MatchData: " + e.getMessage());
+            throw new ResearchDataAccessException("Une erreur est survenue (erreur:301)");
         }
 
         return matchData;
