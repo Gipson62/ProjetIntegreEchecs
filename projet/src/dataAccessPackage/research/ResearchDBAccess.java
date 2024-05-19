@@ -226,7 +226,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
     }
 
     public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException {
-        return getMatchData(idAccount, 5);
+        return getMatchData(idAccount, 20);
     }
 
 }

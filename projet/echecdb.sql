@@ -104,7 +104,7 @@ CREATE TABLE Opening (
                          move3 VARCHAR(8) NOT NULL,
                          move4 VARCHAR(8) NOT NULL,
                          name VARCHAR(35) NOT NULL,
-                         description VARCHAR(152) NOT NULL,
+                         description VARCHAR(512) NOT NULL,
                          FOREIGN KEY (move1) REFERENCES Move(id),
                          FOREIGN KEY (move2) REFERENCES Move(id),
                          FOREIGN KEY (move3) REFERENCES Move(id),
@@ -115,7 +115,7 @@ CREATE TABLE Opening (
 CREATE TABLE Attack (
                         move1 VARCHAR(8) PRIMARY KEY,
                         name VARCHAR(35) NOT NULL,
-                        description VARCHAR(152) NOT NULL,
+                        description VARCHAR(512) NOT NULL,
                         FOREIGN KEY (move1) REFERENCES Move(id)
 );
 
@@ -124,7 +124,7 @@ CREATE TABLE Defense (
                          move1 VARCHAR(8) NOT NULL,
                          move2 VARCHAR(8) NOT NULL,
                          name VARCHAR(35) NOT NULL,
-                         description VARCHAR(152) NOT NULL,
+                         description VARCHAR(512) NOT NULL,
                          FOREIGN KEY (move1) REFERENCES Move(id),
                          FOREIGN KEY (move2) REFERENCES Move(id),
                          CONSTRAINT UC_unique_defense_moves UNIQUE (move1, move2)
