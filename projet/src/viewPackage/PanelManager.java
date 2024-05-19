@@ -112,7 +112,7 @@ public class PanelManager extends JPanel {
      */
     public void changePanel(String panelName) throws UnknownPanel {
         this.cardLayout.show(container, panelName);
-        ((IPanel)this.panels.get(panelName)).resetPanel();
+        ((IPanel)this.panels.get(panelName)).enterPanel();
     }
 
     private class PanelListener extends ComponentAdapter {

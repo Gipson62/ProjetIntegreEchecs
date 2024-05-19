@@ -35,7 +35,7 @@ public class MatchDataSearch extends JPanel implements IPanel {
         this.tournamentStateController = new TournamentStateController();
     }
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         this.removeAll();
         this.init();
     }

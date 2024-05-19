@@ -30,7 +30,6 @@ public class Profiles extends JPanel implements IPanel {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();
-        this.init();
     }
     public void init() {
         this.setLayout(new BorderLayout());
@@ -70,7 +69,7 @@ public class Profiles extends JPanel implements IPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         this.removeAll();
         this.init();
         return;
@@ -90,7 +89,7 @@ public class Profiles extends JPanel implements IPanel {
                     try {
                         System.out.println("IDs: " + accountsToRemove);
                         accountController.deleteAccountLignes(accountsToRemove);
-                        resetPanel();
+                        enterPanel();
                     } catch (DeleteAccountLignesExcemption ex) {
                         throw new RuntimeException(ex);
                     }
@@ -104,7 +103,9 @@ public class Profiles extends JPanel implements IPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ((ModificationPanel) panelManager.getPanels().get("ModificationPanel")).setAccount(allAccounts.get(profiles.getSelectedRow()));
+                    Account accToModify = allAccounts.get(profiles.getSelectedRow());
+                    System.out.println(accToModify);
+                    ((ModificationPanel) panelManager.getPanels().get("ModificationPanel")).setAccount(accToModify);
                     try {
                         panelManager.changePanel("ModificationPanel");
                     } catch (UnknownPanel ex) {
