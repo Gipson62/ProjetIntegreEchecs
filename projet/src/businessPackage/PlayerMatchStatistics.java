@@ -16,6 +16,7 @@ public class PlayerMatchStatistics {
     private ArrayList<MovementData> defenseList;
     private ArrayList<MovementData> attackList;
     private IdAccount accountForResearch;
+    private double globalWinrate;
 
     public PlayerMatchStatistics(IdAccount idAccount) {
         this.openingList = new ArrayList<>();
@@ -154,18 +155,23 @@ public class PlayerMatchStatistics {
         }
 
         int nbAttackGames = 0;
+        int nbGamesWon = 0;
         for (MovementData attack : attackList) {
             nbAttackGames += attack.getWinWith() + attack.getLoseWith() + attack.getWinAgainst() + attack.getLoseAgainst();
+            nbGamesWon += attack.getWinWith() + attack.getWinAgainst();
         }
         int nbDefenseGames = 0;
         for (MovementData defense : defenseList) {
             nbDefenseGames += defense.getWinWith() + defense.getLoseWith() + defense.getWinAgainst() + defense.getLoseAgainst();
+            nbGamesWon += defense.getWinWith() + defense.getWinAgainst();
         }
         int nbOpeningGames = 0;
         for (MovementData opening : openingList) {
             nbOpeningGames += opening.getWinWith() + opening.getLoseWith() + opening.getWinAgainst() + opening.getLoseAgainst();
+            nbGamesWon += opening.getWinWith() + opening.getWinAgainst();
         }
 
+        globalWinrate = (double) nbGamesWon / (nbAttackGames + nbDefenseGames + nbOpeningGames) * 100;
         calculateStatistic( nbAttackGames,  nbDefenseGames,  nbOpeningGames);
     }
 
