@@ -16,15 +16,13 @@ public class MainBusiness {
         try {
 
             AccountManager accountManager = new AccountManager();
-            Account acc = accountManager.login(new Email("etu52812@henallux.be"), new Password("h"));
-            if  (acc.getIdAccount() > 0){
-                System.out.println("Login success");
-                System.out.println("Account id : " + acc.getIdAccount());
-                System.out.println("Account email : " + acc.getEmail());
+            //pour tout les compte existant update
+            for (Account account : accountManager.getAllAccounts()) {
+
+                accountManager.updateAccount(account);
             }
-            else{
-                System.out.println("Login failed");
-            }
+
+
             //connection.close( );//envoie une sql exception a mettre ou ??? a la fin de la fonction main ???
         } // par exemple try creation d'un contre => possible erreur sql ou erreur de valeur
         catch (Exception e) {
