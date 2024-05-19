@@ -153,18 +153,31 @@ public class PlayerMatchStatistics {
             //--------------------------------Opening end------------------------------------------------
         }
 
-        calculateStatistic();
+        int nbAttackGames = 0;
+        for (MovementData attack : attackList) {
+            nbAttackGames += attack.getWinWith() + attack.getLoseWith() + attack.getWinAgainst() + attack.getLoseAgainst();
+        }
+        int nbDefenseGames = 0;
+        for (MovementData defense : defenseList) {
+            nbDefenseGames += defense.getWinWith() + defense.getLoseWith() + defense.getWinAgainst() + defense.getLoseAgainst();
+        }
+        int nbOpeningGames = 0;
+        for (MovementData opening : openingList) {
+            nbOpeningGames += opening.getWinWith() + opening.getLoseWith() + opening.getWinAgainst() + opening.getLoseAgainst();
+        }
+
+        calculateStatistic( nbAttackGames,  nbDefenseGames,  nbOpeningGames);
     }
 
-    private void calculateStatistic() {
+    private void calculateStatistic(int nbAttackGames, int nbDefenseGames, int nbOpeningGames) {
         for (MovementData attack : attackList) {
-            attack.calculateStat();
+            attack.calculateStat(nbAttackGames);
         }
         for (MovementData defense : defenseList) {
-            defense.calculateStat();
+            defense.calculateStat(nbDefenseGames);
         }
         for (MovementData opening : openingList) {
-            opening.calculateStat();
+            opening.calculateStat(nbOpeningGames);
         }
     }
 

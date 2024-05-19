@@ -19,7 +19,7 @@ public class MatchData {
     private final String winOrLose;
 
     public MatchData(Username player, Username opponent, int match_id, String []moves, String attack, String defense, String Opening, char result, String winOrLose) throws IllegalArgumentException {
-        if (player == null || opponent == null || match_id < 0 || moves == null || attack == null || defense == null || Opening == null || result == ' ' || winOrLose == null) {
+        if (player == null || opponent == null || match_id < 0) {
             throw new IllegalArgumentException("Illegal argument in MatchData");
         }
         this.player = player;
@@ -38,9 +38,9 @@ public class MatchData {
         this.opponent = new Username(opponent);
         this.match_id = match_id;
         this.moves = moves;
-        this.attack = attack;
-        this.defense = defense;
-        this.Opening = Opening;
+        this.attack = attack == null ? "Inconnu" : attack;
+        this.defense = defense == null ? "Inconnu" : defense;
+        this.Opening = Opening == null ? "Inconnu" : Opening;
         this.result = result;
         this.winOrLose = winOrLose;
 

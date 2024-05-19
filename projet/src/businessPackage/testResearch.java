@@ -13,7 +13,7 @@ public class testResearch {
     public static void main(String[] args) throws ResearchDataAccessException, Exception {
         ResearchManager researchManager = new ResearchManager();
 
-        ArrayList<MatchData> matchDataArrayList = researchManager.getMatchData(new IdAccount(1));
+        ArrayList<MatchData> matchDataArrayList = researchManager.getMatchData(new IdAccount(1),200);
 
         for (MatchData matchData : matchDataArrayList) {
             System.out.println(matchData);
