@@ -105,16 +105,12 @@ public class Profiles extends JPanel implements IPanel {
                 public void actionPerformed(ActionEvent e) {
                     Account accToModify = allAccounts.get(profiles.getSelectedRow());
                     ModificationPanel modificationPanel = new ModificationPanel(panelManager);
+                    modificationPanel.init();
                     modificationPanel.setAccount(accToModify);
                     panelManager.center.removeAll();
                     panelManager.center.add(modificationPanel);
                     panelManager.center.validate();
                     panelManager.center.repaint();
-                    try {
-                        panelManager.changePanel("ModificationPanel");
-                    } catch (UnknownPanel ex) {
-                        throw new RuntimeException(ex);
-                    }
                 }
             });
         }

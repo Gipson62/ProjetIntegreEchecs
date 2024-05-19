@@ -92,9 +92,8 @@ public class PanelManager extends JPanel {
             case "EloSearch" -> new EloSearch(this);
             case "MatchDataSearch" -> new MatchDataSearch(this);
             case "TournamentsSearch" -> new TournamentsSearch(this);
-            case "OpeningStats" -> new OpeningsStats(this);
+            case "OpeningsStats" -> new OpeningsStats(this);
             case "WinratePanel" -> new WinratePanel(this);
-            case "HomePanel" -> new HomePanel(this);
             default -> new HomePanel(this);
         };
         destinationPanel.enterPanel();
