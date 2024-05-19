@@ -33,7 +33,7 @@ public class EloSearch extends JPanel implements IPanel {
         this.researchController = new ResearchController();
     }
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         this.removeAll();
         this.init();
         return;

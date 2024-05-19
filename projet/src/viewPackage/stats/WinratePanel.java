@@ -17,7 +17,7 @@ public class WinratePanel extends JPanel implements IPanel {
 
     }
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         this.removeAll();
         this.init();
         return;
@@ -49,7 +49,7 @@ public class WinratePanel extends JPanel implements IPanel {
         inscriptionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                resetPanel();
+                enterPanel();
             }
         });
         this.add(buttonsPanel, BorderLayout.SOUTH);

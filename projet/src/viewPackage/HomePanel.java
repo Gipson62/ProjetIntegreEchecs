@@ -12,7 +12,7 @@ public class HomePanel extends JPanel implements IPanel {
     }
 
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         return;
     }
 

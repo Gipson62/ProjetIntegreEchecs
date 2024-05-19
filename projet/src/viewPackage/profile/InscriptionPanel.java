@@ -41,7 +41,7 @@ public class InscriptionPanel extends JPanel implements IPanel {
         this.rankController = new RankController();
     }
     @Override
-    public void resetPanel() {
+    public void enterPanel() {
         this.removeAll();
         this.init();
         return;

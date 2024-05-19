@@ -41,11 +41,10 @@ public class ModificationPanel extends JPanel implements IPanel {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();
+        this.init();
     }
     @Override
-    public void resetPanel() {
-        this.removeAll();
-        this.init();
+    public void enterPanel() {
         return;
     }
     public void setAccount(Account account) {
