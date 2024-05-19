@@ -8,13 +8,11 @@ import exceptionPackage.account.AddAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
-import viewPackage.DefaultPanel;
+import viewPackage.IPanel;
 import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +22,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class InscriptionPanel extends DefaultPanel {
+public class InscriptionPanel extends JPanel implements IPanel {
     AccountController accountController;
     RankController rankController;
     PanelManager panelManager;
@@ -41,6 +39,15 @@ public class InscriptionPanel extends DefaultPanel {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();
+    }
+    @Override
+    public void resetPanel() {
+        this.removeAll();
+        this.init();
+        return;
+    }
+    @Override
+    public void init() {
         this.setLayout(new BorderLayout());
 
         this.titlePanel = new JPanel();
@@ -155,19 +162,8 @@ public class InscriptionPanel extends DefaultPanel {
         this.buttonsPanel.add(validationButton);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
+    }
 
-    }
-    @Override
-    public void resetPanel() {
-        this.email.setText("");
-        this.pseudo.setText("");
-        this.password.setText("");
-        this.gender.setText("");
-        this.bio.setText("");
-        this.elo.setValue(500);
-        this.beginner.setSelected(false);
-        return;
-    }
     private class ValidateButton extends JButton {
         public ValidateButton() {
             super("Valider");

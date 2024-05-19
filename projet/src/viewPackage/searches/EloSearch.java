@@ -5,7 +5,7 @@ import controllerPackage.ResearchController;
 import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.research.FilterMatch;
 import modelPackage.research.ResultFiltredMatch;
-import viewPackage.DefaultPanel;
+import viewPackage.IPanel;
 import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
@@ -17,10 +17,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
-public class EloSearch extends DefaultPanel {
+public class EloSearch extends JPanel implements IPanel {
     PanelManager panelManager;
     JPanel formPanel, buttonsPanel, resultPanel;
     JSlider eloSlider;
@@ -32,6 +31,15 @@ public class EloSearch extends DefaultPanel {
         this.panelManager = initPanelManager;
         this.rankController = new RankController();
         this.researchController = new ResearchController();
+    }
+    @Override
+    public void resetPanel() {
+        this.removeAll();
+        this.init();
+        return;
+    }
+    @Override
+    public void init() {
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
@@ -80,21 +88,9 @@ public class EloSearch extends DefaultPanel {
 
         this.buttonsPanel = new JPanel();
         this.buttonsPanel.add(new ValidationButton("Valider"));
-        JButton inscriptionButton = new JButton("Recommencer");
-        this.buttonsPanel.add(inscriptionButton);
-        inscriptionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resetPanel();
-            }
-        });
         this.add(buttonsPanel, BorderLayout.SOUTH);
+    }
 
-    }
-    @Override
-    public void resetPanel() {
-        return;
-    }
     private class ValidationButton extends JButton{
         public ValidationButton(String text) {
             super(text);

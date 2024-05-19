@@ -4,12 +4,11 @@ import controllerPackage.AccountController;
 import controllerPackage.RankController;
 import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.UnknownPanel;
-import exceptionPackage.account.AddAccountException;
 import exceptionPackage.account.UpdateAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
-import viewPackage.DefaultPanel;
+import viewPackage.IPanel;
 import viewPackage.EloSlider;
 import viewPackage.PanelManager;
 
@@ -24,7 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ModificationPanel extends DefaultPanel {
+public class ModificationPanel extends JPanel implements IPanel {
     AccountController accountController;
     RankController rankController;
     PanelManager panelManager;
@@ -42,6 +41,28 @@ public class ModificationPanel extends DefaultPanel {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();
+    }
+    @Override
+    public void resetPanel() {
+        this.removeAll();
+        this.init();
+        return;
+    }
+    public void setAccount(Account account) {
+        this.account = account;
+        this.pseudo.setText(this.account.getUsername());
+        this.password.setText(this.account.getPassword());
+        this.email.setText(this.account.getEmail());
+        this.gender.setText(this.account.getGender());
+        this.bio.setText(this.account.getBio());
+        this.elo.setValue(this.account.getElo());
+        this.beginner.setSelected(this.account.getIsBeginner());
+        this.ranks.setSelectedIndex(this.account.getRank() - 1);
+        this.birthdate.setValue(Date.valueOf(this.account.getBirthdate()));
+    }
+
+    @Override
+    public void init() {
         this.setLayout(new BorderLayout());
 
         this.titlePanel = new JPanel();
@@ -156,24 +177,8 @@ public class ModificationPanel extends DefaultPanel {
         this.buttonsPanel.add(validationButton);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
+    }
 
-    }
-    @Override
-    public void resetPanel() {
-        return;
-    }
-    public void setAccount(Account account) {
-        this.account = account;
-        this.pseudo.setText(this.account.getUsername());
-        this.password.setText(this.account.getPassword());
-        this.email.setText(this.account.getEmail());
-        this.gender.setText(this.account.getGender());
-        this.bio.setText(this.account.getBio());
-        this.elo.setValue(this.account.getElo());
-        this.beginner.setSelected(this.account.getIsBeginner());
-        this.ranks.setSelectedIndex(this.account.getRank() - 1);
-        this.birthdate.setValue(Date.valueOf(this.account.getBirthdate()));
-    }
     private class ValidateButton extends JButton {
         public ValidateButton() {
             super("Valider");

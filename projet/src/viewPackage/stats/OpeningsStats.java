@@ -1,7 +1,6 @@
 package viewPackage.stats;
 
-import viewPackage.DefaultPanel;
-import viewPackage.MainWindow;
+import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
@@ -9,12 +8,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OpeningsStats extends DefaultPanel {
+public class OpeningsStats extends JPanel implements IPanel {
     PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
     public OpeningsStats(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
+    }
+    @Override
+    public void resetPanel() {
+        this.removeAll();
+        this.init();
+        return;
+    }
+
+    @Override
+    public void init() {
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
@@ -43,10 +52,5 @@ public class OpeningsStats extends DefaultPanel {
             }
         });
         this.add(buttonsPanel, BorderLayout.SOUTH);
-
-    }
-    @Override
-    public void resetPanel() {
-        return;
     }
 }

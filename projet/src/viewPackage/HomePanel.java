@@ -1,13 +1,9 @@
 package viewPackage;
 
-import exceptionPackage.UnknownPanel;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class HomePanel extends DefaultPanel {
+public class HomePanel extends JPanel implements IPanel {
     PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
@@ -18,6 +14,11 @@ public class HomePanel extends DefaultPanel {
     @Override
     public void resetPanel() {
         return;
+    }
+
+    @Override
+    public void init() {
+
     }
 
     public void paint(Graphics g) {

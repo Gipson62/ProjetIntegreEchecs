@@ -99,13 +99,13 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-        this.search3 = new JMenuItem("Tournois d'un ami");
+        this.search3 = new JMenuItem("Matchs d'un joueur");
         this.searchMenu.add(this.search3);
         this.search3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    panelManager.changePanel("FriendTournamentsSearch");
+                    panelManager.changePanel("MatchDataSearch");
                 } catch (UnknownPanel ex) {
                     throw new RuntimeException(ex);
                 }

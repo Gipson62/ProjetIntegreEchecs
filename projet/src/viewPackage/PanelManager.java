@@ -5,7 +5,7 @@ import viewPackage.profile.InscriptionPanel;
 import viewPackage.profile.ModificationPanel;
 import viewPackage.profile.Profiles;
 import viewPackage.searches.EloSearch;
-import viewPackage.searches.FriendTournamentsSearch;
+import viewPackage.searches.MatchDataSearch;
 import viewPackage.searches.TournamentsSearch;
 import viewPackage.stats.OpeningsStats;
 import viewPackage.stats.WinratePanel;
@@ -23,7 +23,7 @@ public class PanelManager extends JPanel {
     public RightPanel right;
     private JPanel center;
     private MainWindow mainWindow;
-    private HashMap<String, DefaultPanel> panels;
+    private HashMap<String, JPanel> panels;
     private CardLayout cardLayout;
     private JPanel container;
     private PanelListener listener;
@@ -55,7 +55,7 @@ public class PanelManager extends JPanel {
         this.addPanel("InscriptionPanel", new InscriptionPanel(this), container);
         this.addPanel("EloSearch", new EloSearch(this), container);
         this.addPanel("TournamentsSearch", new TournamentsSearch(this), container);
-        this.addPanel("FriendTournamentsSearch", new FriendTournamentsSearch(this), container);
+        this.addPanel("MatchDataSearch", new MatchDataSearch(this), container);
         this.addPanel("Profiles", new Profiles(this), container);
         this.addPanel("OpeningsStats", new OpeningsStats(this), container);
         this.addPanel("WinratePanel", new WinratePanel(this), container);
@@ -64,7 +64,7 @@ public class PanelManager extends JPanel {
         System.out.println(this);
     }
 
-    public HashMap<String, DefaultPanel> getPanels() {
+    public HashMap<String, JPanel> getPanels() {
         return panels;
     }
     public JPanel createLeftPanel() {
@@ -102,7 +102,7 @@ public class PanelManager extends JPanel {
      * @param panelName
      * @param panel
      */
-    public void addPanel(String panelName, DefaultPanel panel, JPanel parent) {
+    public void addPanel(String panelName, JPanel panel, JPanel parent) {
         this.panels.put(panelName, panel);
         parent.add(panel, panelName);
     }
@@ -112,7 +112,7 @@ public class PanelManager extends JPanel {
      */
     public void changePanel(String panelName) throws UnknownPanel {
         this.cardLayout.show(container, panelName);
-        this.panels.get(panelName).resetPanel();
+        ((IPanel)this.panels.get(panelName)).resetPanel();
     }
 
     private class PanelListener extends ComponentAdapter {

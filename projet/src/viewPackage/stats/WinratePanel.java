@@ -1,7 +1,6 @@
 package viewPackage.stats;
 
-import viewPackage.DefaultPanel;
-import viewPackage.MainWindow;
+import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
@@ -9,12 +8,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class WinratePanel extends DefaultPanel {
+public class WinratePanel extends JPanel implements IPanel {
     PanelManager panelManager;
     JPanel formPanel;
     JPanel buttonsPanel;
     public WinratePanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
+
+    }
+    @Override
+    public void resetPanel() {
+        this.removeAll();
+        this.init();
+        return;
+    }
+
+    @Override
+    public void init() {
         this.setLayout(new BorderLayout());
 
         this.formPanel = new JPanel();
@@ -43,10 +53,5 @@ public class WinratePanel extends DefaultPanel {
             }
         });
         this.add(buttonsPanel, BorderLayout.SOUTH);
-
-    }
-    @Override
-    public void resetPanel() {
-        return;
     }
 }

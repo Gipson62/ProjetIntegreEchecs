@@ -8,7 +8,7 @@ import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
-import viewPackage.DefaultPanel;
+import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 // TODO : add a way to get written data about the user from the disk with Serializable
-public class Profiles extends DefaultPanel {
+public class Profiles extends JPanel implements IPanel {
     private AccountController accountController;
     private RankController rankController;
     private PanelManager panelManager;
@@ -75,6 +75,7 @@ public class Profiles extends DefaultPanel {
         this.init();
         return;
     }
+
     private class RemoveButton extends JButton {
         public RemoveButton(String text) {
             super(text);
@@ -103,7 +104,7 @@ public class Profiles extends DefaultPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    panelManager.getPanels().get("ModificationPanel").setAccount(allAccounts.get(profiles.getSelectedRow()));
+                    ((ModificationPanel) panelManager.getPanels().get("ModificationPanel")).setAccount(allAccounts.get(profiles.getSelectedRow()));
                     try {
                         panelManager.changePanel("ModificationPanel");
                     } catch (UnknownPanel ex) {
