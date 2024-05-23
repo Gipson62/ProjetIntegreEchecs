@@ -4,7 +4,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Rank implements Serializable {
+public class Rank  {
     private int rank;
     private String name;
     private String description;
@@ -30,7 +30,7 @@ public class Rank implements Serializable {
         if(rank >= 0 && rank <= 11){
             this.rank = rank;
         }else {
-            throw new IllegalAccountArgumentException("Wrong rank size");
+            throw new IllegalAccountArgumentException("le Rank doit etre entre 0 et 11");
         }
     }
 

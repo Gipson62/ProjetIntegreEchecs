@@ -4,7 +4,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Tag implements Serializable {
+public class Tag {
     private int tag;
 
     public Tag(int tag) throws IllegalAccountArgumentException{

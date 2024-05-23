@@ -4,7 +4,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Email implements Serializable {
+public class Email{
     private String email;
 
     public Email(String email) throws IllegalAccountArgumentException {

@@ -5,7 +5,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class IdAccount implements Serializable {
+public class IdAccount {
     private int idAccount;
 
     public IdAccount(int idAccount) throws IllegalAccountArgumentException{

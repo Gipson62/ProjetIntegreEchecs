@@ -4,7 +4,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Bio implements Serializable {
+public class Bio  {
     private String bio;
 
     public Bio(String bio) throws IllegalAccountArgumentException{
@@ -20,7 +20,7 @@ public class Bio implements Serializable {
             this.bio = bio;
         }
         else {
-            throw new IllegalAccountArgumentException("Bio trop longue (512 max)");
+            throw new IllegalAccountArgumentException("La Bio est trop longue! 512 caractères maximum");
         }
     }
 

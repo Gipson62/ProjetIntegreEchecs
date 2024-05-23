@@ -7,6 +7,10 @@ import modelPackage.statistic.MovementData;
 
 import java.util.ArrayList;
 
+/**
+ * Manages statistics related to chess matches for a player.
+ * This class stores and computes various statistics from match data, including openings, defenses, and attacks.
+ */
 public class PlayerMatchStatistics {
     //possede une liste d'Opening une liste de Defense et une liste d'attaque.
     //dedans le nom, les id, String composé pour faire liste de coups
@@ -18,23 +22,38 @@ public class PlayerMatchStatistics {
     private IdAccount accountForResearch;
     private double globalWinrate;
 
+    /**
+     * Constructor for PlayerMatchStatistics.
+     * Initializes lists to store movement data for openings, defenses, and attacks.
+     *
+     * @param idAccount The account ID for which statistics are being compiled.
+     */
     public PlayerMatchStatistics(IdAccount idAccount) {
         this.openingList = new ArrayList<>();
         this.defenseList = new ArrayList<>();
         this.attackList = new ArrayList<>();
         this.accountForResearch = idAccount;
     }
+
+    /**
+     * Overloaded constructor that accepts a primitive integer account ID.
+     * @param idAccount The primitive integer ID of the account.
+     */
     public PlayerMatchStatistics(int idAccount) {
         this(new IdAccount(idAccount));
     }
 
+    /**
+     * Gathers and processes match data to calculate various statistics.
+     * This includes calculating win rates and adding new data to the respective lists.
+     *
+     * @throws ResearchDataAccessException If there is an error accessing the research data.
+     */
     public void setStatistic() throws ResearchDataAccessException {
         ResearchManager researchManager = new ResearchManager();
         for (MatchData matchData : researchManager.getMatchData(accountForResearch,100)) {
 
             char playerColor = (matchData.getResult() == 'w' && matchData.getWinOrLose().equals("Win")) ||(matchData.getResult() == 'b' && matchData.getWinOrLose().equals("Lose"))? 'w' : 'b';
-            System.out.println("playerColor : " + playerColor);
-
 
             //--------------------------------Attack------------------------------------------------
             boolean attackExist = false;
@@ -154,6 +173,8 @@ public class PlayerMatchStatistics {
             //--------------------------------Opening end------------------------------------------------
         }
 
+
+        //calcul des stats globales et des stats pour chaque mouvement  (attack, defense, opening)
         int nbAttackGames = 0;
         int nbGamesWon = 0;
         for (MovementData attack : attackList) {

@@ -12,18 +12,10 @@ public class FilterMatch {
     private LocalDate dateMax;
 
     public FilterMatch( int eloMin, LocalDate dateMin, LocalDate dateMax) throws IllegalAccountArgumentException{
-        try{
-            this.eloMin = new Elo(eloMin);
-        } catch (IllegalAccountArgumentException e) {
-            throw new IllegalAccountArgumentException("filterMatch constructor failed: " + e.getMessage());
-        }
+
+        this.eloMin = new Elo(eloMin);
         setDate(dateMin, dateMax);
     }
-
-    public FilterMatch( int eloMin, String dateMin, String dateMax) throws IllegalAccountArgumentException {
-        this( eloMin, LocalDate.parse(dateMin), LocalDate.parse(dateMax));
-    }
-
 
     public int getEloMin() {
         return eloMin.getElo();
@@ -36,7 +28,6 @@ public class FilterMatch {
     public LocalDate getDateMax() {
         return dateMax;
     }
-
 
     public void setEloMin(int eloMin) throws IllegalAccountArgumentException {
         this.eloMin.setElo(eloMin);

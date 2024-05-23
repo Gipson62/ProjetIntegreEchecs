@@ -1,34 +1,46 @@
 package dataAccessPackage.rankDataAccess;
 
+import exceptionPackage.rank.ReadRankException;
 import exceptionPackage.IllegalAccountArgumentException;
 import dataAccessPackage.SingletonConnection;
-import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Rank;
-import java.util.ArrayList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class RankDBAccess implements RankDataAccess{
+/**
+ * Implementation of the RankDataAccess interface to interact with the database.
+ */
+public class RankDBAccess implements RankDataAccess {
 
     private Connection connection;
 
-    public RankDBAccess(){
+    /**
+     * Constructor establishes a connection to the database using a singleton pattern.
+     */
+    public RankDBAccess() {
         this.connection = SingletonConnection.getInstance();
     }
 
+    /**
+     * Get all ranks from the database.
+     * @return A list of all ranks from the database.
+     * @throws ReadRankException If an SQL exception occurs or the account argument is illegal.
+     */
     @Override
-    public ArrayList<Rank> getAllRanks() throws ReadRankException{
+    public ArrayList<Rank> getAllRanks() throws ReadRankException {
         ArrayList<Rank> ranks = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM `rank`");
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 ranks.add(new Rank(rs.getInt("id"), rs.getString("name"), rs.getString("description")));
             }
-        } catch (SQLException|IllegalAccountArgumentException e) {
-            throw new ReadRankException(e.getMessage());
+        } catch (SQLException | IllegalAccountArgumentException e) {
+            throw new ReadRankException("Une erreur est survenue lors de la récupération des rangs.");
         }
         return ranks;
     }

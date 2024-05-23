@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account implements Serializable {
+public class Account{
 
     //Attributes
     private IdAccount idAccount;

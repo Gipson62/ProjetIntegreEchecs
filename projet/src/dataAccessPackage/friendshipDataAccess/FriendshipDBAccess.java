@@ -29,7 +29,7 @@ public class FriendshipDBAccess implements FriendshipDataAccess{
 
             preparedStatement.executeUpdate();
         }catch(SQLException e){
-            throw new AddFriendshipException(e.getMessage());
+            throw new AddFriendshipException("Une erreur est survenue lors de l'ajout de l'amitié");
         }
     }
 
@@ -40,7 +40,7 @@ public class FriendshipDBAccess implements FriendshipDataAccess{
             preparedStatement.setInt(2, friendship.getIdAccount2());
             preparedStatement.executeUpdate();
         }catch(SQLException e){
-            throw new DeleteFriendshipException(e.getMessage());
+            throw new DeleteFriendshipException("Une erreur est survenue lors de la suppression de l'amitié");
         }
     }
 
@@ -63,7 +63,7 @@ public class FriendshipDBAccess implements FriendshipDataAccess{
             }
 
         }catch(SQLException e){
-            throw new GetFriendListException(e.getMessage());
+            throw new GetFriendListException("Une erreur est survenue lors de la récupération de la liste d'amis");
         }
         return friendList;
     }

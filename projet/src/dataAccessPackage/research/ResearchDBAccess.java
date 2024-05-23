@@ -25,9 +25,6 @@ public class ResearchDBAccess implements ResearchDataAccess{
     }
     @Override
     public ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException {
-        LocalDate dateMin = filterMatch.getDateMin();
-        LocalDate dateMax = filterMatch.getDateMax();
-        int eloMin = filterMatch.getEloMin();
 
         ArrayList<ResultFiltredMatch> resultFiltredMatchs = new ArrayList<>();
 
@@ -46,10 +43,10 @@ public class ResearchDBAccess implements ResearchDataAccess{
                     "and start_date between ?and ?\n" +
                     "order by start_date ;");
 
-            preparedStatement.setInt(1, eloMin);
-            preparedStatement.setInt(2, eloMin);
-            preparedStatement.setDate(3, Date.valueOf(dateMin));
-            preparedStatement.setDate(4, Date.valueOf(dateMax));
+            preparedStatement.setInt(1, filterMatch.getEloMin());
+            preparedStatement.setInt(2, filterMatch.getEloMin());
+            preparedStatement.setDate(3, Date.valueOf(filterMatch.getDateMin()));
+            preparedStatement.setDate(4, Date.valueOf(filterMatch.getDateMax()));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -73,14 +70,14 @@ public class ResearchDBAccess implements ResearchDataAccess{
                     ResultFiltredMatch resultFiltredMatch = new ResultFiltredMatch(matchWin, usernameWhiteName, tagWhite, eloWhite, usernameBlackName, eloBlack, tagBlack, dateMatch);
                     resultFiltredMatchs.add(resultFiltredMatch);
                 } catch (IllegalAccountArgumentException e) {
-                    throw new ResearchDataAccessException("Error during the creation of the result: " + e.getMessage());
+                    System.out.println("Une valeur de l'objet ResultFiltredMatch est incorrecte");
                 }
             }
 
 
         }
         catch (SQLException e){
-            throw new ResearchDataAccessException(" Error during the research Matchfiltred: " + e.getMessage());
+            throw new ResearchDataAccessException("Une erreur est survenue lors de la recherche des matchs");
         }
 
         return resultFiltredMatchs;
@@ -117,15 +114,13 @@ public class ResearchDBAccess implements ResearchDataAccess{
                 int time = resultSet.getInt("time");
                 String winner = resultSet.getString("username");
 
-                try {
+
                     ResultTournamentPlayed resultTournamentPlayed = new ResultTournamentPlayed(tournamentName, startDate, elo, time, winner);
                     resultTournamentPlayeds.add(resultTournamentPlayed);
-                } catch (IllegalAccountArgumentException e) {
-                    throw new ResearchDataAccessException("Error during the creation of the result: " + e.getMessage());
-                }
+
             }
         } catch (SQLException e) {
-            throw new ResearchDataAccessException(" Error during the research TournamentPlayed: " + e.getMessage());
+            throw new ResearchDataAccessException("Une erreur est survenue lors de la recherche des tournois joués");
         }
 
         return resultTournamentPlayeds;
@@ -138,7 +133,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "SELECT \n" +
-                    "    player.username AS Toi, \n" +
+                    "    player.username AS Joueur, \n" +
                     "    opponent.username AS Adversaire, \n" +
                     "    m.id AS match_id, \n" +
                     "    move1.id AS Coup_1, \n" +
@@ -200,7 +195,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String player = resultSet.getString("Toi");
+                String player = resultSet.getString("Joueur");
                 String opponent = resultSet.getString("Adversaire");
                 int match_id = resultSet.getInt("match_id");
                 String[] moves = {resultSet.getString("Coup_1"), resultSet.getString("Coup_2"), resultSet.getString("Coup_3"), resultSet.getString("Coup_4")};
@@ -214,17 +209,18 @@ public class ResearchDBAccess implements ResearchDataAccess{
                     MatchData match = new MatchData(player, opponent, match_id, moves, attack, defense, Opening, result, winOrLose);
                     matchData.add(match);
                 } catch (IllegalAccountArgumentException e) {
-                    throw new ResearchDataAccessException("Une erreur est survenue (erreur:300)");
+                    System.out.println("Une valeur de l'objet MatchData est incorrecte");
                 }
             }
 
         } catch (SQLException e) {
-            throw new ResearchDataAccessException("Une erreur est survenue (erreur:301)");
+            throw new ResearchDataAccessException("Une erreur est survenue lors de la recherche des matchs");
         }
 
         return matchData;
     }
 
+    @Override
     public ArrayList<MatchData> getMatchData(IdAccount idAccount) throws ResearchDataAccessException {
         return getMatchData(idAccount, 20);
     }

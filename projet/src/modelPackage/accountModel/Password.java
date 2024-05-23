@@ -3,7 +3,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Password implements Serializable {
+public class Password {
     private String password;
 
     public Password(String password) throws IllegalAccountArgumentException {

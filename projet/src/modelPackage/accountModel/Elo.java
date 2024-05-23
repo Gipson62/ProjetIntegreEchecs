@@ -4,7 +4,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 
 import java.io.Serializable;
 
-public class Elo implements Serializable {
+public class Elo {
     //elo entre 0 et 3000
     private int elo;
 
@@ -23,7 +23,7 @@ public class Elo implements Serializable {
             this.elo = elo;
         }
         else{
-            throw new IllegalAccountArgumentException("Elo doit etre entre 0 et 3000");
+            throw new IllegalAccountArgumentException("L'Elo doit etre compris entre 0 et 3000");
         }
     }
 }
