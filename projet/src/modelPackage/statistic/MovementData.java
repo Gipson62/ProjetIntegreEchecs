@@ -23,13 +23,13 @@ public class MovementData {
 
     public void calculateStat(int totalGames) {
         if (winWith + loseWith != 0) {
-            winRateWith = (double) (winWith / (winWith + loseWith))*100;
+            winRateWith = ((double) winWith / (winWith + loseWith))*100;
         }
         if (winAgainst + loseAgainst != 0) {
-            winRateAgainst = (double) (winAgainst / (winAgainst + loseAgainst))*100;
+            winRateAgainst = ((double)winAgainst / (winAgainst + loseAgainst))*100;
         }
         if (totalGames != 0) {
-            playRate = (double) ((winWith + loseWith + winAgainst + loseAgainst) / totalGames)*100;
+            playRate = ((double) (winWith + loseWith + winAgainst + loseAgainst) / totalGames)*100;
         }
 
     }
@@ -62,6 +62,9 @@ public class MovementData {
         return name;
     }
 
+    public Double getPlayRate() {
+        return playRate;
+    }
 
     public int getWinWith() {
         return winWith;

@@ -81,7 +81,7 @@ public class WinratePanel extends JPanel implements IPanel {
                         statisticsController.setStatistic();
                         double winrate = statisticsController.getGlobalWinrate();
                         JLabel winrateLabel = new JLabel();
-                        winrateLabel.setText("Taux de victoire : " + (Double.isNaN(winrate) ? "Pas de données" : String.format("%2f", winrate)));
+                        winrateLabel.setText("Taux de victoire : " + (Double.isNaN(winrate) ? "Pas de données" : String.format("%.2f", winrate)));
                         winrateLabel.setFont(getFont().deriveFont(28f));
                         resultPanel.removeAll();
                         resultPanel.add(winrateLabel);
