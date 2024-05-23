@@ -58,9 +58,9 @@ public class Profiles extends JPanel implements IPanel {
             this.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int[] idAccounts = profiles.getSelectedRows();
+                    int[] selectedRows = profiles.getSelectedRows();
                     ArrayList<Integer> accountsToRemove = new ArrayList<>();
-                    for (int account : idAccounts) {
+                    for (int account : selectedRows) {
                         accountsToRemove.add(allAccounts.get(account).getIdAccount());
                     }
                     try {
