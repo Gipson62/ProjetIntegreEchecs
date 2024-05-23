@@ -2,17 +2,14 @@ package viewPackage.profile;
 
 import controllerPackage.AccountController;
 import controllerPackage.RankController;
-import exceptionPackage.account.DeleteAccountLignesExcemption;
+import exceptionPackage.account.DeleteAccountLignesException;
 import exceptionPackage.account.ReadAccountException;
-import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
-import modelPackage.accountModel.Rank;
 import modelPackage.tables.AllAccountsModel;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +67,7 @@ public class Profiles extends JPanel implements IPanel {
                         System.out.println("IDs: " + accountsToRemove);
                         accountController.deleteAccountLignes(accountsToRemove);
                         enterPanel();
-                    } catch (DeleteAccountLignesExcemption ex) {
+                    } catch (DeleteAccountLignesException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

@@ -4,8 +4,6 @@ import businessPackage.AccountManager;
 import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
 import exceptionPackage.account.*;
-import modelPackage.accountModel.Password;
-import modelPackage.accountModel.Email;
 
 import java.util.ArrayList;
 
@@ -29,7 +27,7 @@ public class AccountController {
         accountManager.updateAccount(account);
     }
 
-    public void deleteAccountLignes(ArrayList<Integer> idAccount) throws DeleteAccountLignesExcemption{
+    public void deleteAccountLignes(ArrayList<Integer> idAccount) throws DeleteAccountLignesException {
         accountManager.deleteAccountLignes(idAccount);
     }
 

@@ -139,7 +139,7 @@ public class AccountDBAccess implements AccountDataAccess{
     }
 
     @Override
-    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesExcemption{
+    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesException {
         for (Integer id : idAccounts) {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
@@ -151,7 +151,7 @@ public class AccountDBAccess implements AccountDataAccess{
             }
             catch (SQLException e) {
                 System.out.println(e.getMessage());
-                throw new DeleteAccountLignesExcemption("Account avec l'id " + id + " n'a pas été supprimé");
+                throw new DeleteAccountLignesException("Account avec l'id " + id + " n'a pas été supprimé");
                 //les comptes qui n'exste pas sont quand meme affiché comme supprimé pas s'erreur si n'existe pas
             }
         }

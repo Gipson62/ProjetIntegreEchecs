@@ -6,7 +6,6 @@ import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
 import exceptionPackage.account.*;
 import modelPackage.accountModel.IdAccount;
-import modelPackage.accountModel.Password;
 import modelPackage.accountModel.Email;
 
 import java.util.ArrayList;
@@ -79,9 +78,9 @@ public class AccountManager {
     /**
      * Deletes accounts based on a list of account IDs.
      * @param idAccounts List of account IDs to delete.
-     * @throws DeleteAccountLignesExcemption If an error occurs during the deletion process.
+     * @throws DeleteAccountLignesException If an error occurs during the deletion process.
      */
-    public void deleteAccountLignes(ArrayList<Integer> idAccounts) throws DeleteAccountLignesExcemption {
+    public void deleteAccountLignes(ArrayList<Integer> idAccounts) throws DeleteAccountLignesException {
         dao.deleteAccountLignes(idAccounts);
     }
 
