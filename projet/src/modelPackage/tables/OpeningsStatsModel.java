@@ -22,6 +22,7 @@ public class OpeningsStatsModel extends AbstractTableModel {
         this.columnNames.add("Nombre de défaite contre");
         this.columnNames.add("Taux de victoire avec");
         this.columnNames.add("Taux de victoire contre");
+        this.columnNames.add("Taux d'utilisation");
 
         this.contents = new ArrayList<>();
         this.contents.addAll(attackList);
@@ -65,6 +66,7 @@ public class OpeningsStatsModel extends AbstractTableModel {
             case 4 -> movementData.getWinAgainst();
             case 5 -> movementData.getLoseAgainst();
             case 6 -> movementData.getWinRateWith();
+            case 8 -> movementData.getPlayRate();
             default -> movementData.getWinRateAgainst();
         };
     }
@@ -72,7 +74,7 @@ public class OpeningsStatsModel extends AbstractTableModel {
     public Class getColumnClass(int column) {
         return switch(column) {
             case 0, 1 -> String.class;
-            case 6, 7 -> Double.class;
+            case 6, 7, 8 -> Double.class;
             default -> Integer.class;
         };
     }

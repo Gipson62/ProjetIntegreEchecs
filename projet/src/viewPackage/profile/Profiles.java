@@ -67,6 +67,8 @@ public class Profiles extends JPanel implements IPanel {
                         System.out.println("IDs: " + accountsToRemove);
                         accountController.deleteAccountLignes(accountsToRemove);
                         enterPanel();
+                        panelManager.center.validate();
+                        panelManager.center.repaint();
                     } catch (DeleteAccountLignesException ex) {
                         throw new RuntimeException(ex);
                     }

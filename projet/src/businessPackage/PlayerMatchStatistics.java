@@ -12,10 +12,6 @@ import java.util.ArrayList;
  * This class stores and computes various statistics from match data, including openings, defenses, and attacks.
  */
 public class PlayerMatchStatistics {
-    //possede une liste d'Opening une liste de Defense et une liste d'attaque.
-    //dedans le nom, les id, String composé pour faire liste de coups
-
-    //puis les données seront stat seront calculé en fonction de ces listes
     private ArrayList<MovementData> openingList;
     private ArrayList<MovementData> defenseList;
     private ArrayList<MovementData> attackList;
@@ -24,7 +20,7 @@ public class PlayerMatchStatistics {
 
     /**
      * Constructor for PlayerMatchStatistics.
-     * Initializes lists to store movement data for openings, defenses, and attacks.
+     * Initialize lists to store movement data for openings, defenses, and attacks.
      *
      * @param idAccount The account ID for which statistics are being compiled.
      */
