@@ -1,5 +1,6 @@
 package viewPackage;
 
+import controllerPackage.ConnectionController;
 import dataAccessPackage.SingletonConnection;
 
 import javax.swing.*;
@@ -12,20 +13,18 @@ public class MainWindow extends JFrame {
     private JMenu appMenu, profilMenu, searchMenu, statMenu;
     private JMenuItem exit, home, inscription, profiles, playerTournaments, gameBetweenTwoDates, playerAllMatches, winrate, OpeningUsage;
     private PanelManager panelManager;
+    private ConnectionController connectionController;
     public MainWindow(String title) {
         super(title);
         this.panelManager = new PanelManager(this);
         this.add(panelManager, BorderLayout.CENTER);
+        this.connectionController = new ConnectionController();
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                try {
-                    SingletonConnection.closeConnection();
-                    System.exit(0);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error while trying to close the connexion to the database", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                connectionController.closeConnection();
+                System.exit(0);
             }
         });
         this.setBounds(250, 250, 800, 500);
@@ -39,6 +38,7 @@ public class MainWindow extends JFrame {
         this.exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                connectionController.closeConnection();
                 System.exit(0);
             }
         });
