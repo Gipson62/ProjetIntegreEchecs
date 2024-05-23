@@ -3,6 +3,7 @@ package dataAccessPackage.accountDataAccess;
 import exceptionPackage.account.AddAccountException;
 import modelPackage.accountModel.Account;
 import exceptionPackage.account.*;
+import modelPackage.accountModel.IdAccount;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public interface AccountDataAccess {
      * @param idAccounts List of IDs of the accounts to be deleted.
      * @throws DeleteAccountLignesException If there is a failure in deleting the accounts.
      */
-    void deleteAccountLignes(ArrayList<Integer> idAccounts) throws DeleteAccountLignesException;
+    void deleteAccountLignes(ArrayList<IdAccount> idAccounts) throws DeleteAccountLignesException;
 
     /**
      * Retrieves all available accounts.

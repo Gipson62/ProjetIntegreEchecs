@@ -81,7 +81,11 @@ public class AccountManager {
      * @throws DeleteAccountLignesException If an error occurs during the deletion process.
      */
     public void deleteAccountLignes(ArrayList<Integer> idAccounts) throws DeleteAccountLignesException {
-        dao.deleteAccountLignes(idAccounts);
+        ArrayList<IdAccount> idAccountsList = new ArrayList<>();
+        for (Integer id : idAccounts) {
+            idAccountsList.add(new IdAccount(id));
+        }
+        dao.deleteAccountLignes(idAccountsList);
     }
 
     /**

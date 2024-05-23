@@ -139,12 +139,12 @@ public class AccountDBAccess implements AccountDataAccess{
     }
 
     @Override
-    public void deleteAccountLignes(ArrayList <Integer> idAccounts) throws DeleteAccountLignesException {
-        for (Integer id : idAccounts) {
+    public void deleteAccountLignes(ArrayList <IdAccount> idAccounts) throws DeleteAccountLignesException {
+        for (IdAccount id : idAccounts) {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
 
-                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, id.getIdAccount());
                 preparedStatement.executeUpdate();
 
                 System.out.println("Account avec l'id " + id + " à été supprimé");
