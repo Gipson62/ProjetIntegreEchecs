@@ -8,6 +8,7 @@ import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.IdAccount;
 import modelPackage.research.MatchData;
+import modelPackage.tables.MatchDataSearchModel;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
@@ -50,7 +51,7 @@ public class MatchDataSearch extends JPanel implements IPanel {
         this.formPanel.setLayout(gridBag);
 
         try {
-            JLabel usernameLabel = new JLabel("Username :");
+            JLabel usernameLabel = new JLabel("Pseudo :");
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
             gridBag.setConstraints(usernameLabel, c);
@@ -73,7 +74,8 @@ public class MatchDataSearch extends JPanel implements IPanel {
         this.add(this.formPanel, BorderLayout.NORTH);
 
         this.buttonsPanel = new JPanel();
-        this.buttonsPanel.add(new ValidateButton("Valider"));
+        this.validateButton = new ValidateButton("Valider");
+        this.buttonsPanel.add(this.validateButton);
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
@@ -86,20 +88,9 @@ public class MatchDataSearch extends JPanel implements IPanel {
                     try {
                         IdAccount id = allAccounts.get(users.getSelectedIndex()).getIdAccountO();
                         ArrayList<MatchData> matches = researchController.getMatchData(id);
+                        MatchDataSearchModel matchDataSearchModel = new MatchDataSearchModel(matches);
                         resultPanel.removeAll();
-                        String[] columnNames = {"Pseudo", "Adversaire", "Coups", "Attaque utilisé", "Defense utilisée", "Ouverture utilsiée", "Résultat"};
-                        String[][] data = new String[matches.size()][7];
-                        for(int i = 0; i < matches.size(); i++){
-                            MatchData currMatch = matches.get(i);
-                            data[i][0] = currMatch.getPlayer();
-                            data[i][1] = currMatch.getOpponent();
-                            data[i][2] = currMatch.getMoves();
-                            data[i][3] = currMatch.getAttack().isEmpty() ? "Attaque inconnue" : currMatch.getAttack();
-                            data[i][4] = currMatch.getDefense().isEmpty() ? "Defense inconnue" : currMatch.getDefense();
-                            data[i][5] = currMatch.getOpening().isEmpty() ? "Defense inconnue" : currMatch.getOpening();
-                            data[i][6] = currMatch.getWinOrLose();
-                        }
-                        result = new JTable(data, columnNames);
+                        result = new JTable(matchDataSearchModel);
                         resultPanel.add(new JScrollPane(result));
                         resultPanel.validate();
                         resultPanel.repaint();

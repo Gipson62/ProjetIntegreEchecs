@@ -1,23 +1,19 @@
 package viewPackage.stats;
 
 import controllerPackage.AccountController;
-import controllerPackage.ResearchController;
 import controllerPackage.StatisticsController;
 import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.IdAccount;
-import modelPackage.statistic.MovementData;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
-import viewPackage.searches.MatchDataSearch;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class WinratePanel extends JPanel implements IPanel {
     PanelManager panelManager;
@@ -85,7 +81,7 @@ public class WinratePanel extends JPanel implements IPanel {
                         statisticsController.setStatistic();
                         double winrate = statisticsController.getGlobalWinrate();
                         JLabel winrateLabel = new JLabel();
-                        winrateLabel.setText("Winrate : " + (Double.isNaN(winrate) ? "no data" : winrate));
+                        winrateLabel.setText("Taux de victoire : " + (Double.isNaN(winrate) ? "Pas de données" : String.format("%2f", winrate)));
                         winrateLabel.setFont(getFont().deriveFont(28f));
                         resultPanel.removeAll();
                         resultPanel.add(winrateLabel);

@@ -25,7 +25,7 @@ public class Gender implements Serializable {
     }
 
     public String toString(){
-        return "Gender : " +this.gender ;
+        return "Gender : " + this.gender ;
     }
 }
 

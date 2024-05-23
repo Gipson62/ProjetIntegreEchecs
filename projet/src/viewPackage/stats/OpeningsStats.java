@@ -8,6 +8,7 @@ import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.IdAccount;
 import modelPackage.statistic.MovementData;
+import modelPackage.tables.OpeningsStatsModel;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
 import viewPackage.searches.MatchDataSearch;
@@ -87,25 +88,8 @@ public class OpeningsStats extends JPanel implements IPanel {
                         ArrayList<MovementData> attackArray = statisticsController.getAttackList();
                         ArrayList<MovementData> openingArray = statisticsController.getOpeningList();
                         ArrayList<MovementData> defenseArray = statisticsController.getDefenseList();
-                        String[][] openingData = new String[attackArray.size() + openingArray.size() + defenseArray.size()][8];
-                        int i = 0;
-                        for(; i < attackArray.size(); i++) {
-                            MovementData currAttack = attackArray.get(i);
-                            createOpeningData(openingData, i, currAttack, "Attaque");
-                        }
-                        for(; i < attackArray.size() + defenseArray.size(); i++) {
-                            int tmp_i = i - attackArray.size();
-                            MovementData currDefense = defenseArray.get(tmp_i);
-                            createOpeningData(openingData, i, currDefense, "Défense");
-                        }
-                        for(; i < attackArray.size() + defenseArray.size() + openingArray.size(); i++) {
-                            int tmp_i = i - attackArray.size() - defenseArray.size();
-                            MovementData currOpening = openingArray.get(tmp_i);
-                            createOpeningData(openingData, i, currOpening, "Ouverture");
-                        }
-                        System.out.println(Arrays.deepToString(openingData));
-                        result = new JTable(openingData, column);
-                        result.setEnabled(false);
+                        OpeningsStatsModel openingsStatsModel = new OpeningsStatsModel(attackArray, defenseArray, openingArray);
+                        result = new JTable(openingsStatsModel);
                         resultPanel.removeAll();
                         resultPanel.add(new JScrollPane(result));
                         resultPanel.validate();

@@ -1,23 +1,33 @@
 package viewPackage;
 
-import exceptionPackage.UnknownPanel;
+import dataAccessPackage.SingletonConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
-    private CardLayout cardLayout;
-    private Container container;
     private JMenuBar menuBar;
     private JMenu appMenu, profilMenu, searchMenu, statMenu;
-    private JMenuItem exit, home, login, signUp, myProfil, search1, search2, search3, stat1, stat2;
+    private JMenuItem exit, home, inscription, profiles, playerTournaments, gameBetweenTwoDates, playerAllMatches, winrate, OpeningUsage;
     private PanelManager panelManager;
     public MainWindow(String title) {
         super(title);
         this.panelManager = new PanelManager(this);
         this.add(panelManager, BorderLayout.CENTER);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    SingletonConnection.closeConnection();
+                    System.exit(0);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error while trying to close the connexion to the database", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         this.setBounds(250, 250, 800, 500);
 
         this.menuBar = new JMenuBar();
@@ -33,109 +43,78 @@ public class MainWindow extends JFrame {
             }
         });
         this.appMenu.add(this.exit);
+
         this.home = new JMenuItem("Accueil");
         this.appMenu.add(this.home);
         this.home.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("HomePanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("HomePanel");
             }
         });
-
         this.profilMenu = new JMenu("Profil");
         this.menuBar.add(this.profilMenu);
-        this.signUp = new JMenuItem("Créer un compte");
-        this.profilMenu.add(this.signUp);
-        this.signUp.addActionListener(new ActionListener() {
+        this.inscription = new JMenuItem("Créer un compte");
+        this.profilMenu.add(this.inscription);
+        this.inscription.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("InscriptionPanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("InscriptionPanel");
             }
         });
-        this.myProfil = new JMenuItem("Mon profil");
-        this.profilMenu.add(this.myProfil);
-        this.myProfil.addActionListener(new ActionListener() {
+        this.profiles = new JMenuItem("Profiles");
+        this.profilMenu.add(this.profiles);
+
+        this.profiles.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("Profiles");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("Profiles");
             }
         });
 
         this.searchMenu = new JMenu("Recherches");
         this.menuBar.add(this.searchMenu);
-        this.search1 = new JMenuItem("Tournois d'un joueur");
-        this.searchMenu.add(this.search1);
-        this.search1.addActionListener(new ActionListener() {
+        this.playerTournaments = new JMenuItem("Tournois d'un joueur");
+        this.searchMenu.add(this.playerTournaments);
+        this.playerTournaments.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("TournamentsSearch");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("TournamentsSearch");
             }
         });
-        this.search2 = new JMenuItem("Parties entre 2 dates");
-        this.searchMenu.add(this.search2);
-        this.search2.addActionListener(new ActionListener() {
+        this.gameBetweenTwoDates = new JMenuItem("Parties entre 2 dates");
+        this.searchMenu.add(this.gameBetweenTwoDates);
+        this.gameBetweenTwoDates.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("EloSearch");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("EloSearch");
             }
         });
-        this.search3 = new JMenuItem("Matchs d'un joueur");
-        this.searchMenu.add(this.search3);
-        this.search3.addActionListener(new ActionListener() {
+        this.playerAllMatches = new JMenuItem("Matchs d'un joueur");
+        this.searchMenu.add(this.playerAllMatches);
+        this.playerAllMatches.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("MatchDataSearch");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("MatchDataSearch");
             }
         });
 
         this.statMenu = new JMenu("Statistiques");
         this.menuBar.add(this.statMenu);
-        this.stat1 = new JMenuItem("Blanc/Noir winrate");
-        this.statMenu.add(this.stat1);
-        this.stat1.addActionListener(new ActionListener() {
+        this.winrate = new JMenuItem("Blanc/Noir winrate");
+        this.statMenu.add(this.winrate);
+        this.winrate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("WinratePanel");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("WinratePanel");
             }
         });
-        this.stat2 = new JMenuItem("Utilisation des ouvertures");
-        this.statMenu.add(this.stat2);
-        this.stat2.addActionListener(new ActionListener() {
+        this.OpeningUsage = new JMenuItem("Utilisation des ouvertures");
+        this.statMenu.add(this.OpeningUsage);
+        this.OpeningUsage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    panelManager.changePanel("OpeningsStats");
-                } catch (UnknownPanel ex) {
-                    throw new RuntimeException(ex);
-                }
+                panelManager.changePanel("OpeningsStats");
             }
         });
 

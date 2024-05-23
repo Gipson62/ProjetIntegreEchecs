@@ -15,7 +15,7 @@ public class EloSlider extends JSlider {
         this.setMinorTickSpacing(250);
         this.setPaintTicks(true);
         this.setPaintLabels(true);
-        eloLabel.setText("Elo : (500)");
+        eloLabel.setText("Elo : (" + this.getValue() + ")");
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

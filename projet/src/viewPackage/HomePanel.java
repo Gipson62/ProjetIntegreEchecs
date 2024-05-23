@@ -5,8 +5,6 @@ import java.awt.*;
 
 public class HomePanel extends JPanel implements IPanel {
     PanelManager panelManager;
-    JPanel formPanel;
-    JPanel buttonsPanel;
     public HomePanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
     }
@@ -18,7 +16,7 @@ public class HomePanel extends JPanel implements IPanel {
 
     @Override
     public void init() {
-
+        return;
     }
 
     public void paint(Graphics g) {

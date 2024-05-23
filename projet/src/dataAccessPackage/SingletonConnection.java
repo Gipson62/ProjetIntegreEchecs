@@ -5,7 +5,7 @@ import java.sql.*;
 public class SingletonConnection {
     private static Connection connexionUnique;
 
-    public static Connection getInstance( )  {
+    public static Connection getInstance()  {
         if (connexionUnique == null) {
 
             try {
@@ -24,5 +24,12 @@ public class SingletonConnection {
             }
         }
         return connexionUnique;
+    }
+
+    public static void closeConnection() throws SQLException {
+        if(connexionUnique != null) {
+            connexionUnique.close();
+            System.out.println("Connexion closed");
+        }
     }
 }

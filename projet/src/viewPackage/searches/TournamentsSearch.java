@@ -10,6 +10,7 @@ import modelPackage.accountModel.Account;
 import modelPackage.accountModel.IdAccount;
 import modelPackage.research.FilterTournamentPlayed;
 import modelPackage.research.ResultTournamentPlayed;
+import modelPackage.tables.TournamentSearchModel;
 import modelPackage.tournamentState.State;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
@@ -59,7 +60,7 @@ public class TournamentsSearch extends JPanel implements IPanel {
         this.formPanel.setLayout(gridBag);
 
         try {
-            JLabel usernameLabel = new JLabel("Username :");
+            JLabel usernameLabel = new JLabel("Pseudo :");
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
             gridBag.setConstraints(usernameLabel, c);
@@ -99,11 +100,11 @@ public class TournamentsSearch extends JPanel implements IPanel {
             for(int i = 0; i < stateArrayList.size(); i++) {
                 statesTab[i] = stateArrayList.get(i).getState();
             }
-            states = new JComboBox<String>(statesTab);
+            states = new JComboBox<>(statesTab);
             gridBag.setConstraints(states, c);
             this.formPanel.add(states);
         } catch (ReadTournamentStateException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(this.formPanel, BorderLayout.NORTH);
 
@@ -129,18 +130,9 @@ public class TournamentsSearch extends JPanel implements IPanel {
                         IdAccount id = allAccounts.get(users.getSelectedIndex()).getIdAccountO();
                         FilterTournamentPlayed filterTournamentPlayed = new FilterTournamentPlayed(id, (String) states.getSelectedItem(), ((java.util.Date) date.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                         ArrayList<ResultTournamentPlayed> tournaments = researchController.getTournamentPlayed(filterTournamentPlayed);
+                        TournamentSearchModel tournamentSearchModel = new TournamentSearchModel(tournaments);
+                        result = new JTable(tournamentSearchModel);
                         resultPanel.removeAll();
-                        String[] columnNames = {"Nom", "Date", "Elo", "Moment", "Vainqueur"};
-                        String[][] data = new String[tournaments.size()][5];
-                        for(int i = 0; i < tournaments.size(); i++){
-                            ResultTournamentPlayed currTournament = tournaments.get(i);
-                            data[i][0] = currTournament.getNameTournament();
-                            data[i][1] = currTournament.getDateMatch().toString();
-                            data[i][2] = String.valueOf(currTournament.getTournamentElo());
-                            data[i][3] = String.valueOf(currTournament.getTimeMatch());
-                            data[i][4] = currTournament.getUserTournamentWinner();
-                        }
-                        result = new JTable(data, columnNames);
                         resultPanel.add(new JScrollPane(result));
                         resultPanel.validate();
                         resultPanel.repaint();

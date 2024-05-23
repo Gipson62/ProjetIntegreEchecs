@@ -1,6 +1,5 @@
 package viewPackage;
 
-import exceptionPackage.UnknownPanel;
 import viewPackage.profile.InscriptionPanel;
 import viewPackage.profile.ModificationPanel;
 import viewPackage.profile.Profiles;
@@ -16,7 +15,6 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class PanelManager extends JPanel {
     private JPanel left;
@@ -46,6 +44,9 @@ public class PanelManager extends JPanel {
         container = new JPanel();
 
         this.center.add(container, BorderLayout.CENTER);
+
+        this.changePanel("HomePanel");
+
         System.out.println(this);
     }
 
@@ -83,7 +84,7 @@ public class PanelManager extends JPanel {
      * This function change from one panel to another using the name of the given panel & reset the destination panel before showing it.
      * @param panelName specify the panel you want to go to using a name.
      */
-    public void changePanel(String panelName) throws UnknownPanel {
+    public void changePanel(String panelName) {
         this.center.removeAll();
         IPanel destinationPanel = switch (panelName) {
             case "InscriptionPanel" -> new InscriptionPanel(this);

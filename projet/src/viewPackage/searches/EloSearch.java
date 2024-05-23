@@ -5,6 +5,7 @@ import controllerPackage.ResearchController;
 import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.research.FilterMatch;
 import modelPackage.research.ResultFiltredMatch;
+import modelPackage.tables.EloSearchModel;
 import viewPackage.IPanel;
 import viewPackage.EloSlider;
 import viewPackage.PanelManager;
@@ -103,27 +104,9 @@ public class EloSearch extends JPanel implements IPanel {
                         FilterMatch filterMatch = new FilterMatch(eloSlider.getValue(), dateMin, dateMax);
                         try {
                             ArrayList<ResultFiltredMatch> res = researchController.getFiltredMatch(filterMatch);
-                            String[] columNames = {"Start Date", "Username (winner)", "Elo (winner)", "Username (Loser)", "Elo (loser)"};
-                            String[][] data = new String[res.size()][5];
-                            for (int i = 0; i < res.size(); i++) {
-                                ResultFiltredMatch currMatch = res.get(i);
-                                data[i][0] = currMatch.getDateMatch().toString();
-                                if (Objects.equals(currMatch.getMatchWin(), "b")) {
-                                    //White victory
-                                    data[i][1] = currMatch.getUsernameWhite();
-                                    data[i][2] = String.valueOf(currMatch.getEloWhite());
-                                    data[i][3] = currMatch.getUsernameBlack();
-                                    data[i][4] = String.valueOf(currMatch.getEloBlack());
-                                } else {
-                                    //Black victory
-                                    data[i][1] = currMatch.getUsernameBlack();
-                                    data[i][2] = String.valueOf(currMatch.getEloBlack());
-                                    data[i][3] = currMatch.getUsernameWhite();
-                                    data[i][4] = String.valueOf(currMatch.getEloWhite());
-                                }
-                            }
+                            EloSearchModel eloSearchModel = new EloSearchModel(res);
                             resultPanel.removeAll();
-                            result = new JTable(data, columNames);
+                            result = new JTable(eloSearchModel);
                             resultPanel.add(new JScrollPane(result));
                             resultPanel.validate();
                             resultPanel.repaint();

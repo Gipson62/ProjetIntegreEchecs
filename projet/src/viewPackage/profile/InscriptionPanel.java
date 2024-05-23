@@ -3,7 +3,6 @@ package viewPackage.profile;
 import controllerPackage.AccountController;
 import controllerPackage.RankController;
 import exceptionPackage.IllegalAccountArgumentException;
-import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.AddAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
@@ -42,7 +41,6 @@ public class InscriptionPanel extends JPanel implements IPanel {
     }
     @Override
     public void enterPanel() {
-        this.removeAll();
         this.init();
         return;
     }
@@ -134,10 +132,11 @@ public class InscriptionPanel extends JPanel implements IPanel {
         this.formPanel.add(bioLabel);
         c.gridwidth = GridBagConstraints.REMAINDER;
         this.bio = new JTextArea();
-        gridBag.setConstraints(this.bio, c);
-        this.formPanel.add(this.bio);
+        JScrollPane bioScroll = new JScrollPane(this.bio);
+        gridBag.setConstraints(bioScroll, c);
+        this.formPanel.add(bioScroll);
 
-        JLabel rankLabel = new JLabel("Rank");
+        JLabel rankLabel = new JLabel("Rang");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(rankLabel, c);
         this.formPanel.add(rankLabel);
@@ -176,9 +175,8 @@ public class InscriptionPanel extends JPanel implements IPanel {
                         Rank rank = null;
                         for (int i = 0; rank == null && i < allRanks.size(); i++) {
                             Rank currRank = allRanks.get(i);
-                            if (Objects.equals((String) ranks.getSelectedItem(), currRank.getName())) {
+                            if (Objects.equals(ranks.getSelectedItem(), currRank.getName())) {
                                 rank = currRank;
-                                System.out.println(currRank);
                             }
                         }
                         if (rank != null) {
@@ -187,7 +185,7 @@ public class InscriptionPanel extends JPanel implements IPanel {
                                     pseudo.getText().isEmpty() ? null : pseudo.getText(),
                                     email.getText().isEmpty() ? null : email.getText(),
                                     date,
-                                    password.getText().isEmpty() ? null : password.getText(),
+                                    String.valueOf(password.getPassword()).isEmpty() ? null : String.valueOf(password.getPassword()),
                                     bio.getText().isEmpty() ? null : bio.getText(),
                                     null,
                                     beginner.isSelected(),
@@ -196,10 +194,10 @@ public class InscriptionPanel extends JPanel implements IPanel {
                                     gender.getText().isEmpty() ? null : gender.getText()
                             ));
                         } else {
-                            JOptionPane.showMessageDialog(null, "You have to select an existing rank", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Vous devez sélectionner un rang existant", "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                         panelManager.changePanel("Profiles");
-                    } catch (AddAccountException | UnknownPanel | IllegalAccountArgumentException | ReadRankException ex) {
+                    } catch (AddAccountException | IllegalAccountArgumentException | ReadRankException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }

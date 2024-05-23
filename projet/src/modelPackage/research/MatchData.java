@@ -58,8 +58,8 @@ public class MatchData {
         return match_id;
     }
 
-    public String getMoves() {
-        return String.join("=>", moves);
+    public String[] getMoves() {
+        return moves;
     }
 
     public String getAttack() {

@@ -2,16 +2,17 @@ package viewPackage.profile;
 
 import controllerPackage.AccountController;
 import controllerPackage.RankController;
-import exceptionPackage.UnknownPanel;
 import exceptionPackage.account.DeleteAccountLignesExcemption;
 import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Account;
 import modelPackage.accountModel.Rank;
+import modelPackage.tables.AllAccountsModel;
 import viewPackage.IPanel;
 import viewPackage.PanelManager;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,33 +36,12 @@ public class Profiles extends JPanel implements IPanel {
         this.setLayout(new BorderLayout());
         try {
             this.allAccounts = this.accountController.getAllAccounts();
-            String[][] data = new String[allAccounts.size()][10];
-            for(int i = 0; i < allAccounts.size(); i++) {
-                Account currAccount = allAccounts.get(i);
-                data[i][0] = currAccount.getEmail();
-                data[i][1] = currAccount.getUsername();
-                Rank rank = this.rankController.getRankById(currAccount.getRank());
-                if (rank != null) {
-                    data[i][2] = rank.getName();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Le rang pour l'utilisateur \"" + currAccount.getEmail() + "\" n'est pas valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
-                data[i][3] = currAccount.getBirthdate().toString();
-                data[i][4] = currAccount.getIsBeginner().toString();
-                data[i][5] = String.valueOf(currAccount.getElo());
-                data[i][6] = currAccount.getPassword();
-                data[i][7] = currAccount.getBio();
-                data[i][8] = String.valueOf(currAccount.getTag());
-                data[i][9] = currAccount.getGender();
-            }
-            String[] columnNames = {"Email", "Username", "Rank", "Birthdate", "IsBeginner", "Elo", "Password", "Bio", "Tag", "Gender"};
-            this.profiles = new JTable(data, columnNames);
+            this.profiles = new JTable(new AllAccountsModel(this.allAccounts));
             this.add(new JScrollPane(this.profiles));
-        } catch (ReadAccountException | ReadRankException e) {
+        } catch (ReadAccountException e) {
             throw new RuntimeException(e);
         }
         JPanel buttonPanel = new JPanel();
-        //buttonPanel.setLayout(new BorderLayout());
         this.updateButton = new UpdateButton("Modifier");
         buttonPanel.add(updateButton, BorderLayout.EAST);
         this.removeButton = new RemoveButton("Supprimer");
