@@ -37,7 +37,4 @@ public class AccountController {
         return accountManager.getAllAccounts();
     }
 
-    public Account login(Email email, Password password) throws ReadAccountException, LoginAccountException{
-        return accountManager.login(email, password);
-    }
 }
