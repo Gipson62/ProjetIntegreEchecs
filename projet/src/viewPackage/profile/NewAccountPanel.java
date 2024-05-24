@@ -21,7 +21,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class InscriptionPanel extends JPanel implements IPanel {
+public class NewAccountPanel extends JPanel implements IPanel {
     AccountController accountController;
     RankController rankController;
     PanelManager panelManager;
@@ -34,7 +34,7 @@ public class InscriptionPanel extends JPanel implements IPanel {
     JTextArea bio;
     JComboBox<String> ranks;
     ValidateButton validationButton;
-    public InscriptionPanel(PanelManager initPanelManager) {
+    public NewAccountPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();
         this.rankController = new RankController();

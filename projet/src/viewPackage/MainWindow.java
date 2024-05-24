@@ -59,7 +59,7 @@ public class MainWindow extends JFrame {
         this.inscription.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.changePanel("InscriptionPanel");
+                panelManager.changePanel("NewAccountPanel");
             }
         });
         this.profiles = new JMenuItem("Profiles");

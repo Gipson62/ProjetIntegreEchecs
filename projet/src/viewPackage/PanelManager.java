@@ -1,6 +1,7 @@
 package viewPackage;
 
-import viewPackage.profile.InscriptionPanel;
+import controllerPackage.ConnectionController;
+import viewPackage.profile.NewAccountPanel;
 import viewPackage.profile.ModificationPanel;
 import viewPackage.profile.Profiles;
 import viewPackage.searches.EloSearch;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 public class PanelManager extends JPanel {
     private JPanel left;
@@ -24,9 +26,11 @@ public class PanelManager extends JPanel {
     private JPanel container;
     private PanelListener listener;
     private ChessThread chessThread;
+    private ConnectionController connectionController;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
+        this.connectionController = new ConnectionController();
         listener = new PanelListener(this);
         this.addComponentListener(listener);
         this.left = createLeftPanel();
@@ -85,22 +89,26 @@ public class PanelManager extends JPanel {
      * @param panelName specify the panel you want to go to using a name.
      */
     public void changePanel(String panelName) {
-        this.center.removeAll();
-        IPanel destinationPanel = switch (panelName) {
-            case "InscriptionPanel" -> new InscriptionPanel(this);
-            case "ModificationPanel" -> new ModificationPanel(this);
-            case "Profiles" -> new Profiles(this);
-            case "EloSearch" -> new EloSearch(this);
-            case "MatchDataSearch" -> new MatchDataSearch(this);
-            case "TournamentsSearch" -> new TournamentsSearch(this);
-            case "OpeningsStats" -> new OpeningsStats(this);
-            case "WinratePanel" -> new WinratePanel(this);
-            default -> new HomePanel(this);
-        };
-        destinationPanel.enterPanel();
-        this.center.add((JPanel) destinationPanel);
-        this.center.validate();
-        this.center.repaint();
+        if(connectionController.getInstance() != null || Objects.equals(panelName, "HomePanel")) {
+            this.center.removeAll();
+            IPanel destinationPanel = switch (panelName) {
+                case "NewAccountPanel" -> new NewAccountPanel(this);
+                case "ModificationPanel" -> new ModificationPanel(this);
+                case "Profiles" -> new Profiles(this);
+                case "EloSearch" -> new EloSearch(this);
+                case "MatchDataSearch" -> new MatchDataSearch(this);
+                case "TournamentsSearch" -> new TournamentsSearch(this);
+                case "OpeningsStats" -> new OpeningsStats(this);
+                case "WinratePanel" -> new WinratePanel(this);
+                default -> new HomePanel(this);
+            };
+            destinationPanel.enterPanel();
+            this.center.add((JPanel) destinationPanel);
+            this.center.validate();
+            this.center.repaint();
+        } else {
+            JOptionPane.showMessageDialog(null, "Veuillez vous connecter à la base de données d'abord.");
+        }
     }
 
     private class PanelListener extends ComponentAdapter {
