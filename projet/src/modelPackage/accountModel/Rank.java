@@ -8,6 +8,8 @@ public class Rank  {
     private int rank;
     private String name;
     private String description;
+    private static final int MAX_RANK = 11;
+    private static final int MIN_RANK = 1;
 
     public Rank(int rank) throws  IllegalAccountArgumentException{
 
@@ -27,10 +29,10 @@ public class Rank  {
     public void setRank(Integer  rank) throws IllegalAccountArgumentException{
 
         //taille max 11
-        if(rank >= 0 && rank <= 11){
+        if(rank > MIN_RANK && rank <= MAX_RANK){
             this.rank = rank;
         }else {
-            throw new IllegalAccountArgumentException("le Rank doit etre entre 0 et 11");
+            throw new IllegalAccountArgumentException("le Rank doit etre entre "+MIN_RANK+" et "+MAX_RANK);
         }
     }
 

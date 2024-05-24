@@ -18,7 +18,6 @@ public class IdAccount {
     }
 
     public void setIdAccount(int idAccount) throws IllegalAccountArgumentException {
-        //id not < 0
         if (idAccount < 0) {
             throw new IllegalAccountArgumentException("IdAccount must be positive");
         }

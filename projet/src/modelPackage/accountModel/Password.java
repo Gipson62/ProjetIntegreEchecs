@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 public class Password {
     private String password;
+    private static final int MIN_PASSWORD_LENGTH = 8;
+    private static final int MAX_PASSWORD_LENGTH = 60;
 
     public Password(String password) throws IllegalAccountArgumentException {
 
@@ -16,8 +18,8 @@ public class Password {
     }
 
     public void setPassword(String password) throws IllegalAccountArgumentException {
-        if(password.length() < 8){
-            throw new IllegalAccountArgumentException("Mot de passe doit contenir au moins 8 caractères");
+        if(password.length() < MIN_PASSWORD_LENGTH || password.length() > MAX_PASSWORD_LENGTH){
+            throw new IllegalAccountArgumentException("Mot de passe doit contenir au moins "+MIN_PASSWORD_LENGTH+" caractères et au plus "+ MAX_PASSWORD_LENGTH +" caractères.");
         }
         this.password = password;
     }

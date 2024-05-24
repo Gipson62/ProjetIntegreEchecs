@@ -5,8 +5,8 @@ import exceptionPackage.IllegalAccountArgumentException;
 import java.io.Serializable;
 
 public class Gender {
-    //string de taille 6 max fait que de lettre
     private String gender ;
+    private static final int MAX_LENGTH = 16;
 
     public Gender (String gender) throws IllegalAccountArgumentException{
         setGender(gender);
@@ -17,13 +17,13 @@ public class Gender {
     }
 
     public void setGender(String gender) throws IllegalAccountArgumentException{
-        if(gender.length() <= 16 ){
+        if(gender.length() <= MAX_LENGTH ){
             if (!gender.isEmpty()){this.gender = gender;}
             else {
                 throw new IllegalAccountArgumentException("Le champ Genre ne peut pas être vide");
             }
         }else {
-            throw new IllegalAccountArgumentException("Le champ Genre doit contenir au maximum 16 caractères");
+            throw new IllegalAccountArgumentException("Le champ Genre doit contenir au maximum "+MAX_LENGTH+" caractères");
         }
     }
 

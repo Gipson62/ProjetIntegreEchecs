@@ -2,14 +2,7 @@ package viewPackage;
 
 import controllerPackage.AccountController;
 import controllerPackage.RankController;
-import exceptionPackage.account.AddAccountException;
-import exceptionPackage.account.ReadAccountException;
-import exceptionPackage.rank.ReadRankException;
-import modelPackage.accountModel.Account;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Main {
     static RankController rankController = new RankController();
