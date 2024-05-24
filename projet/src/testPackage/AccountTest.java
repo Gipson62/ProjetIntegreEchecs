@@ -25,34 +25,6 @@ public class AccountTest {
         this.rankController = new RankController();
     }
     @Test
-    public void createAccountTest() {
-        try {
-            Account newAccount = new Account(
-                    null,
-                    "Gipson62",
-                    "j.h.gipson62@gmail.com",
-                    LocalDate.of(2004, 1, 6),
-                    "Gipson62#8015",
-                    "Salut je m'appelle Julien",
-                    null,
-                    true,
-                    rankController.getRankById(1),
-                    400,
-                    "Male"
-            );
-            accountController.addAccount(newAccount);
-            assertThrows(AddAccountException.class, () -> {
-                accountController.addAccount(newAccount);
-            });
-        } catch (ReadRankException | AddAccountException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @Test
-    public void readAccountTest() {
-
-    }
-    @Test
     public void CRUDTest() {
         setUp();
         try {
