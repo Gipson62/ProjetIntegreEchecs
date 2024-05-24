@@ -1,9 +1,7 @@
 package modelPackage.accountModel;
 
 import exceptionPackage.IllegalAccountArgumentException;
-import modelPackage.accountModel.*;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ public class Account{
     private Rank rank;
     private Elo elo;
 
-    //Constructor
     public Account(Integer idAccount, String username, String email, LocalDate birthdate,
                    String password, String bio, Integer tag, boolean isBeginner, Rank rank,
                    int elo, String gender) throws IllegalAccountArgumentException {

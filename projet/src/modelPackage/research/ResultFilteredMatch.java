@@ -1,6 +1,5 @@
 package modelPackage.research;
 
-import modelPackage.accountModel.IdAccount;
 import modelPackage.accountModel.Elo;
 import exceptionPackage.IllegalAccountArgumentException;
 import modelPackage.accountModel.Tag;
@@ -10,7 +9,7 @@ import java.time.LocalDate;
 
 import static java.lang.Integer.parseInt;
 
-public class ResultFiltredMatch {
+public class ResultFilteredMatch {
     private String matchWin;
     private Username usernameWhite;
     private Tag tagWhite;
@@ -21,8 +20,8 @@ public class ResultFiltredMatch {
     private Tag tagBlack;
     private LocalDate dateMatch;
 
-    public ResultFiltredMatch(String matchWin, String usernameWhite,String tagWhite, int eloWhite,
-                               String usernameBlack,int eloBlack, String tagBlack ,LocalDate dateMatch) throws IllegalAccountArgumentException {
+    public ResultFilteredMatch(String matchWin, String usernameWhite, String tagWhite, int eloWhite,
+                               String usernameBlack, int eloBlack, String tagBlack , LocalDate dateMatch) throws IllegalAccountArgumentException {
         try {
             this.usernameWhite = new Username( usernameWhite);
             this.eloWhite = new Elo(eloWhite);

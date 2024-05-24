@@ -12,16 +12,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Implementation of the RankDataAccess interface to interact with the database.
+ * Implementation of the IRankDataAccess interface to interact with the database.
  */
-public class RankDBAccess implements RankDataAccess {
+public class IRankDBAccess implements IRankDataAccess {
 
     private Connection connection;
 
     /**
      * Constructor establishes a connection to the database using a singleton pattern.
      */
-    public RankDBAccess() {
+    public IRankDBAccess() {
         this.connection = SingletonConnection.getInstance();
     }
 

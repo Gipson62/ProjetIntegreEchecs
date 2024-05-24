@@ -1,11 +1,10 @@
 package businessPackage;
 
-import dataAccessPackage.research.ResearchDBAccess;
-import dataAccessPackage.research.ResearchDataAccess;
+import dataAccessPackage.research.IResearchDataAccess;
+import dataAccessPackage.research.IResearchDBAccess;
 import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.research.*;
 import modelPackage.research.*;
-import exceptionPackage.research.*;
 import modelPackage.accountModel.IdAccount;
 
 
@@ -16,13 +15,13 @@ import java.util.ArrayList;
  */
 public class ResearchManager {
 
-        ResearchDataAccess dao;
+        IResearchDataAccess dao;
 
     /**
-     * Constructor that initializes the ResearchDataAccess implementation.
+     * Constructor that initializes the IResearchDataAccess implementation.
      */
         public ResearchManager(){
-            dao = new ResearchDBAccess();
+            dao = new IResearchDBAccess();
         }
 
 
@@ -34,8 +33,8 @@ public class ResearchManager {
      * @throws ResearchDataAccessException If there is an issue retrieving the data.
      */
 
-        public ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException{
-            return dao.getFiltredMatch(filterMatch);
+        public ArrayList<ResultFilteredMatch> getFilteredMatch(FilterMatch filterMatch) throws ResearchDataAccessException{
+            return dao.getFilteredMatch(filterMatch);
         }
 
     /**

@@ -1,11 +1,8 @@
 package controllerPackage;
 
 import businessPackage.ResearchManager;
-import dataAccessPackage.research.ResearchDBAccess;
-import dataAccessPackage.research.ResearchDataAccess;
 import exceptionPackage.research.*;
 import modelPackage.research.*;
-import exceptionPackage.research.*;
 import modelPackage.accountModel.IdAccount;
 
 
@@ -19,8 +16,8 @@ public class ResearchController {
         researchManager = new ResearchManager();
     }
 
-    public ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException{
-        return researchManager.getFiltredMatch(filterMatch);
+    public ArrayList<ResultFilteredMatch> getFilteredMatch(FilterMatch filterMatch) throws ResearchDataAccessException{
+        return researchManager.getFilteredMatch(filterMatch);
     }
 
     public ArrayList<ResultTournamentPlayed> getTournamentPlayed(FilterTournamentPlayed filterTournamentPlayed) throws ResearchDataAccessException{

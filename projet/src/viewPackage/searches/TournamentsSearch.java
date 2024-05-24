@@ -34,7 +34,7 @@ public class TournamentsSearch extends JPanel implements IPanel {
     ResearchController researchController;
     AccountController accountController;
     JTable result;
-    ValidateButton validateButton;
+    SearchButton searchButton;
     public TournamentsSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.tournamentStateController = new TournamentStateController();
@@ -115,13 +115,13 @@ public class TournamentsSearch extends JPanel implements IPanel {
         this.buttonsPanel = new JPanel();
         GridLayout gridLayout1 = new GridLayout(1, 2, 5, 5);
         this.buttonsPanel.setLayout(gridLayout1);
-        this.validateButton = new ValidateButton("Valider");
-        this.buttonsPanel.add(this.validateButton);
+        this.searchButton = new SearchButton("Rechercher");
+        this.buttonsPanel.add(this.searchButton);
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
-    private class ValidateButton extends JButton {
-        public ValidateButton(String text) {
+    private class SearchButton extends JButton {
+        public SearchButton(String text) {
             super(text);
             this.addActionListener(new ActionListener() {
                 @Override

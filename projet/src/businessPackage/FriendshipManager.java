@@ -13,13 +13,13 @@ import java.util.ArrayList;
  */
 public class FriendshipManager {
 
-    private FriendshipDataAccess dao;
+    private IFriendshipDataAccess dao;
 
     /**
-     * An instance of FriendshipDBAccess is created and assigned to dao.
+     * An instance of IFriendshipDBAccess is created and assigned to dao.
      */
     public FriendshipManager() {
-        dao = new FriendshipDBAccess();
+        dao = new IFriendshipDBAccess();
     }
 
     /**

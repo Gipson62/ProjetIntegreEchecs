@@ -15,10 +15,10 @@ import exceptionPackage.IllegalAccountArgumentException;
 import org.mindrot.jbcrypt.BCrypt;
 
 
-public class AccountDBAccess implements AccountDataAccess{
+public class IAccountDBAccess implements IAccountDataAccess {
     private Connection connection;
 
-    public AccountDBAccess(){
+    public IAccountDBAccess(){
         this.connection = SingletonConnection.getInstance();
     }
 
@@ -48,24 +48,22 @@ public class AccountDBAccess implements AccountDataAccess{
             preparedStatement.setString(10, account.getUsername());
 
             preparedStatement.executeUpdate();
-
-            //recuperer l'id du compte ajouté et le tag
+            //Update the given account so its values are up to date to the db
             try {
-                Account accountInfo = getAccount(account.getEmail());
-                account.setIdAccount( accountInfo.getIdAccount());
+                Account accountInfo = getAccount(new Email(account.getEmail()));
+                account.setIdAccount(accountInfo.getIdAccount());
                 account.setTag(accountInfo.getTag());
+                account.setPassword(accountInfo.getPassword());
             } catch (IllegalAccountArgumentException | ReadAccountException e) {
                 throw new AddAccountException(e.getMessage());
             }
         } catch (SQLException e) {
-
             throw new AddAccountException("Erreur lors de la création du compte");
         }
     }
 
     @Override
     public <T> Account getAccount(T parameterResearch) throws ReadAccountException {
-
         try
         {
             //requete pour recuperer un compte de la BD selon l'id
@@ -147,11 +145,11 @@ public class AccountDBAccess implements AccountDataAccess{
                 preparedStatement.setInt(1, id.getIdAccount());
                 preparedStatement.executeUpdate();
 
-                System.out.println("Account avec l'id " + id + " à été supprimé");
+                System.out.println("Account avec l'id " + id.getIdAccount() + " à été supprimé");
             }
             catch (SQLException e) {
                 System.out.println(e.getMessage());
-                throw new DeleteAccountLignesException("Account avec l'id " + id + " n'a pas été supprimé");
+                throw new DeleteAccountLignesException("Account avec l'id " + id.getIdAccount() + " n'a pas été supprimé");
                 //les comptes qui n'exste pas sont quand meme affiché comme supprimé pas s'erreur si n'existe pas
             }
         }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Interface for getting research data related to matches and tournaments.
  */
-public interface ResearchDataAccess {
+public interface IResearchDataAccess {
 
     /**
      * Gets a list of matches that meet certain criteria.
@@ -18,7 +18,7 @@ public interface ResearchDataAccess {
      * @return A list of filtered match results.
      * @throws ResearchDataAccessException If there's a problem getting the data.
      */
-    ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException;
+    ArrayList<ResultFilteredMatch> getFilteredMatch(FilterMatch filterMatch) throws ResearchDataAccessException;
 
     /**
      * Gets a list of tournaments a player has participated in, based on given criteria.

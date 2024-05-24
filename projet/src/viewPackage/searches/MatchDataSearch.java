@@ -28,7 +28,7 @@ public class MatchDataSearch extends JPanel implements IPanel {
     ResearchController researchController;
     AccountController accountController;
     JTable result;
-    ValidateButton validateButton;
+    SearchButton searchButton;
     public MatchDataSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.researchController = new ResearchController();
@@ -74,13 +74,13 @@ public class MatchDataSearch extends JPanel implements IPanel {
         this.add(this.formPanel, BorderLayout.NORTH);
 
         this.buttonsPanel = new JPanel();
-        this.validateButton = new ValidateButton("Valider");
-        this.buttonsPanel.add(this.validateButton);
+        this.searchButton = new SearchButton("Rechercher");
+        this.buttonsPanel.add(this.searchButton);
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
-    private class ValidateButton extends JButton{
-        public ValidateButton(String text) {
+    private class SearchButton extends JButton{
+        public SearchButton(String text) {
             super(text);
             this.addActionListener(new ActionListener() {
                 @Override

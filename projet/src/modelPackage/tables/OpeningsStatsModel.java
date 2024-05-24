@@ -52,9 +52,9 @@ public class OpeningsStatsModel extends AbstractTableModel {
         MovementData movementData = this.contents.get(rowIndex);
         return switch (columnIndex) {
             case 0 -> {
-                if (columnIndex < this.attackSize) {
+                if (rowIndex < this.attackSize) {
                     yield "Attaque";
-                } else if(columnIndex < this.attackSize+this.defenseSize) {
+                } else if(rowIndex < this.attackSize+this.defenseSize) {
                     yield "Défense";
                 } else {
                     yield "Ouverture";

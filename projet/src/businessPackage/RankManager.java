@@ -1,7 +1,7 @@
 package businessPackage;
 
-import dataAccessPackage.rankDataAccess.RankDataAccess;
-import dataAccessPackage.rankDataAccess.RankDBAccess;
+import dataAccessPackage.rankDataAccess.IRankDBAccess;
+import dataAccessPackage.rankDataAccess.IRankDataAccess;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Rank;
 
@@ -11,14 +11,14 @@ import java.util.ArrayList;
  * Business layer class to manage operations of rank.
  */
 public class RankManager {
-    private RankDataAccess dao;
+    private IRankDataAccess dao;
     private ArrayList<Rank> allRanks;
 
     /**
-     * Constructor initializes the RankDataAccess object.
+     * Constructor initializes the IRankDataAccess object.
      */
     public RankManager() {
-        dao = new RankDBAccess();
+        dao = new IRankDBAccess();
     }
 
     /**

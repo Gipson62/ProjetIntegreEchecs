@@ -1,8 +1,6 @@
 package controllerPackage;
 
 import businessPackage.TournamentStateManager;
-import dataAccessPackage.tournamentStateDataAcces.TournamentStateDBAcces;
-import dataAccessPackage.tournamentStateDataAcces.TournamentStateDataAcces;
 import exceptionPackage.tounamentState.ReadTournamentStateException;
 import modelPackage.tournamentState.State;
 

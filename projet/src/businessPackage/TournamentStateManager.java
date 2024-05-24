@@ -1,7 +1,7 @@
 package businessPackage;
 
-import dataAccessPackage.tournamentStateDataAcces.TournamentStateDBAcces;
-import dataAccessPackage.tournamentStateDataAcces.TournamentStateDataAcces;
+import dataAccessPackage.tournamentStateDataAcces.ITournamentStateDBAcces;
+import dataAccessPackage.tournamentStateDataAcces.ITournamentStateDataAcces;
 import exceptionPackage.tounamentState.ReadTournamentStateException;
 import modelPackage.tournamentState.State;
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ import java.util.ArrayList;
  * Manages the operations related to tournament states in the system.
  */
 public class TournamentStateManager {
-    private TournamentStateDataAcces dao;
+    private ITournamentStateDataAcces dao;
 
     /**
      * Constructor that initializes the data access object for managing tournament states.
      */
     public TournamentStateManager() {
-        dao = new TournamentStateDBAcces();
+        dao = new ITournamentStateDBAcces();
     }
 
     /**

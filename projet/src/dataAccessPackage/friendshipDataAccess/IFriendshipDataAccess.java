@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Interface defining the data access operations for managing friendships.
  */
-public interface FriendshipDataAccess {
+public interface IFriendshipDataAccess {
 
      /**
       * Adds a new friendship to the data store.

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Interface for accessing tournament state data from a storage system.
  */
-public interface TournamentStateDataAcces {
+public interface ITournamentStateDataAcces {
     /**
      * Retrieves all possible states of a tournament.
      *

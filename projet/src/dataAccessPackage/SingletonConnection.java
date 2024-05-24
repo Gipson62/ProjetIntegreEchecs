@@ -15,24 +15,18 @@ public class SingletonConnection {
      * @return The single shared instance of a database connection.
      */
     public static Connection getInstance()  {
-        if (connectionUnique == null) {
-
-            try {
-                connectionUnique =
-                        DriverManager.getConnection("jdbc:mysql://localhost:3306/echecdb",// + "?useSSL=false"
-                                "root",//  nom d’utilisateur
-                                "EchecMySql*52812") ; // mot de passe
-
-                System.out.println("Connection to the database was successful." + connectionUnique);
-            }
-            catch (SQLException exception) {
-                System.out.println("An error occurred while connecting to the database.");
-                //get the error message
-                System.out.println("Error message: " + exception.getMessage());
-                exception.printStackTrace();
-            }
-        }
         return connectionUnique;
+    }
+
+    public static void databaseLogin(String password) throws SQLException {
+        try {
+            connectionUnique = DriverManager.getConnection("jdbc:mysql://localhost:3306/echecdb",
+                    "root",
+                    password
+                    );
+        } catch (SQLException ex) {
+            throw ex;
+        }
     }
 
     /**

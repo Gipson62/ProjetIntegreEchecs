@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Interface for account data access operations.
  * Defines CRUD operations for managing user accounts.
  */
-public interface AccountDataAccess {
+public interface IAccountDataAccess {
     /**
      * Adds a new account.
      * @param account The account to be added.

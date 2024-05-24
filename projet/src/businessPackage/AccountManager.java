@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * Manages account logic and interactions with the data access.
  */
 public class AccountManager {
-    private AccountDataAccess dao;
+    private IAccountDataAccess dao;
 
     /**
      * Constructor initializes the data access object.
      */
     public AccountManager() {
-        dao = new AccountDBAccess(); // Initialize with a specific implementation of AccountDataAccess
+        dao = new IAccountDBAccess(); // Initialize with a specific implementation of IAccountDataAccess
     }
 
     /**

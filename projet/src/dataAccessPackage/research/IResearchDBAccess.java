@@ -5,7 +5,7 @@ import exceptionPackage.IllegalAccountArgumentException;
 import exceptionPackage.research.*;
 import modelPackage.accountModel.IdAccount;
 import modelPackage.research.*;
-import modelPackage.research.ResultFiltredMatch;
+import modelPackage.research.ResultFilteredMatch;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -16,17 +16,17 @@ import java.util.ArrayList;
 
 
 
-public class ResearchDBAccess implements ResearchDataAccess{
+public class IResearchDBAccess implements IResearchDataAccess {
 
     private Connection connection;
 
-    public ResearchDBAccess(){
+    public IResearchDBAccess(){
         connection = SingletonConnection.getInstance();
     }
     @Override
-    public ArrayList<ResultFiltredMatch> getFiltredMatch(FilterMatch filterMatch) throws ResearchDataAccessException {
+    public ArrayList<ResultFilteredMatch> getFilteredMatch(FilterMatch filterMatch) throws ResearchDataAccessException {
 
-        ArrayList<ResultFiltredMatch> resultFiltredMatchs = new ArrayList<>();
+        ArrayList<ResultFilteredMatch> resultFilteredMatches = new ArrayList<>();
 
         try {
             System.out.println("Start research filtred");
@@ -67,10 +67,10 @@ public class ResearchDBAccess implements ResearchDataAccess{
                 LocalDate dateMatch = resultSet.getDate("start_date").toLocalDate();
 
                 try {
-                    ResultFiltredMatch resultFiltredMatch = new ResultFiltredMatch(matchWin, usernameWhiteName, tagWhite, eloWhite, usernameBlackName, eloBlack, tagBlack, dateMatch);
-                    resultFiltredMatchs.add(resultFiltredMatch);
+                    ResultFilteredMatch resultFilteredMatch = new ResultFilteredMatch(matchWin, usernameWhiteName, tagWhite, eloWhite, usernameBlackName, eloBlack, tagBlack, dateMatch);
+                    resultFilteredMatches.add(resultFilteredMatch);
                 } catch (IllegalAccountArgumentException e) {
-                    System.out.println("Une valeur de l'objet ResultFiltredMatch est incorrecte");
+                    System.out.println("Une valeur de l'objet ResultFilteredMatch est incorrecte");
                 }
             }
 
@@ -80,7 +80,7 @@ public class ResearchDBAccess implements ResearchDataAccess{
             throw new ResearchDataAccessException("Une erreur est survenue lors de la recherche des matchs");
         }
 
-        return resultFiltredMatchs;
+        return resultFilteredMatches;
     }
 
     @Override

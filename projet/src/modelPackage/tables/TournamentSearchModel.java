@@ -1,12 +1,10 @@
 package modelPackage.tables;
 
-import modelPackage.research.ResultFiltredMatch;
 import modelPackage.research.ResultTournamentPlayed;
 
 import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class TournamentSearchModel extends AbstractTableModel {
     private ArrayList<String> columnNames;

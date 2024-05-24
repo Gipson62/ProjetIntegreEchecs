@@ -7,16 +7,15 @@ import exceptionPackage.IllegalAccountArgumentException;
 import modelPackage.accountModel.IdAccount;
 import java.util.ArrayList;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-public class FriendshipDBAccess implements FriendshipDataAccess{
+public class IFriendshipDBAccess implements IFriendshipDataAccess {
 
     private Connection connection;
 
-    public FriendshipDBAccess(){
+    public IFriendshipDBAccess(){
         connection = SingletonConnection.getInstance();
     }
 

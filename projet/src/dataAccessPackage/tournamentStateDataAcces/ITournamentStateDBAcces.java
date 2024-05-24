@@ -6,11 +6,11 @@ import modelPackage.tournamentState.State;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TournamentStateDBAcces implements TournamentStateDataAcces{
+public class ITournamentStateDBAcces implements ITournamentStateDataAcces {
 
     private Connection connection;
 
-    public TournamentStateDBAcces(){
+    public ITournamentStateDBAcces(){
         this.connection = SingletonConnection.getInstance();
     }
 

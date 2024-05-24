@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Interface defining the data access operations related to ranks.
  */
-public interface RankDataAccess {
+public interface IRankDataAccess {
     /**
      * Retrieves all rank entries from the data store.
      * @return A list of Rank objects representing all ranks.

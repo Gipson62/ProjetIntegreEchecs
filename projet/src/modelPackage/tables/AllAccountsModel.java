@@ -15,6 +15,7 @@ public class AllAccountsModel extends AbstractTableModel {
     public AllAccountsModel(ArrayList<Account> allAccounts) {
         this.rankController = new RankController();
         this.columnNames = new ArrayList<>();
+        this.columnNames.add("Identifiant");
         this.columnNames.add("Email");
         this.columnNames.add("Pseudo");
         this.columnNames.add("Rang");
@@ -46,21 +47,22 @@ public class AllAccountsModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Account account = this.contents.get(rowIndex);
         return switch(columnIndex) {
-            case 0 -> account.getEmail();
-            case 1 -> account.getUsername();
-            case 2 -> {
+            case 0 -> account.getIdAccount();
+            case 1 -> account.getEmail();
+            case 2 -> account.getUsername();
+            case 3 -> {
                 try {
                     yield rankController.getRankById(account.getRank()).getName();
                 } catch (ReadRankException e) {
                     throw new RuntimeException(e);
                 }
             }
-            case 3 -> account.getBirthdate();
-            case 4 -> account.getIsBeginner();
-            case 5 -> account.getElo();
-            case 6 -> account.getPassword();
-            case 7 -> account.getBio();
-            case 8 -> account.getTag();
+            case 4 -> account.getBirthdate();
+            case 5 -> account.getIsBeginner();
+            case 6 -> account.getElo();
+            case 7 -> account.getPassword();
+            case 8 -> account.getBio();
+            case 9 -> account.getTag();
             default -> account.getGender();
         };
     }
@@ -68,9 +70,9 @@ public class AllAccountsModel extends AbstractTableModel {
     @Override
     public Class getColumnClass(int column) {
         return switch (column) {
-            case 3 -> LocalDate.class;
-            case 4 -> Boolean.class;
-            case 5, 8 -> Integer.class;
+            case 4 -> LocalDate.class;
+            case 5 -> Boolean.class;
+            case 0, 6, 9 -> Integer.class;
             default -> String.class;
         };
     }

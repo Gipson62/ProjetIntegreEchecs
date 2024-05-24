@@ -4,7 +4,7 @@ import controllerPackage.RankController;
 import controllerPackage.ResearchController;
 import exceptionPackage.research.ResearchDataAccessException;
 import modelPackage.research.FilterMatch;
-import modelPackage.research.ResultFiltredMatch;
+import modelPackage.research.ResultFilteredMatch;
 import modelPackage.tables.EloSearchModel;
 import viewPackage.IPanel;
 import viewPackage.EloSlider;
@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class EloSearch extends JPanel implements IPanel {
     PanelManager panelManager;
@@ -88,12 +87,12 @@ public class EloSearch extends JPanel implements IPanel {
         this.resultPanel.add(new JScrollPane(this.result));
 
         this.buttonsPanel = new JPanel();
-        this.buttonsPanel.add(new ValidationButton("Valider"));
+        this.buttonsPanel.add(new SearchButton("Rechercher"));
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
-    private class ValidationButton extends JButton{
-        public ValidationButton(String text) {
+    private class SearchButton extends JButton{
+        public SearchButton(String text) {
             super(text);
             this.addActionListener(new ActionListener() {
                 @Override
@@ -103,7 +102,7 @@ public class EloSearch extends JPanel implements IPanel {
                     if(dateMin.isBefore(dateMax)) {
                         FilterMatch filterMatch = new FilterMatch(eloSlider.getValue(), dateMin, dateMax);
                         try {
-                            ArrayList<ResultFiltredMatch> res = researchController.getFiltredMatch(filterMatch);
+                            ArrayList<ResultFilteredMatch> res = researchController.getFilteredMatch(filterMatch);
                             EloSearchModel eloSearchModel = new EloSearchModel(res);
                             resultPanel.removeAll();
                             result = new JTable(eloSearchModel);
