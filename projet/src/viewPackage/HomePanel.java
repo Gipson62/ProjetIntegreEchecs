@@ -56,6 +56,5 @@ public class HomePanel extends JPanel implements IPanel {
             }
         });
         this.add(loginButton);
-        return;
     }
 }

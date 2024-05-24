@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS FriendShip;
 DROP TABLE IF EXISTS Account;
 DROP TABLE IF EXISTS `Rank`;
 
+
+
 CREATE TABLE `Rank` (
                         id INT PRIMARY KEY AUTO_INCREMENT,
                         description VARCHAR(86) NOT NULL,
@@ -130,5 +132,7 @@ CREATE TABLE Defense (
                          CONSTRAINT UC_unique_defense_moves UNIQUE (move1, move2)
 );
 
-
+DROP USER 'testeur'@'%';
+CREATE USER 'testeur'@'%' IDENTIFIED BY 'EchecMySql*52812';
+GRANT SELECT, INSERT, UPDATE, DELETE ON echecdb.* TO 'testeur'@'%';
 

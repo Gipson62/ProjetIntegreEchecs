@@ -21,7 +21,7 @@ public class SingletonConnection {
     public static void databaseLogin(String password) throws SQLException {
         try {
             connectionUnique = DriverManager.getConnection("jdbc:mysql://localhost:3306/echecdb",
-                    "root",
+                    "testeur",
                     password
                     );
         } catch (SQLException ex) {
