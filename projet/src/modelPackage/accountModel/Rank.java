@@ -9,7 +9,7 @@ public class Rank  {
     private String name;
     private String description;
     private static final int MAX_RANK = 11;
-    private static final int MIN_RANK = 1;
+    private static final int MIN_RANK = 0;
 
     public Rank(int rank) throws  IllegalAccountArgumentException{
 
