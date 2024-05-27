@@ -27,16 +27,16 @@ public class Account{
         List<String> errors = new ArrayList<>();
 
         validateField("ID Account", idAccount, errors);
-        validateField("Username", username, errors);
+        validateField("Pseudo", username, errors);
         validateField("Email", email, errors);
-        validateField("Birthdate", birthdate, errors);
-        validateField("Password", password, errors);
+        validateField("Date anniversaire", birthdate, errors);
+        validateField("Mot de passe", password, errors);
         validateField("Bio", bio, errors);
         validateField("Tag", tag, errors);
         this.isBeginner = isBeginner;
         this.rank = rank;
         validateField("Elo", elo, errors);
-        validateField("Gender", gender, errors);
+        validateField("Genre", gender, errors);
 
         if (!errors.isEmpty()) {
             String errorMessage = String.join("\n", errors);
@@ -50,16 +50,16 @@ public class Account{
                 case "ID Account":
                     setIdAccount((Integer) value);
                     break;
-                case "Username":
+                case "Pseudo":
                     setUsername((String) value);
                     break;
                 case "Email":
                     setEmail((String) value);
                     break;
-                case "Birthdate":
+                case "Date anniversaire":
                     setBirthdate((LocalDate) value);
                     break;
-                case "Password":
+                case "Mot de passe":
                     setPassword((String) value);
                     break;
                 case "Bio":
@@ -71,7 +71,7 @@ public class Account{
                 case "Elo":
                     setElo((Integer) value);
                     break;
-                case "Gender":
+                case "Genre":
                     setGender((String) value);
                     break;
                 default:
