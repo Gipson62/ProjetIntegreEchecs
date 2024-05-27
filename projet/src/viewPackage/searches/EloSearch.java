@@ -47,7 +47,7 @@ public class EloSearch extends JPanel implements IPanel {
         GridBagConstraints c = new GridBagConstraints();
         this.formPanel.setLayout(gridBag);
 
-        JLabel eloLabel = new JLabel("Elo :");
+        JLabel eloLabel = new JLabel("Elo* :");
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         gridBag.setConstraints(eloLabel, c);
@@ -57,7 +57,7 @@ public class EloSearch extends JPanel implements IPanel {
         gridBag.setConstraints(this.eloSlider, c);
         this.formPanel.add(this.eloSlider);
 
-        JLabel dateLabel = new JLabel("Première date :");
+        JLabel dateLabel = new JLabel("Première date* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(dateLabel, c);
         this.formPanel.add(dateLabel);
@@ -68,7 +68,7 @@ public class EloSearch extends JPanel implements IPanel {
         gridBag.setConstraints(this.date1, c);
         this.formPanel.add(this.date1);
 
-        JLabel date2Label = new JLabel("Deuxième date :");
+        JLabel date2Label = new JLabel("Deuxième date* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(date2Label, c);
         this.formPanel.add(date2Label);

@@ -15,14 +15,14 @@ public class EloSlider extends JSlider {
         this.setMinorTickSpacing(250);
         this.setPaintTicks(true);
         this.setPaintLabels(true);
-        eloLabel.setText("Elo : (" + this.getValue() + ")");
+        eloLabel.setText("Elo* : (" + this.getValue() + ")");
         this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 if(!source.getValueIsAdjusting()) {
                     int elo = (int)source.getValue();
-                    eloLabel.setText("Elo : ("+elo+")");
+                    eloLabel.setText("Elo* : ("+elo+")");
                 }
             }
         });

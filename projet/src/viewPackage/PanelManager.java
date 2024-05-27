@@ -27,6 +27,7 @@ public class PanelManager extends JPanel {
     private PanelListener listener;
     private ChessThread chessThread;
     private ConnectionController connectionController;
+    private JLabel infoLabel;
     public PanelManager(MainWindow mainWindow) {
         super(new FlowLayout(FlowLayout.LEADING, 0, 0));
         this.mainWindow = mainWindow;
@@ -38,6 +39,9 @@ public class PanelManager extends JPanel {
         this.center = createCenterPanel();
         this.chessThread = new ChessThread(this);
         this.chessThread.start();
+
+        this.infoLabel = new JLabel("<html>Les champs avec * <br>sont obligatoires</html>");
+        this.infoLabel.setFont(this.getFont().deriveFont(10f));
 
         this.add(this.left);
         this.add(this.center);
@@ -57,7 +61,6 @@ public class PanelManager extends JPanel {
     public JPanel createLeftPanel() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setPreferredSize(new Dimension(100, 400));
-
         return panel;
     }
     public RightPanel createRightPanel() {
@@ -91,19 +94,43 @@ public class PanelManager extends JPanel {
     public void changePanel(String panelName) {
         if(connectionController.getInstance() != null || Objects.equals(panelName, "HomePanel")) {
             this.center.removeAll();
+            this.left.removeAll();
             IPanel destinationPanel = switch (panelName) {
-                case "NewAccountPanel" -> new NewAccountPanel(this);
-                case "ModificationPanel" -> new ModificationPanel(this);
+                case "NewAccountPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new NewAccountPanel(this);
+                }
+                case "ModificationPanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new ModificationPanel(this);
+                }
                 case "Profiles" -> new Profiles(this);
-                case "EloSearch" -> new EloSearch(this);
-                case "MatchDataSearch" -> new MatchDataSearch(this);
-                case "TournamentsSearch" -> new TournamentsSearch(this);
-                case "OpeningsStats" -> new OpeningsStats(this);
-                case "WinratePanel" -> new WinratePanel(this);
+                case "EloSearch" -> {
+                    this.left.add(this.infoLabel);
+                    yield new EloSearch(this);
+                }
+                case "MatchDataSearch" -> {
+                    this.left.add(this.infoLabel);
+                    yield new MatchDataSearch(this);
+                }
+                case "TournamentsSearch" -> {
+                    this.left.add(this.infoLabel);
+                    yield new TournamentsSearch(this);
+                }
+                case "OpeningsStats" -> {
+                    this.left.add(this.infoLabel);
+                    yield new OpeningsStats(this);
+                }
+                case "WinratePanel" -> {
+                    this.left.add(this.infoLabel);
+                    yield new WinratePanel(this);
+                }
                 default -> new HomePanel(this);
             };
             destinationPanel.enterPanel();
             this.center.add((JPanel) destinationPanel);
+            this.left.validate();
+            this.left.repaint();
             this.center.validate();
             this.center.repaint();
         } else {

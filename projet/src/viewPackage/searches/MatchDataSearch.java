@@ -51,7 +51,7 @@ public class MatchDataSearch extends JPanel implements IPanel {
         this.formPanel.setLayout(gridBag);
 
         try {
-            JLabel usernameLabel = new JLabel("Pseudo :");
+            JLabel usernameLabel = new JLabel("Pseudo* :");
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
             gridBag.setConstraints(usernameLabel, c);

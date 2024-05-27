@@ -60,7 +60,7 @@ public class TournamentsSearch extends JPanel implements IPanel {
         this.formPanel.setLayout(gridBag);
 
         try {
-            JLabel usernameLabel = new JLabel("Pseudo :");
+            JLabel usernameLabel = new JLabel("Pseudo* :");
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
             gridBag.setConstraints(usernameLabel, c);
@@ -78,7 +78,7 @@ public class TournamentsSearch extends JPanel implements IPanel {
             throw new RuntimeException(e);
         }
 
-        JLabel dateLabel = new JLabel("Date :");
+        JLabel dateLabel = new JLabel("Date* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(dateLabel, c);
         this.formPanel.add(dateLabel);
@@ -90,7 +90,7 @@ public class TournamentsSearch extends JPanel implements IPanel {
         this.formPanel.add(this.date);
 
         try {
-            JLabel stateLabel = new JLabel("État :");
+            JLabel stateLabel = new JLabel("État du tournoi* :");
             c.gridwidth = GridBagConstraints.RELATIVE;
             gridBag.setConstraints(stateLabel, c);
             this.formPanel.add(stateLabel);

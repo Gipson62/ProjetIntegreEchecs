@@ -75,7 +75,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         GridBagConstraints c = new GridBagConstraints();
         this.formPanel.setLayout(gridBag);
 
-        JLabel emailLabel = new JLabel("Email :");
+        JLabel emailLabel = new JLabel("Email* :");
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         gridBag.setConstraints(emailLabel, c);
@@ -85,7 +85,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.email, c);
         this.formPanel.add(this.email);
 
-        JLabel passwordLabel = new JLabel("Mot de Passe :");
+        JLabel passwordLabel = new JLabel("Mot de Passe* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(passwordLabel, c);
         this.formPanel.add(passwordLabel);
@@ -94,7 +94,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.password, c);
         this.formPanel.add(this.password);
 
-        JLabel pseudoLabel = new JLabel("Pseudo :");
+        JLabel pseudoLabel = new JLabel("Pseudo* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(pseudoLabel, c);
         this.formPanel.add(pseudoLabel);
@@ -103,7 +103,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.pseudo, c);
         this.formPanel.add(this.pseudo);
 
-        JLabel eloLabel = new JLabel("Elo :");
+        JLabel eloLabel = new JLabel("Elo* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(eloLabel, c);
         this.formPanel.add(eloLabel);
@@ -112,7 +112,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.elo, c);
         this.formPanel.add(this.elo);
 
-        JLabel dateLabel = new JLabel("Date de naissance :");
+        JLabel dateLabel = new JLabel("Date de naissance* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(dateLabel, c);
         this.formPanel.add(dateLabel);
@@ -123,7 +123,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.birthdate, c);
         this.formPanel.add(this.birthdate);
 
-        JLabel beginnerLabel = new JLabel("Débutant :");
+        JLabel beginnerLabel = new JLabel("Débutant* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(beginnerLabel, c);
         this.formPanel.add(beginnerLabel);
@@ -132,7 +132,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.beginner, c);
         this.formPanel.add(this.beginner);
 
-        JLabel genderLabel = new JLabel("Genre");
+        JLabel genderLabel = new JLabel("Genre : ");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(genderLabel, c);
         this.formPanel.add(genderLabel);
@@ -141,7 +141,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(this.gender, c);
         this.formPanel.add(this.gender);
 
-        JLabel bioLabel = new JLabel("Bio");
+        JLabel bioLabel = new JLabel("Bio :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(bioLabel, c);
         this.formPanel.add(bioLabel);
@@ -151,7 +151,7 @@ public class ModificationPanel extends JPanel implements IPanel {
         gridBag.setConstraints(bioScroll, c);
         this.formPanel.add(bioScroll);
 
-        JLabel rankLabel = new JLabel("Rang");
+        JLabel rankLabel = new JLabel("Rang* :");
         c.gridwidth = GridBagConstraints.RELATIVE;
         gridBag.setConstraints(rankLabel, c);
         this.formPanel.add(rankLabel);
