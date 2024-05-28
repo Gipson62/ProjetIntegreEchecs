@@ -1,0 +1,8 @@
+Basile Hélas etu52812@henallux.be
+Julien Higginson etu51912@henallux.be
+
+Mot de passe d'accès à la base de données: EchecMySql*52812
+
+
+https://github.com/Gipson62/ProjetIntegreEchecs
+Il a 2 scripts d'insertion de base de données, "insertEchecdb.sql" et "secondInsertOpening.sql", il faut d'abord lancer le premier puis lancer celui des openings
