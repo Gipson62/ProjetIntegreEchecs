@@ -22,7 +22,7 @@ public class Rank  {
         setRank(rank);
     }
 
-    public int getRank() {
+    public Integer getRank() {
         return rank;
     }
 

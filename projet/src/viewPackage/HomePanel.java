@@ -1,16 +1,15 @@
 package viewPackage;
 
 import controllerPackage.ConnectionController;
+import exceptionPackage.CantConnectToDbException;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class HomePanel extends JPanel implements IPanel {
     PanelManager panelManager;
-    ConnectionController connectionController;
+    private ConnectionController connectionController;
     public HomePanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
     }
@@ -49,7 +48,7 @@ public class HomePanel extends JPanel implements IPanel {
                         connectionController.databaseLogin(String.valueOf(password));
                         loginButton.setText("Accès à la db validé.");
                         loginButton.setEnabled(false);
-                    } catch (SQLException ex) {
+                    } catch (CantConnectToDbException ex) {
                         JOptionPane.showMessageDialog(null, "Le mot de passe est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 }

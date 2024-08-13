@@ -66,19 +66,19 @@ public class MovementData {
         return playRate;
     }
 
-    public int getWinWith() {
+    public Integer getWinWith() {
         return winWith;
     }
 
-    public int getLoseWith() {
+    public Integer getLoseWith() {
         return loseWith;
     }
 
-    public int getWinAgainst() {
+    public Integer getWinAgainst() {
         return winAgainst;
     }
 
-    public int getLoseAgainst() {
+    public Integer getLoseAgainst() {
         return loseAgainst;
     }
 

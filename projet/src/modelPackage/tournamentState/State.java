@@ -18,7 +18,7 @@ public class State {
     }
 
 
-    public int getIdState() {
+    public Integer getIdState() {
         return idState;
     }
 

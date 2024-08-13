@@ -20,7 +20,7 @@ public class AccountManager {
      * Constructor initializes the data access object.
      */
     public AccountManager() {
-        dao = new IAccountDBAccess(); // Initialize with a specific implementation of IAccountDataAccess
+        dao = new AccountDBAccess(); // Initialize with a specific implementation of IAccountDataAccess
     }
 
     /**

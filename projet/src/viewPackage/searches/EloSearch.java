@@ -20,13 +20,13 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class EloSearch extends JPanel implements IPanel {
-    PanelManager panelManager;
-    JPanel formPanel, buttonsPanel, resultPanel;
-    JSlider eloSlider;
-    JSpinner date1, date2;
-    RankController rankController;
-    ResearchController researchController;
-    JTable result;
+    private PanelManager panelManager;
+    private JPanel formPanel, buttonsPanel, resultPanel;
+    private JSlider eloSlider;
+    private JSpinner date1, date2;
+    private RankController rankController;
+    private ResearchController researchController;
+    private JTable result;
     public EloSearch(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.rankController = new RankController();

@@ -15,7 +15,7 @@ public class Elo {
         setElo(elo);
     }
 
-    public int getElo() {
+    public Integer getElo() {
         return elo;
     }
 

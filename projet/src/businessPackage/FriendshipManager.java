@@ -19,7 +19,7 @@ public class FriendshipManager {
      * An instance of IFriendshipDBAccess is created and assigned to dao.
      */
     public FriendshipManager() {
-        dao = new IFriendshipDBAccess();
+        dao = new FriendshipDBAccess();
     }
 
     /**

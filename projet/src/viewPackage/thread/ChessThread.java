@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChessThread extends Thread {
-    ArrayList<BufferedImage> images;
+    private ArrayList<BufferedImage> images;
     PanelManager panelManager;
     int currentIndex;
     public ChessThread(PanelManager panelManager) {

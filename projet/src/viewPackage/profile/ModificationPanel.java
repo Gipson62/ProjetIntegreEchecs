@@ -23,19 +23,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ModificationPanel extends JPanel implements IPanel {
-    AccountController accountController;
-    RankController rankController;
-    PanelManager panelManager;
-    JPanel formPanel, buttonsPanel, titlePanel;
-    JTextField email, pseudo, gender;
-    JPasswordField password;
-    EloSlider elo;
-    JSpinner birthdate;
-    JCheckBox beginner;
-    JTextArea bio;
-    JComboBox<String> ranks;
-    ValidateButton validationButton;
-    Account account;
+    private AccountController accountController;
+    private RankController rankController;
+    private PanelManager panelManager;
+    private JPanel formPanel, buttonsPanel, titlePanel;
+    private JTextField email, pseudo, gender;
+    private JPasswordField password;
+    private EloSlider elo;
+    private JSpinner birthdate;
+    private JCheckBox beginner;
+    private JTextArea bio;
+    private JComboBox<String> ranks;
+    private ValidateButton validationButton;
+    private Account account;
     public ModificationPanel(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();

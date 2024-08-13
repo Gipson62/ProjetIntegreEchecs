@@ -37,7 +37,7 @@ public class FilterTournamentPlayed {
             }
     }
 
-    public int getIdAccountResearch() {
+    public Integer getIdAccountResearch() {
         return idAccountResearch.getIdAccount();
     }
 

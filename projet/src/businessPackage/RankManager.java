@@ -1,6 +1,6 @@
 package businessPackage;
 
-import dataAccessPackage.rankDataAccess.IRankDBAccess;
+import dataAccessPackage.rankDataAccess.RankDBAccess;
 import dataAccessPackage.rankDataAccess.IRankDataAccess;
 import exceptionPackage.rank.ReadRankException;
 import modelPackage.accountModel.Rank;
@@ -18,7 +18,7 @@ public class RankManager {
      * Constructor initializes the IRankDataAccess object.
      */
     public RankManager() {
-        dao = new IRankDBAccess();
+        dao = new RankDBAccess();
     }
 
     /**

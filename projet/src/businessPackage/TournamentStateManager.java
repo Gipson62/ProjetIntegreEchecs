@@ -1,6 +1,6 @@
 package businessPackage;
 
-import dataAccessPackage.tournamentStateDataAcces.ITournamentStateDBAcces;
+import dataAccessPackage.tournamentStateDataAcces.TournamentStateDBAcces;
 import dataAccessPackage.tournamentStateDataAcces.ITournamentStateDataAcces;
 import exceptionPackage.tounamentState.ReadTournamentStateException;
 import modelPackage.tournamentState.State;
@@ -16,7 +16,7 @@ public class TournamentStateManager {
      * Constructor that initializes the data access object for managing tournament states.
      */
     public TournamentStateManager() {
-        dao = new ITournamentStateDBAcces();
+        dao = new TournamentStateDBAcces();
     }
 
     /**

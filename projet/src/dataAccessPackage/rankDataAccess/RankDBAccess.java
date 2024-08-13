@@ -14,16 +14,12 @@ import java.util.ArrayList;
 /**
  * Implementation of the IRankDataAccess interface to interact with the database.
  */
-public class IRankDBAccess implements IRankDataAccess {
-
-    private Connection connection;
+public class RankDBAccess implements IRankDataAccess {
 
     /**
      * Constructor establishes a connection to the database using a singleton pattern.
      */
-    public IRankDBAccess() {
-        this.connection = SingletonConnection.getInstance();
-    }
+    public RankDBAccess() { }
 
     /**
      * Get all ranks from the database.
@@ -34,7 +30,7 @@ public class IRankDBAccess implements IRankDataAccess {
     public ArrayList<Rank> getAllRanks() throws ReadRankException {
         ArrayList<Rank> ranks = new ArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM `rank`");
+            PreparedStatement ps = SingletonConnection.getInstance().prepareStatement("SELECT * FROM `rank`");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ranks.add(new Rank(rs.getInt("id"), rs.getString("name"), rs.getString("description")));

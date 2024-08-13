@@ -50,11 +50,11 @@ public class ResultTournamentPlayed {
         return dateMatch;
     }
 
-    public int getTournamentElo() {
+    public Integer getTournamentElo() {
         return tournamentElo.getElo();
     }
 
-    public int getTimeMatch() {
+    public Integer getTimeMatch() {
         return timeMatch;
     }
 

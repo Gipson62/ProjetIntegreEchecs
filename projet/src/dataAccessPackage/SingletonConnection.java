@@ -1,5 +1,7 @@
 package dataAccessPackage;
 
+import exceptionPackage.CantConnectToDbException;
+
 import java.sql.*;
 
 /**
@@ -18,14 +20,14 @@ public class SingletonConnection {
         return connectionUnique;
     }
 
-    public static void databaseLogin(String password) throws SQLException {
+    public static void databaseLogin(String password) throws CantConnectToDbException {
         try {
             connectionUnique = DriverManager.getConnection("jdbc:mysql://localhost:3306/echecdb",
                     "testeur",
                     password
-                    );
-        } catch (SQLException ex) {
-            throw ex;
+            );
+        } catch (SQLException e) {
+            throw new CantConnectToDbException();
         }
     }
 

@@ -210,7 +210,7 @@ public class Account{
         return rank;
     }
 
-    public int getRank() {
+    public Integer getRank() {
         return rank.getRank();
     }
 
@@ -218,7 +218,7 @@ public class Account{
         return elo;
     }
 
-    public int getElo() {
+    public Integer getElo() {
         return elo.getElo();
     }
 

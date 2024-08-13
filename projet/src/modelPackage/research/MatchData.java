@@ -54,7 +54,7 @@ public class MatchData {
         return opponent.getUsername();
     }
 
-    public int getMatch_id() {
+    public Integer getMatch_id() {
         return match_id;
     }
 
@@ -74,7 +74,7 @@ public class MatchData {
         return Opening;
     }
 
-    public char getResult() {
+    public Character getResult() {
         return result;
     }
 

@@ -5,7 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class EloSlider extends JSlider {
-    JLabel eloLabel;
+    private JLabel eloLabel;
     static final int ELO_MIN = 0;
     static final int ELO_MAX = 3000;
     public EloSlider(JLabel initEloLabel) {

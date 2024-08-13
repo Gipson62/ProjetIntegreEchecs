@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OpeningsStats extends JPanel implements IPanel {
-    PanelManager panelManager;
-    JPanel formPanel, buttonsPanel, resultPanel;
-    JComboBox<String> users;
-    ArrayList<Account> allAccounts;
-    StatisticsController statisticsController;
-    AccountController accountController;
-    JTable result;
+    private PanelManager panelManager;
+    private JPanel formPanel, buttonsPanel, resultPanel;
+    private JComboBox<String> users;
+    private ArrayList<Account> allAccounts;
+    private StatisticsController statisticsController;
+    private AccountController accountController;
+    private JTable result;
     public OpeningsStats(PanelManager initPanelManager) {
         this.panelManager = initPanelManager;
         this.accountController = new AccountController();

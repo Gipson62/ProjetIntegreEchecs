@@ -1,7 +1,7 @@
 package businessPackage;
 
 import dataAccessPackage.research.IResearchDataAccess;
-import dataAccessPackage.research.IResearchDBAccess;
+import dataAccessPackage.research.ResearchDBAccess;
 import exceptionPackage.account.ReadAccountException;
 import exceptionPackage.research.*;
 import modelPackage.research.*;
@@ -21,7 +21,7 @@ public class ResearchManager {
      * Constructor that initializes the IResearchDataAccess implementation.
      */
         public ResearchManager(){
-            dao = new IResearchDBAccess();
+            dao = new ResearchDBAccess();
         }
 
 

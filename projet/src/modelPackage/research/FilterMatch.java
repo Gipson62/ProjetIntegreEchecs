@@ -17,7 +17,7 @@ public class FilterMatch {
         setDate(dateMin, dateMax);
     }
 
-    public int getEloMin() {
+    public Integer getEloMin() {
         return eloMin.getElo();
     }
 

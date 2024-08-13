@@ -13,7 +13,7 @@ public class IdAccount {
         setIdAccount(idAccount);
     }
 
-    public int getIdAccount() {
+    public Integer getIdAccount() {
         return idAccount;
     }
 

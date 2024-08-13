@@ -11,18 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-public class IFriendshipDBAccess implements IFriendshipDataAccess {
+public class FriendshipDBAccess implements IFriendshipDataAccess {
 
-    private Connection connection;
-
-    public IFriendshipDBAccess(){
-        connection = SingletonConnection.getInstance();
-    }
+    public FriendshipDBAccess() { }
 
 
     public void addFriendship(Friendship friendship) throws AddFriendshipException{
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Friendship (Friend_1, Friend_2) VALUES (?, ?)");
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("INSERT INTO Friendship (Friend_1, Friend_2) VALUES (?, ?)");
             preparedStatement.setInt(1, friendship.getIdAccount1());
             preparedStatement.setInt(2, friendship.getIdAccount2());
 
@@ -34,7 +30,7 @@ public class IFriendshipDBAccess implements IFriendshipDataAccess {
 
     public void deleteFriendship(Friendship friendship) throws DeleteFriendshipException{
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Friendship WHERE Friend_1 = ? AND Friend_2 = ?");
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("DELETE FROM Friendship WHERE Friend_1 = ? AND Friend_2 = ?");
             preparedStatement.setInt(1, friendship.getIdAccount1());
             preparedStatement.setInt(2, friendship.getIdAccount2());
             preparedStatement.executeUpdate();
@@ -48,7 +44,7 @@ public class IFriendshipDBAccess implements IFriendshipDataAccess {
         ArrayList<Friendship> friendList = new ArrayList<>();
         try{
             int idAccount = account.getIdAccount();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT  *\n" +
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("SELECT  *\n" +
                     "FROM (SELECT Friend_2 FROM Friendship WHERE Friend_1 = ? UNION SELECT Friend_1 FROM Friendship WHERE Friend_2 = ?) as friend");
             preparedStatement.setInt(1, idAccount);
             preparedStatement.setInt(2, idAccount);

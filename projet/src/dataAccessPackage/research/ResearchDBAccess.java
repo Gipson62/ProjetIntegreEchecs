@@ -16,13 +16,9 @@ import java.util.ArrayList;
 
 
 
-public class IResearchDBAccess implements IResearchDataAccess {
+public class ResearchDBAccess implements IResearchDataAccess {
 
-    private Connection connection;
-
-    public IResearchDBAccess(){
-        connection = SingletonConnection.getInstance();
-    }
+    public ResearchDBAccess() { }
     @Override
     public ArrayList<ResultFilteredMatch> getFilteredMatch(FilterMatch filterMatch) throws ResearchDataAccessException {
 
@@ -30,7 +26,7 @@ public class IResearchDBAccess implements IResearchDataAccess {
 
         try {
             System.out.println("Start research filtred");
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT DISTINCT p2.elo AS eloWhite,CONCAT(p2.username, '#', p2.tag)as White ,\n" +
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("SELECT DISTINCT p2.elo AS eloWhite,CONCAT(p2.username, '#', p2.tag)as White ,\n" +
                     "        `match`.winner,\n" +
                     "        CONCAT(p1.username, '#', p1.tag) AS Black,\n" +
                     "        p1.elo AS eloBlack,\n" +
@@ -88,7 +84,7 @@ public class IResearchDBAccess implements IResearchDataAccess {
         ArrayList<ResultTournamentPlayed> resultTournamentPlayeds = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
                     "select t.name,t.elo,m.start_date,m.time,winner.username\n" +
                             "from  `Match` m \n" +
                             "inner join tournament t on (m.tournament = t.id) \n" +
@@ -131,7 +127,7 @@ public class IResearchDBAccess implements IResearchDataAccess {
         ArrayList<MatchData> matchData = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
                     "SELECT \n" +
                     "    player.username AS Joueur, \n" +
                     "    opponent.username AS Adversaire, \n" +

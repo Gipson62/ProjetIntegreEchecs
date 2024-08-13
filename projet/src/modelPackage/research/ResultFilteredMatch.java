@@ -41,7 +41,7 @@ public class ResultFilteredMatch {
         return matchWin;
     }
 
-    public int getEloWhite() {
+    public Integer getEloWhite() {
         return eloWhite.getElo();
     }
 
@@ -49,11 +49,11 @@ public class ResultFilteredMatch {
         return usernameWhite.getUsername();
     }
 
-    public int getTagWhite() {
+    public Integer getTagWhite() {
         return tagWhite.getTag();
     }
 
-    public int getEloBlack() {
+    public Integer getEloBlack() {
         return eloBlack.getElo();
     }
 
@@ -61,7 +61,7 @@ public class ResultFilteredMatch {
         return usernameBlack.getUsername();
     }
 
-    public int getTagBlack() {
+    public Integer getTagBlack() {
         return tagBlack.getTag();
     }
 

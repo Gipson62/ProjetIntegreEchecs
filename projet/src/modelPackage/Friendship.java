@@ -43,11 +43,11 @@ public class Friendship {
         return idFriendship;
     }
 
-    public int getIdAccount1() {
+    public Integer getIdAccount1() {
         return idAccount1.getIdAccount();
     }
 
-    public int getIdAccount2() {
+    public Integer getIdAccount2() {
         return idAccount2.getIdAccount();
     }
 

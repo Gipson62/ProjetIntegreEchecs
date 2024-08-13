@@ -15,12 +15,9 @@ import exceptionPackage.IllegalAccountArgumentException;
 import org.mindrot.jbcrypt.BCrypt;
 
 
-public class IAccountDBAccess implements IAccountDataAccess {
-    private Connection connection;
+public class AccountDBAccess implements IAccountDataAccess {
 
-    public IAccountDBAccess(){
-        this.connection = SingletonConnection.getInstance();
-    }
+    public AccountDBAccess(){ }
 
 
     @Override
@@ -28,7 +25,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
             System.out.println("Start insertion in the DB");
         try {
             //requete pour inserer un compte dans la BD
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
                     "INSERT INTO Account (username, email, birthdate, password, bio, tag, is_beginner, `rank`, gender, elo)  \n" +
                             "SELECT ?, ?, ?, ?, ?, \n" +
                             "       IFNULL(MAX(tag), 0) + 1, ?, ?, ?, ?\n" +
@@ -68,7 +65,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
         {
             //requete pour recuperer un compte de la BD selon l'id
             if (parameterResearch instanceof IdAccount idAccount) {
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE id = ?");
+                PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM account WHERE id = ?");
                 preparedStatement.setInt(1, idAccount.getIdAccount());
                 ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -83,7 +80,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
             }
             //requete pour recuperer un compte de la BD selon l'email
             else if (parameterResearch instanceof Email email) {
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ?");
+                PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM account WHERE email = ?");
                 preparedStatement.setString(1, email.getEmail());
                 ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -106,7 +103,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
     public void updateAccount(Account account) throws UpdateAccountException {
         try
         {
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(
                     "UPDATE account SET username = ?, email = ?, birthdate = ?, password = ?, bio = ?, tag = ?, is_beginner = ?, `rank` = ?, gender = ?, elo = ? WHERE id = ?");
 
             preparedStatement.setString(1, account.getUsername());
@@ -140,7 +137,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
     public void deleteAccountLignes(ArrayList <IdAccount> idAccounts) throws DeleteAccountLignesException {
         for (IdAccount id : idAccounts) {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
+                PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("DELETE FROM account WHERE id = ?");
 
                 preparedStatement.setInt(1, id.getIdAccount());
                 preparedStatement.executeUpdate();
@@ -159,7 +156,7 @@ public class IAccountDBAccess implements IAccountDataAccess {
     @Override
     public ArrayList<Account> getAllAccounts() throws ReadAccountException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account");
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM account");
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Account> accounts = new ArrayList<>();
             while (resultSet.next()) {

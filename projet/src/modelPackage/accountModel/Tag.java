@@ -11,7 +11,7 @@ public class Tag {
         setTag(tag);
     }
 
-    public int getTag() {
+    public Integer getTag() {
         return tag;
     }
 
